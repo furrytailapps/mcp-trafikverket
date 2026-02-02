@@ -4,7 +4,7 @@
 
 export interface SyncStatus {
   lastSync: string;
-  source: 'lastkajen' | 'manual' | 'initial';
+  source: 'lastkajen' | 'trafikinfo' | 'manual' | 'initial';
   success: boolean;
   error?: string;
   counts: {
