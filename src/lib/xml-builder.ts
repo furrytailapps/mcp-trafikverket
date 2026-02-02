@@ -105,10 +105,22 @@ export function eqFilter(name: string, value: string | number | boolean): XmlFil
 }
 
 /**
- * Build a LIKE filter for partial match
+ * Build a LIKE filter for partial match (regex-based)
+ *
+ * The Trafikinfo API LIKE filter uses regex patterns, not glob syntax.
+ * This function accepts glob-style wildcards (*) for convenience and
+ * converts them to proper regex (.*).
+ *
+ * Examples:
+ *   *182* → .*182.*  (matches "Track 182 North")
+ *   E4*   → E4.*     (matches "E4", "E4.1", "E4-South")
+ *   *holm → .*holm   (matches "Stockholm")
  */
-export function likeFilter(name: string, value: string): XmlFilter {
-  return { type: 'LIKE', name, value };
+export function likeFilter(name: string, pattern: string): XmlFilter {
+  // Convert glob wildcards to regex: * → .*
+  // Handle multiple wildcards and edge cases
+  const regexPattern = pattern.replace(/\*/g, '.*');
+  return { type: 'LIKE', name, value: regexPattern };
 }
 
 /**

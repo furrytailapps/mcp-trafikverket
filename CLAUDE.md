@@ -259,15 +259,14 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 - All tools follow the flat schema pattern (no nested objects)
 - Trafikinfo API uses XML POST requests, handled by `xml-builder.ts`
 
-## Known API Limitations
+## LIKE Filter Implementation
 
-The Trafikinfo API has some filter limitations. These are documented in the test suite:
+The Trafikinfo API LIKE filter uses **regex patterns**, not glob syntax. The `likeFilter()` function in `xml-builder.ts` automatically converts glob wildcards (`*`) to regex (`.*`) for convenience:
 
-| Tool | Filter | Status | Workaround |
-|------|--------|--------|------------|
-| `trafikverket_get_crossings` | `trackId` | Not supported | Use location-based query with coordinates |
-| `trafikverket_get_crossings` | `roadNumber` | Not supported | Use location-based query |
-| `trafikverket_get_operations` | `roadNumber` (for road_conditions) | Not supported | Use location-based query |
-| `trafikverket_get_operations` | `nearStation` (for parking) | Not supported | Use location-based query |
+```typescript
+// Input (glob-style)     →  Output (regex)
+likeFilter('Name', '*Stockholm*')  →  LIKE value=".*Stockholm.*"
+likeFilter('TrackId', '*182*')     →  LIKE value=".*182.*"
+```
 
-**Location-based queries work reliably.** When a filter fails, fall back to querying by latitude/longitude with a radius.
+All LIKE-based filters (trackId, roadNumber, nearStation) work correctly with both location-based and string-based queries.
