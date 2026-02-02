@@ -1,0 +1,18 @@
+[
+  {
+    "id": "TUN-001",
+    "name": "Citytunneln",
+    "trackId": "182",
+    "length": 2500,
+    "width": 12,
+    "height": 8,
+    "builtYear": 2010,
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [18.06, 59.32],
+        [18.08, 59.34]
+      ]
+    }
+  }
+]

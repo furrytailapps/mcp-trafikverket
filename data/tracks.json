@@ -1,0 +1,44 @@
+[
+  {
+    "id": "182",
+    "designation": "182",
+    "name": "Västra Stambanan",
+    "gauge": 1435,
+    "speedLimit": 160,
+    "electrified": true,
+    "electrificationType": "15kV 16.7Hz AC",
+    "infrastructureManager": "Trafikverket",
+    "trackClass": "A",
+    "numberOfTracks": 2,
+    "length": 45000,
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [18.07, 59.33],
+        [17.95, 59.4],
+        [17.85, 59.5]
+      ]
+    }
+  },
+  {
+    "id": "421",
+    "designation": "421",
+    "name": "Dalabanan",
+    "gauge": 1435,
+    "speedLimit": 130,
+    "electrified": true,
+    "electrificationType": "15kV 16.7Hz AC",
+    "infrastructureManager": "Trafikverket",
+    "trackClass": "B",
+    "numberOfTracks": 1,
+    "length": 120000,
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [15.6, 60.5],
+        [15.5, 60.6],
+        [15.4, 60.7]
+      ]
+    }
+  }
+]

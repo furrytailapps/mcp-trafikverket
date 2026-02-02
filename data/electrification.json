@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ELEC-001",
+    "trackId": "182",
+    "systemType": "15kV 16.7Hz AC",
+    "voltage": 15000,
+    "frequency": 16.7,
+    "catenary": true,
+    "thirdRail": false,
+    "startKm": 0,
+    "endKm": 45,
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [18.07, 59.33],
+        [17.85, 59.5]
+      ]
+    }
+  }
+]

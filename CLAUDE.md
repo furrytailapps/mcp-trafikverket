@@ -24,12 +24,29 @@ Construction/infrastructure companies (NRC, COWI) using yesper.ai who need:
 
 This MCP uses two different Trafikverket data sources:
 
-| Source         | Endpoint                            | Type            | Data                | Status        |
-| -------------- | ----------------------------------- | --------------- | ------------------- | ------------- |
-| **Lastkajen**  | `lastkajen.trafikverket.se`         | Download portal | NJDB infrastructure | Sample data\* |
-| **Trafikinfo** | `api.trafikinfo.trafikverket.se/v2` | API (XML POST)  | Real-time data      | Live data     |
+| Source         | Endpoint                            | Type            | Data                | Status    |
+| -------------- | ----------------------------------- | --------------- | ------------------- | --------- |
+| **Lastkajen**  | `lastkajen.trafikverket.se`         | REST API        | NJDB infrastructure | JSON sync |
+| **Trafikinfo** | `api.trafikinfo.trafikverket.se/v2` | API (XML POST)  | Real-time data      | Live      |
 
-\* Lastkajen is a bulk download portal for NJDB files, not a queryable API. Infrastructure tool uses sample data.
+### Data Sync Architecture
+
+```
+┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
+│  Vercel Cron    │────▶│  Lastkajen API   │────▶│  /data/*.json   │
+│  (daily 3am)    │     │  (REST + Bearer) │     │  (git-tracked)  │
+└─────────────────┘     └──────────────────┘     └─────────────────┘
+                                                          │
+                                                          ▼
+                                                 ┌─────────────────┐
+                                                 │  MCP Tools      │
+                                                 │  (read JSON)    │
+                                                 └─────────────────┘
+```
+
+- **Infrastructure data** is stored in `/data/*.json` files (git-tracked for reliability)
+- **Vercel Cron** syncs data daily at 3am UTC via `/api/cron/sync`
+- **Manual sync**: `npx tsx src/scripts/sync-lastkajen.ts`
 
 ## Available Tools (4)
 
@@ -43,19 +60,33 @@ This MCP uses two different Trafikverket data sources:
 ## Project Structure
 
 ```
+data/                             # Infrastructure data (git-tracked)
+├── tracks.json
+├── tunnels.json
+├── bridges.json
+├── switches.json
+├── electrification.json
+├── stations.json
+├── metadata.json                 # managers, track designations, station codes
+└── sync-status.json              # last sync timestamp and counts
+
 src/
-├── app/[transport]/route.ts      # MCP endpoint
-├── cache/
-│   └── infrastructure-cache.ts   # Cache utilities
+├── app/
+│   ├── [transport]/route.ts      # MCP endpoint
+│   └── api/cron/sync/route.ts    # Vercel Cron sync endpoint
 ├── clients/
-│   ├── lastkajen-client.ts       # NJDB infrastructure (REST + Bearer)
+│   ├── lastkajen-client.ts       # NJDB infrastructure (reads JSON files)
 │   └── trafikinfo-client.ts      # Real-time data (XML POST)
 ├── lib/
 │   ├── concurrency.ts            # Rate limiting (max 2 concurrent)
+│   ├── data-loader.ts            # JSON file loader with caching
 │   ├── errors.ts                 # Error classes
 │   ├── http-client.ts            # HTTP wrapper with XML support
+│   ├── lastkajen-api.ts          # Lastkajen REST API client
 │   ├── response.ts               # Response formatting
 │   └── xml-builder.ts            # Trafikinfo XML query builder
+├── scripts/
+│   └── sync-lastkajen.ts         # Data sync script (run manually or via cron)
 ├── tools/
 │   ├── index.ts                  # Tool registry (4 tools)
 │   ├── get-infrastructure.ts     # NJDB infrastructure queries
@@ -254,10 +285,25 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 
 ## Notes
 
-- **Infrastructure tool uses sample data**: Lastkajen is a bulk download portal, not a queryable REST API. The NJDB infrastructure data (tracks, tunnels, bridges, etc.) is only available via file downloads from https://lastkajen.trafikverket.se. The `trafikverket_get_infrastructure` and `trafikverket_describe_data` tools return representative sample data to demonstrate the expected structure.
-- **Trafikinfo tools use real data**: The `trafikverket_get_crossings` and `trafikverket_get_operations` tools query the live Trafikinfo API and return real data for level crossings, traffic incidents, road conditions, and parking.
+- **Infrastructure data synced from Lastkajen**: The `/data/*.json` files contain NJDB infrastructure data. Run `npx tsx src/scripts/sync-lastkajen.ts` to update, or wait for daily Vercel Cron sync.
+- **Trafikinfo tools use live data**: The `trafikverket_get_crossings` and `trafikverket_get_operations` tools query the live Trafikinfo API.
 - All tools follow the flat schema pattern (no nested objects)
 - Trafikinfo API uses XML POST requests, handled by `xml-builder.ts`
+
+## Data Sync
+
+```bash
+# Manual sync (updates /data/*.json)
+npx tsx src/scripts/sync-lastkajen.ts
+
+# Check sync status
+curl http://localhost:3000/api/cron/sync
+
+# View current data freshness
+# Use trafikverket_describe_data with dataType="data_freshness"
+```
+
+**Vercel Cron**: Configured in `vercel.json` to run daily at 3am UTC.
 
 ## LIKE Filter Implementation
 

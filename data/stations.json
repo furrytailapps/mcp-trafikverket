@@ -1,0 +1,28 @@
+[
+  {
+    "id": "STA-001",
+    "name": "Stockholm Central",
+    "signature": "Cst",
+    "type": "station",
+    "platforms": 19,
+    "tracks": 12,
+    "accessible": true,
+    "geometry": {
+      "type": "Point",
+      "coordinates": [18.0589, 59.3303]
+    }
+  },
+  {
+    "id": "STA-002",
+    "name": "Göteborg Central",
+    "signature": "G",
+    "type": "station",
+    "platforms": 16,
+    "tracks": 10,
+    "accessible": true,
+    "geometry": {
+      "type": "Point",
+      "coordinates": [11.9733, 57.7089]
+    }
+  }
+]

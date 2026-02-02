@@ -1,4 +1,24 @@
+/**
+ * Lastkajen client for NJDB infrastructure data
+ *
+ * Reads infrastructure data from JSON files in /data directory.
+ * Data is synced from Lastkajen API via the sync script.
+ */
+
 import { ValidationError } from '@/lib/errors';
+import {
+  loadTracks,
+  loadTunnels,
+  loadBridges,
+  loadSwitches,
+  loadElectrification,
+  loadStations,
+  loadInfrastructureManagers,
+  loadTrackDesignations,
+  loadStationCodes,
+  loadSyncStatus,
+  clearDataCache,
+} from '@/lib/data-loader';
 import {
   type Track,
   type Tunnel,
@@ -10,21 +30,21 @@ import {
   type InfrastructureManager,
 } from '@/types/njdb-api';
 
-// In-memory cache for infrastructure data (24-hour TTL)
+// In-memory cache for computed results (24-hour TTL)
 interface CacheEntry<T> {
   data: T;
   timestamp: number;
 }
 
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
-const cache = new Map<string, CacheEntry<unknown>>();
+const resultCache = new Map<string, CacheEntry<unknown>>();
 
 function getCached<T>(key: string): T | null {
-  const entry = cache.get(key);
+  const entry = resultCache.get(key);
   if (!entry) return null;
 
   if (Date.now() - entry.timestamp > CACHE_TTL) {
-    cache.delete(key);
+    resultCache.delete(key);
     return null;
   }
 
@@ -32,7 +52,7 @@ function getCached<T>(key: string): T | null {
 }
 
 function setCache<T>(key: string, data: T): void {
-  cache.set(key, { data, timestamp: Date.now() });
+  resultCache.set(key, { data, timestamp: Date.now() });
 }
 
 /**
@@ -80,224 +100,36 @@ function bboxFromPoint(lat: number, lon: number, radiusKm: number): BBox {
   };
 }
 
-// ============================================================================
-// MOCK DATA
-// Note: The Lastkajen API requires registration and authentication.
-// This mock data demonstrates the expected response structure.
-// Once API access is obtained, replace with actual API calls.
-// ============================================================================
+/**
+ * Check if a point is within a bounding box
+ */
+function isPointInBBox(lon: number, lat: number, bbox: BBox): boolean {
+  return lon >= bbox.minLon && lon <= bbox.maxLon && lat >= bbox.minLat && lat <= bbox.maxLat;
+}
 
 /**
- * Mock track data for demonstration
- * In production, this would query Lastkajen's NJDB API
+ * Check if a geometry intersects a bounding box
  */
-function getMockTracks(): Track[] {
-  return [
-    {
-      id: '182',
-      designation: '182',
-      name: 'Västra Stambanan',
-      gauge: 1435,
-      speedLimit: 160,
-      electrified: true,
-      electrificationType: '15kV 16.7Hz AC',
-      infrastructureManager: 'Trafikverket',
-      trackClass: 'A',
-      numberOfTracks: 2,
-      length: 45000,
-      geometry: {
-        type: 'LineString',
-        coordinates: [
-          [18.07, 59.33],
-          [17.95, 59.4],
-          [17.85, 59.5],
-        ],
-      },
-    },
-    {
-      id: '421',
-      designation: '421',
-      name: 'Dalabanan',
-      gauge: 1435,
-      speedLimit: 130,
-      electrified: true,
-      electrificationType: '15kV 16.7Hz AC',
-      infrastructureManager: 'Trafikverket',
-      trackClass: 'B',
-      numberOfTracks: 1,
-      length: 120000,
-      geometry: {
-        type: 'LineString',
-        coordinates: [
-          [15.6, 60.5],
-          [15.5, 60.6],
-          [15.4, 60.7],
-        ],
-      },
-    },
-  ];
-}
+function geometryIntersectsBBox(
+  geometry: { type: string; coordinates: number[] | number[][] | number[][][] },
+  bbox: BBox,
+): boolean {
+  if (geometry.type === 'Point') {
+    const [lon, lat] = geometry.coordinates as number[];
+    return isPointInBBox(lon, lat, bbox);
+  }
 
-function getMockTunnels(): Tunnel[] {
-  return [
-    {
-      id: 'TUN-001',
-      name: 'Citytunneln',
-      trackId: '182',
-      length: 2500,
-      width: 12,
-      height: 8,
-      builtYear: 2010,
-      geometry: {
-        type: 'LineString',
-        coordinates: [
-          [18.06, 59.32],
-          [18.08, 59.34],
-        ],
-      },
-    },
-  ];
-}
+  if (geometry.type === 'LineString') {
+    const coords = geometry.coordinates as number[][];
+    return coords.some(([lon, lat]) => isPointInBBox(lon, lat, bbox));
+  }
 
-function getMockBridges(): Bridge[] {
-  return [
-    {
-      id: 'BRG-001',
-      name: 'Årstaviksbron',
-      trackId: '182',
-      type: 'beam',
-      length: 350,
-      width: 14,
-      clearanceHeight: 6,
-      builtYear: 1927,
-      loadCapacity: 200,
-      crossesOver: 'Årstaviken',
-      geometry: {
-        type: 'LineString',
-        coordinates: [
-          [18.04, 59.3],
-          [18.06, 59.31],
-        ],
-      },
-    },
-  ];
-}
+  if (geometry.type === 'Polygon') {
+    const coords = (geometry.coordinates as number[][][])[0];
+    return coords.some(([lon, lat]) => isPointInBBox(lon, lat, bbox));
+  }
 
-function getMockSwitches(): Switch[] {
-  return [
-    {
-      id: 'SW-001',
-      trackId: '182',
-      type: 'left',
-      controlType: 'remote',
-      maxSpeed: 80,
-      geometry: {
-        type: 'Point',
-        coordinates: [18.07, 59.33],
-      },
-    },
-  ];
-}
-
-function getMockElectrification(): ElectrificationSection[] {
-  return [
-    {
-      id: 'ELEC-001',
-      trackId: '182',
-      systemType: '15kV 16.7Hz AC',
-      voltage: 15000,
-      frequency: 16.7,
-      catenary: true,
-      thirdRail: false,
-      startKm: 0,
-      endKm: 45,
-      geometry: {
-        type: 'LineString',
-        coordinates: [
-          [18.07, 59.33],
-          [17.85, 59.5],
-        ],
-      },
-    },
-  ];
-}
-
-function getMockStations(): Station[] {
-  return [
-    {
-      id: 'STA-001',
-      name: 'Stockholm Central',
-      signature: 'Cst',
-      type: 'station',
-      platforms: 19,
-      tracks: 12,
-      accessible: true,
-      geometry: {
-        type: 'Point',
-        coordinates: [18.0589, 59.3303],
-      },
-    },
-    {
-      id: 'STA-002',
-      name: 'Göteborg Central',
-      signature: 'G',
-      type: 'station',
-      platforms: 16,
-      tracks: 10,
-      accessible: true,
-      geometry: {
-        type: 'Point',
-        coordinates: [11.9733, 57.7089],
-      },
-    },
-  ];
-}
-
-function getMockInfrastructureManagers(): InfrastructureManager[] {
-  return [
-    { id: 'TV', name: 'Trafikverket', shortName: 'Trafikverket' },
-    { id: 'IB', name: 'Inlandsbanan AB', shortName: 'Inlandsbanan' },
-    { id: 'APT', name: 'A-Train AB (Arlanda Express)', shortName: 'A-Train' },
-    { id: 'ORE', name: 'Öresundståg AB', shortName: 'Öresundståg' },
-    { id: 'SL', name: 'Storstockholms Lokaltrafik', shortName: 'SL' },
-  ];
-}
-
-function getMockTrackDesignations(): string[] {
-  return [
-    '111',
-    '182',
-    '401',
-    '411',
-    '421',
-    '421',
-    '511',
-    '520',
-    '611',
-    '701',
-    '801',
-    '900',
-    '901',
-    '902',
-    '903',
-    '904',
-    '905',
-  ];
-}
-
-function getMockStationCodes(): { code: string; name: string }[] {
-  return [
-    { code: 'Cst', name: 'Stockholm Central' },
-    { code: 'G', name: 'Göteborg Central' },
-    { code: 'M', name: 'Malmö Central' },
-    { code: 'U', name: 'Uppsala Central' },
-    { code: 'Lp', name: 'Linköping Central' },
-    { code: 'Nr', name: 'Norrköping Central' },
-    { code: 'Hpbg', name: 'Helsingborg Central' },
-    { code: 'Vs', name: 'Västerås Central' },
-    { code: 'Öb', name: 'Örebro Central' },
-    { code: 'Jn', name: 'Jönköping Central' },
-  ];
+  return false;
 }
 
 // ============================================================================
@@ -312,19 +144,26 @@ async function getSegmentInfrastructure(trackId: string): Promise<SegmentInfrast
   const cached = getCached<SegmentInfrastructure>(cacheKey);
   if (cached) return cached;
 
-  // In production, this would make parallel API calls to Lastkajen
-  // For now, return mock data filtered by trackId
-  const allTracks = getMockTracks();
+  // Load all data from JSON files
+  const [allTracks, allTunnels, allBridges, allSwitches, allElectrification, allStations] = await Promise.all([
+    loadTracks(),
+    loadTunnels(),
+    loadBridges(),
+    loadSwitches(),
+    loadElectrification(),
+    loadStations(),
+  ]);
+
   const track = allTracks.find((t) => t.id === trackId || t.designation === trackId);
 
   const result: SegmentInfrastructure = {
     trackId,
     track: track || undefined,
-    tunnels: getMockTunnels().filter((t) => t.trackId === trackId),
-    bridges: getMockBridges().filter((b) => b.trackId === trackId),
-    switches: getMockSwitches().filter((s) => s.trackId === trackId),
-    electrification: getMockElectrification().filter((e) => e.trackId === trackId),
-    stations: getMockStations(), // Stations are associated differently
+    tunnels: allTunnels.filter((t) => t.trackId === trackId),
+    bridges: allBridges.filter((b) => b.trackId === trackId),
+    switches: allSwitches.filter((s) => s.trackId === trackId),
+    electrification: allElectrification.filter((e) => e.trackId === trackId),
+    stations: allStations, // Stations are associated differently - return all for now
   };
 
   setCache(cacheKey, result);
@@ -332,124 +171,104 @@ async function getSegmentInfrastructure(trackId: string): Promise<SegmentInfrast
 }
 
 /**
- * Get tracks by geographic bounding box
+ * Factory function for creating bbox query functions
  */
-async function getTracksByBBox(bbox: BBox, limit?: number): Promise<Track[]> {
-  const cacheKey = `tracks:bbox:${bbox.minLon},${bbox.minLat},${bbox.maxLon},${bbox.maxLat}`;
-  const cached = getCached<Track[]>(cacheKey);
-  if (cached) return cached.slice(0, limit);
+function createBBoxQuery<T extends { geometry?: { type: string; coordinates: number[] | number[][] | number[][][] } }>(
+  loadFn: () => Promise<T[]>,
+  cachePrefix?: string,
+): (bbox: BBox, limit?: number) => Promise<T[]> {
+  return async function (bbox: BBox, limit?: number): Promise<T[]> {
+    if (cachePrefix) {
+      const cacheKey = `${cachePrefix}:bbox:${bbox.minLon},${bbox.minLat},${bbox.maxLon},${bbox.maxLat}`;
+      const cached = getCached<T[]>(cacheKey);
+      if (cached) return cached.slice(0, limit);
+    }
 
-  // In production, query Lastkajen with WFS bbox filter
-  // For now, return mock tracks
-  const tracks = getMockTracks();
-  setCache(cacheKey, tracks);
-  return tracks.slice(0, limit || 100);
+    const allItems = await loadFn();
+    const filtered = allItems.filter((item) => item.geometry && geometryIntersectsBBox(item.geometry, bbox));
+
+    if (cachePrefix) {
+      const cacheKey = `${cachePrefix}:bbox:${bbox.minLon},${bbox.minLat},${bbox.maxLon},${bbox.maxLat}`;
+      setCache(cacheKey, filtered);
+    }
+
+    return filtered.slice(0, limit || 100);
+  };
 }
 
-/**
- * Get tunnels by geographic bounding box
- */
-async function getTunnelsByBBox(bbox: BBox, limit?: number): Promise<Tunnel[]> {
-  // In production, query Lastkajen
-  return getMockTunnels().slice(0, limit || 100);
-}
-
-/**
- * Get bridges by geographic bounding box
- */
-async function getBridgesByBBox(bbox: BBox, limit?: number): Promise<Bridge[]> {
-  return getMockBridges().slice(0, limit || 100);
-}
-
-/**
- * Get switches by geographic bounding box
- */
-async function getSwitchesByBBox(bbox: BBox, limit?: number): Promise<Switch[]> {
-  return getMockSwitches().slice(0, limit || 100);
-}
-
-/**
- * Get electrification sections by geographic bounding box
- */
-async function getElectrificationByBBox(bbox: BBox, limit?: number): Promise<ElectrificationSection[]> {
-  return getMockElectrification().slice(0, limit || 100);
-}
-
-/**
- * Get stations by geographic bounding box
- */
-async function getStationsByBBox(bbox: BBox, limit?: number): Promise<Station[]> {
-  return getMockStations().slice(0, limit || 100);
-}
+const getTracksByBBox = createBBoxQuery<Track>(loadTracks, 'tracks');
+const getTunnelsByBBox = createBBoxQuery<Tunnel>(loadTunnels);
+const getBridgesByBBox = createBBoxQuery<Bridge>(loadBridges);
+const getSwitchesByBBox = createBBoxQuery<Switch>(loadSwitches);
+const getElectrificationByBBox = createBBoxQuery<ElectrificationSection>(loadElectrification);
+const getStationsByBBox = createBBoxQuery<Station>(loadStations);
 
 // ============================================================================
 // METADATA
 // ============================================================================
 
 /**
- * Get list of all infrastructure managers
+ * Factory function for creating cached metadata loaders
  */
-async function getInfrastructureManagers(): Promise<InfrastructureManager[]> {
-  const cacheKey = 'metadata:infrastructure_managers';
-  const cached = getCached<InfrastructureManager[]>(cacheKey);
-  if (cached) return cached;
+function createCachedLoader<T>(cacheKey: string, loadFn: () => Promise<T>): () => Promise<T> {
+  return async function (): Promise<T> {
+    const cached = getCached<T>(cacheKey);
+    if (cached) return cached;
 
-  const managers = getMockInfrastructureManagers();
-  setCache(cacheKey, managers);
-  return managers;
+    const data = await loadFn();
+    setCache(cacheKey, data);
+    return data;
+  };
 }
 
-/**
- * Get list of all track designations
- */
-async function getTrackDesignations(): Promise<string[]> {
-  const cacheKey = 'metadata:track_designations';
-  const cached = getCached<string[]>(cacheKey);
-  if (cached) return cached;
+const getInfrastructureManagers = createCachedLoader<InfrastructureManager[]>(
+  'metadata:infrastructure_managers',
+  loadInfrastructureManagers,
+);
 
-  const designations = getMockTrackDesignations();
-  setCache(cacheKey, designations);
-  return designations;
-}
+const getTrackDesignations = createCachedLoader<string[]>('metadata:track_designations', loadTrackDesignations);
+
+const getStationCodes = createCachedLoader<{ code: string; name: string }[]>('metadata:station_codes', loadStationCodes);
 
 /**
- * Get list of station codes
+ * Get cache/sync status
  */
-async function getStationCodes(): Promise<{ code: string; name: string }[]> {
-  const cacheKey = 'metadata:station_codes';
-  const cached = getCached<{ code: string; name: string }[]>(cacheKey);
-  if (cached) return cached;
-
-  const codes = getMockStationCodes();
-  setCache(cacheKey, codes);
-  return codes;
-}
-
-/**
- * Get cache status
- */
-function getCacheStatus(): { entries: number; oldestEntry: string | null } {
+async function getCacheStatus(): Promise<{
+  entries: number;
+  oldestEntry: string | null;
+  syncStatus: { lastSync: string; source: string; success: boolean } | null;
+}> {
   let oldestTimestamp = Infinity;
   let oldestKey: string | null = null;
 
-  cache.forEach((entry, key) => {
+  resultCache.forEach((entry, key) => {
     if (entry.timestamp < oldestTimestamp) {
       oldestTimestamp = entry.timestamp;
       oldestKey = key;
     }
   });
 
+  const syncStatus = await loadSyncStatus();
+
   return {
-    entries: cache.size,
+    entries: resultCache.size,
     oldestEntry: oldestKey ? new Date(oldestTimestamp).toISOString() : null,
+    syncStatus: syncStatus
+      ? {
+          lastSync: syncStatus.lastSync,
+          source: syncStatus.source,
+          success: syncStatus.success,
+        }
+      : null,
   };
 }
 
 /**
- * Clear the cache
+ * Clear all caches
  */
 function clearCache(): void {
-  cache.clear();
+  resultCache.clear();
+  clearDataCache();
 }
 
 // ============================================================================
@@ -460,7 +279,7 @@ export const lastkajenClient = {
   // Segment queries (primary use case)
   getSegmentInfrastructure,
 
-  // Geographic queries (use bboxFromPoint to convert lat/lon to bbox)
+  // Geographic queries
   getTracksByBBox,
   getTunnelsByBBox,
   getBridgesByBBox,
@@ -477,7 +296,7 @@ export const lastkajenClient = {
   getCacheStatus,
   clearCache,
 
-  // Utility (use bboxFromPoint to convert lat/lon/radius to bbox)
+  // Utility
   parseBBox,
   bboxFromPoint,
 };

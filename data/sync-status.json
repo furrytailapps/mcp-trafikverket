@@ -1,0 +1,13 @@
+{
+  "lastSync": "2026-02-02T21:38:48.621Z",
+  "source": "manual",
+  "success": true,
+  "counts": {
+    "tracks": 2,
+    "tunnels": 1,
+    "bridges": 1,
+    "switches": 1,
+    "electrification": 1,
+    "stations": 2
+  }
+}

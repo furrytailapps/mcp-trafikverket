@@ -1,0 +1,25 @@
+{
+  "managers": [
+    { "id": "TV", "name": "Trafikverket", "shortName": "Trafikverket" },
+    { "id": "IB", "name": "Inlandsbanan AB", "shortName": "Inlandsbanan" },
+    { "id": "APT", "name": "A-Train AB (Arlanda Express)", "shortName": "A-Train" },
+    { "id": "ORE", "name": "Öresundståg AB", "shortName": "Öresundståg" },
+    { "id": "SL", "name": "Storstockholms Lokaltrafik", "shortName": "SL" }
+  ],
+  "trackDesignations": [
+    "111", "182", "401", "411", "421", "511", "520",
+    "611", "701", "801", "900", "901", "902", "903", "904", "905"
+  ],
+  "stationCodes": [
+    { "code": "Cst", "name": "Stockholm Central" },
+    { "code": "G", "name": "Göteborg Central" },
+    { "code": "M", "name": "Malmö Central" },
+    { "code": "U", "name": "Uppsala Central" },
+    { "code": "Lp", "name": "Linköping Central" },
+    { "code": "Nr", "name": "Norrköping Central" },
+    { "code": "Hpbg", "name": "Helsingborg Central" },
+    { "code": "Vs", "name": "Västerås Central" },
+    { "code": "Öb", "name": "Örebro Central" },
+    { "code": "Jn", "name": "Jönköping Central" }
+  ]
+}

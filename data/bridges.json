@@ -1,0 +1,21 @@
+[
+  {
+    "id": "BRG-001",
+    "name": "Årstaviksbron",
+    "trackId": "182",
+    "type": "beam",
+    "length": 350,
+    "width": 14,
+    "clearanceHeight": 6,
+    "builtYear": 1927,
+    "loadCapacity": 200,
+    "crossesOver": "Årstaviken",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [18.04, 59.3],
+        [18.06, 59.31]
+      ]
+    }
+  }
+]

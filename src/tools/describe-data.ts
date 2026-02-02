@@ -106,17 +106,20 @@ export const describeDataHandler = withErrorHandling(async (args: DescribeDataIn
     }
 
     case 'data_freshness': {
-      const cacheStatus = lastkajenClient.getCacheStatus();
+      const cacheStatus = await lastkajenClient.getCacheStatus();
 
       return {
         dataType,
         description: 'Information about data freshness and cache status',
         infrastructure: {
-          source: 'NJDB (Nationella Järnvägsdatabasen) via Lastkajen API',
-          cacheTTL: '24 hours',
+          source: 'NJDB (Nationella Järnvägsdatabasen) via Lastkajen',
+          dataStorage: 'JSON files in /data directory',
+          cacheTTL: '24 hours (in-memory)',
           cacheEntries: cacheStatus.entries,
           oldestCacheEntry: cacheStatus.oldestEntry,
-          note: 'Infrastructure data rarely changes; 24-hour cache is appropriate',
+          lastSync: cacheStatus.syncStatus?.lastSync || 'unknown',
+          syncSource: cacheStatus.syncStatus?.source || 'unknown',
+          note: 'Infrastructure data synced from Lastkajen; 24-hour cache is appropriate',
         },
         realtime: {
           source: 'Trafikinfo API',
