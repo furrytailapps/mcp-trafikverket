@@ -142,6 +142,35 @@ npm run prettier:fix # Format code
 
 ## Testing
 
+Test files in `tests/` directory:
+
+```bash
+# Start dev server first
+npm run dev
+
+# Run tests against local server
+node tests/basic.cjs          # Basic connectivity
+node tests/comprehensive.cjs  # All tools with various scenarios
+node tests/use-cases.cjs      # Real-world user scenarios (5 workflows)
+node tests/edge-cases.cjs     # Error handling
+
+# Test against production
+MCP_URL=https://mcp-trafikverket.vercel.app/mcp node tests/basic.cjs
+MCP_URL=https://mcp-trafikverket.vercel.app/mcp node tests/use-cases.cjs
+```
+
+**User scenario tests** (in `tests/use-cases.cjs`) simulate real AI agent workflows:
+
+1. **Track Maintenance Planning** - Query infrastructure for a track segment
+2. **Level Crossing Safety Inspection** - Find barrier-protected crossings
+3. **Emergency Response Coordination** - Find affected infrastructure near incident
+4. **Heavy Equipment Transport** - Check crossings and road conditions
+5. **Station Area Work Planning** - Plan maintenance near Stockholm Central
+
+See `tests/README.md` for full documentation.
+
+**External test tools:**
+
 ```bash
 # Basic connectivity
 ~/.claude/scripts/test-mcp.sh https://mcp-trafikverket.vercel.app/mcp
@@ -229,3 +258,16 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 - **Trafikinfo tools use real data**: The `trafikverket_get_crossings` and `trafikverket_get_operations` tools query the live Trafikinfo API and return real data for level crossings, traffic incidents, road conditions, and parking.
 - All tools follow the flat schema pattern (no nested objects)
 - Trafikinfo API uses XML POST requests, handled by `xml-builder.ts`
+
+## Known API Limitations
+
+The Trafikinfo API has some filter limitations. These are documented in the test suite:
+
+| Tool | Filter | Status | Workaround |
+|------|--------|--------|------------|
+| `trafikverket_get_crossings` | `trackId` | Not supported | Use location-based query with coordinates |
+| `trafikverket_get_crossings` | `roadNumber` | Not supported | Use location-based query |
+| `trafikverket_get_operations` | `roadNumber` (for road_conditions) | Not supported | Use location-based query |
+| `trafikverket_get_operations` | `nearStation` (for parking) | Not supported | Use location-based query |
+
+**Location-based queries work reliably.** When a filter fails, fall back to querying by latitude/longitude with a radius.
