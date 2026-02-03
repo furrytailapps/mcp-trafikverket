@@ -2,16 +2,19 @@
 /**
  * Infrastructure Data Sync Script
  *
- * Syncs railway infrastructure data from available APIs:
- * - Stations: Trafikinfo API (TrainStation) - REAL DATA
- * - Tracks, tunnels, bridges: Lastkajen (when API available) - SAMPLE DATA for now
+ * Syncs railway infrastructure data:
+ * - Stations: Trafikinfo API (TrainStation) - has richer metadata (platforms, accessibility)
+ * - Tracks, tunnels, bridges: Synced via GeoPackage from Lastkajen (see convert-geopackage.ts)
  *
  * Usage:
  *   npx tsx src/scripts/sync-lastkajen.ts
  *
+ * For full infrastructure sync (tracks, tunnels, bridges), run:
+ *   npx tsx src/scripts/download-railway-data.ts  # Download GeoPackage from Lastkajen
+ *   npx tsx src/scripts/convert-geopackage.ts     # Convert to JSON
+ *
  * Environment variables:
  *   TRAFIKVERKET_API_KEY - For Trafikinfo API (stations)
- *   LASTKAJEN_API_TOKEN - For Lastkajen API (infrastructure) - not yet implemented
  */
 
 import { promises as fs } from 'fs';
@@ -48,7 +51,7 @@ async function ensureDataDir(): Promise<void> {
 }
 
 // ============================================================================
-// TRAFIKINFO API - Real station data
+// TRAFIKINFO API - Station data with rich metadata
 // ============================================================================
 
 interface TrafikinfoStation {
@@ -73,6 +76,7 @@ interface TrafikinfoResponse {
 
 /**
  * Fetch all train stations from Trafikinfo API
+ * These have better metadata (platforms, accessibility) than NJDB stations
  */
 async function fetchStationsFromTrafikinfo(apiKey: string): Promise<Station[]> {
   console.log('[sync] Fetching stations from Trafikinfo API...');
@@ -139,7 +143,7 @@ async function syncFromLastkajen(): Promise<SyncStatus> {
   let stationsCount = 0;
   let stationsSynced = false;
 
-  // Sync stations from Trafikinfo API (real data!)
+  // Sync stations from Trafikinfo API (has richer metadata than NJDB)
   if (trafikverketKey) {
     try {
       const stations = await fetchStationsFromTrafikinfo(trafikverketKey);
@@ -177,10 +181,10 @@ async function syncFromLastkajen(): Promise<SyncStatus> {
     console.log('[sync] TRAFIKVERKET_API_KEY not set - skipping station sync');
   }
 
-  // For tracks, tunnels, bridges, etc. - preserve existing sample data
-  // (Lastkajen API endpoints not yet implemented)
-  console.log('[sync] Tracks/tunnels/bridges: preserving existing sample data');
-  console.log('[sync] (Lastkajen API endpoints not yet implemented)');
+  // Infrastructure data (tracks, tunnels, bridges) is synced via GeoPackage
+  // See: download-railway-data.ts and convert-geopackage.ts
+  console.log('[sync] Infrastructure data (tracks/tunnels/bridges) from Lastkajen GeoPackage');
+  console.log('[sync] To update: run download-railway-data.ts then convert-geopackage.ts');
 
   const tracks = await readJsonFile<unknown[]>('tracks.json');
   const tunnels = await readJsonFile<unknown[]>('tunnels.json');
@@ -191,7 +195,7 @@ async function syncFromLastkajen(): Promise<SyncStatus> {
 
   const status: SyncStatus = {
     lastSync: new Date().toISOString(),
-    source: stationsSynced ? 'trafikinfo' : 'manual',
+    source: stationsSynced ? 'lastkajen' : 'manual',
     success: true,
     counts: {
       tracks: tracks?.length || 0,
@@ -222,12 +226,12 @@ async function main(): Promise<void> {
   console.log('Summary:');
   console.log(`  Success: ${status.success}`);
   console.log(`  Source: ${status.source}`);
-  console.log(`  Tracks: ${status.counts.tracks} (sample)`);
-  console.log(`  Tunnels: ${status.counts.tunnels} (sample)`);
-  console.log(`  Bridges: ${status.counts.bridges} (sample)`);
-  console.log(`  Switches: ${status.counts.switches} (sample)`);
-  console.log(`  Electrification: ${status.counts.electrification} (sample)`);
-  console.log(`  Stations: ${status.counts.stations} ${status.source === 'trafikinfo' ? '(REAL)' : '(sample)'}`);
+  console.log(`  Tracks: ${status.counts.tracks} (NJDB/Lastkajen)`);
+  console.log(`  Tunnels: ${status.counts.tunnels} (NJDB/Lastkajen)`);
+  console.log(`  Bridges: ${status.counts.bridges} (NJDB/Lastkajen)`);
+  console.log(`  Switches: ${status.counts.switches}`);
+  console.log(`  Electrification: ${status.counts.electrification}`);
+  console.log(`  Stations: ${status.counts.stations} (Trafikinfo API)`);
 
   if (status.error) {
     console.log(`  Error: ${status.error}`);

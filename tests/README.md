@@ -1,6 +1,6 @@
 # Trafikverket MCP Test Suite
 
-Comprehensive test suite for the Trafikverket MCP server. These tests verify all 4 tools work correctly with the Trafikverket APIs (Trafikinfo for real-time data, NJDB sample data for infrastructure).
+Comprehensive test suite for the Trafikverket MCP server. These tests verify all 4 tools work correctly with the Trafikverket APIs (Trafikinfo for real-time data, NJDB infrastructure data from Lastkajen).
 
 ## Prerequisites
 

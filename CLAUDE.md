@@ -86,7 +86,10 @@ src/
 │   ├── response.ts               # Response formatting
 │   └── xml-builder.ts            # Trafikinfo XML query builder
 ├── scripts/
-│   └── sync-lastkajen.ts         # Data sync script (run manually or via cron)
+│   ├── sync-lastkajen.ts         # Station sync from Trafikinfo API
+│   ├── download-railway-data.ts  # Download GeoPackage from Lastkajen
+│   ├── convert-geopackage.ts     # Convert GeoPackage to JSON
+│   └── test-lastkajen-api.ts     # API connectivity test
 ├── tools/
 │   ├── index.ts                  # Tool registry (4 tools)
 │   ├── get-infrastructure.ts     # NJDB infrastructure queries
@@ -285,15 +288,21 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 
 ## Notes
 
-- **Infrastructure data synced from Lastkajen**: The `/data/*.json` files contain NJDB infrastructure data. Run `npx tsx src/scripts/sync-lastkajen.ts` to update, or wait for daily Vercel Cron sync.
+- **Infrastructure data from Lastkajen**: The `/data/*.json` files contain real NJDB infrastructure data (283 tracks, 214 tunnels, 4053 bridges) synced from Trafikverket's Lastkajen GeoPackage.
 - **Trafikinfo tools use live data**: The `trafikverket_get_crossings` and `trafikverket_get_operations` tools query the live Trafikinfo API.
 - All tools follow the flat schema pattern (no nested objects)
 - Trafikinfo API uses XML POST requests, handled by `xml-builder.ts`
 
 ## Data Sync
 
+Infrastructure data is synced via GeoPackage from Lastkajen:
+
 ```bash
-# Manual sync (updates /data/*.json)
+# Full infrastructure sync (tracks, tunnels, bridges)
+npx tsx src/scripts/download-railway-data.ts  # Download GeoPackage
+npx tsx src/scripts/convert-geopackage.ts     # Convert to JSON
+
+# Station sync only (from Trafikinfo API)
 npx tsx src/scripts/sync-lastkajen.ts
 
 # Check sync status
@@ -303,7 +312,9 @@ curl http://localhost:3000/api/cron/sync
 # Use trafikverket_describe_data with dataType="data_freshness"
 ```
 
-**Vercel Cron**: Configured in `vercel.json` to run daily at 3am UTC.
+**Data sources:**
+- Tracks, tunnels, bridges: Lastkajen GeoPackage (NJDB)
+- Stations: Trafikinfo API (has richer metadata like platforms, accessibility)
 
 ## LIKE Filter Implementation
 

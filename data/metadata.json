@@ -1,2813 +1,1375 @@
 {
   "managers": [
     {
-      "id": "TV",
-      "name": "Trafikverket",
-      "shortName": "Trafikverket"
+      "code": "SIB",
+      "name": "Sibelco Nordic AB"
     },
     {
-      "id": "IB",
-      "name": "Inlandsbanan AB",
-      "shortName": "Inlandsbanan"
+      "code": "POS",
+      "name": "PostNord Sverige AB"
     },
     {
-      "id": "APT",
-      "name": "A-Train AB (Arlanda Express)",
-      "shortName": "A-Train"
+      "code": "ESK",
+      "name": "Eskilstuna kommun"
     },
     {
-      "id": "ORE",
-      "name": "Öresundståg AB",
-      "shortName": "Öresundståg"
+      "code": "PIT",
+      "name": "Piteå Hamn AB"
     },
     {
-      "id": "SL",
-      "name": "Storstockholms Lokaltrafik",
-      "shortName": "SL"
+      "code": "ÅNG",
+      "name": "Ånge kommun"
+    },
+    {
+      "code": "LKA",
+      "name": "LKAB Malmtrafik AB"
+    },
+    {
+      "code": "TRA",
+      "name": "Trafikverket infrastruktur"
+    },
+    {
+      "code": "REG",
+      "name": "Region Stockholm"
+    },
+    {
+      "code": "REG",
+      "name": "Region Skåne"
+    },
+    {
+      "code": "KVA",
+      "name": "Kvarkenhamnar Aktiebolag"
+    },
+    {
+      "code": "INL",
+      "name": "Inlandsbanan AB"
+    },
+    {
+      "code": "UNK",
+      "name": "Unknown"
+    },
+    {
+      "code": "NOR",
+      "name": "Norrsundets Hamn AB"
+    },
+    {
+      "code": "ENG",
+      "name": "Engelsberg-Norbergs Järnvägshistoriska sällskap"
+    },
+    {
+      "code": "VÄS",
+      "name": "Västerdala Terminal och Järnvägsspår AB"
+    },
+    {
+      "code": "NOR",
+      "name": "Nora Bergslags Veteran-Jernväg (NBVJ)"
+    },
+    {
+      "code": "A-T",
+      "name": "A-Train AB"
+    },
+    {
+      "code": "SKÅ",
+      "name": "Skåne-Smålands Järnvägsförening"
+    },
+    {
+      "code": "ÖRE",
+      "name": "Öresundsbro konsortiet"
     }
   ],
   "trackDesignations": [
+    "001",
+    "002",
+    "003",
+    "004",
+    "005",
+    "006",
+    "007",
+    "008",
+    "009",
+    "010",
+    "011",
+    "012",
+    "013",
+    "020",
     "111",
-    "182",
+    "112",
+    "113",
+    "114",
+    "116",
+    "117",
+    "118",
+    "119",
+    "120",
+    "122",
+    "124",
+    "126",
+    "129",
+    "130",
+    "132",
+    "133",
+    "136",
+    "137",
+    "138",
+    "141",
+    "143",
+    "144",
+    "146",
+    "147",
+    "149",
+    "151",
+    "152",
+    "153",
+    "161",
+    "164",
+    "165",
+    "171",
+    "173",
+    "175",
+    "210",
+    "211",
+    "212",
+    "213",
+    "215",
+    "216",
+    "217",
+    "218",
+    "221",
+    "222",
+    "223",
+    "224",
+    "230",
+    "231",
+    "232",
+    "233",
+    "234",
+    "235",
+    "236",
+    "237",
+    "238",
+    "239",
+    "242",
+    "243",
+    "251",
+    "261",
+    "262",
+    "264",
+    "265",
+    "300",
+    "301",
+    "302",
+    "303",
+    "304",
+    "305",
+    "306",
+    "311",
+    "312",
+    "313",
+    "315",
+    "322",
+    "323",
+    "324",
+    "325",
+    "326",
+    "327",
+    "331",
+    "333",
+    "334",
+    "340",
+    "341",
+    "344",
+    "345",
+    "347",
+    "348",
+    "349",
+    "350",
+    "351",
+    "354",
+    "361",
+    "364",
+    "371",
+    "375",
+    "376",
+    "382",
+    "383",
+    "391",
+    "392",
+    "393",
+    "395",
     "401",
-    "411",
+    "402",
+    "403",
+    "404",
+    "405",
+    "406",
+    "407",
+    "409",
+    "410",
+    "412",
+    "413",
+    "414",
+    "416",
+    "417",
+    "418",
+    "419",
+    "420",
     "421",
+    "422",
+    "425",
+    "426",
+    "427",
+    "429",
+    "430",
+    "431",
+    "433",
+    "434",
+    "435",
+    "437",
+    "438",
+    "441",
+    "443",
+    "444",
+    "445",
+    "450",
+    "451",
+    "452",
+    "453",
+    "456",
+    "473",
+    "474",
+    "476",
+    "477",
+    "490",
+    "492",
+    "493",
+    "494",
+    "502",
+    "503",
+    "504",
+    "505",
+    "509",
     "511",
-    "520",
+    "512",
+    "522",
+    "524",
+    "527",
+    "552",
+    "563",
+    "591",
+    "601",
+    "602",
+    "603",
+    "604",
     "611",
-    "701",
-    "801",
-    "900",
+    "612",
+    "621",
+    "623",
+    "624",
+    "625",
+    "626",
+    "627",
+    "628",
+    "629",
+    "630",
+    "631",
+    "634",
+    "635",
+    "636",
+    "637",
+    "640",
+    "641",
+    "651",
+    "652",
+    "653",
+    "654",
+    "655",
+    "656",
+    "661",
+    "662",
+    "666",
+    "710",
+    "711",
+    "715",
+    "720",
+    "721",
+    "731",
+    "732",
+    "733",
+    "735",
+    "742",
+    "752",
+    "810",
+    "811",
+    "813",
+    "814",
+    "815",
+    "816",
+    "817",
+    "820",
+    "821",
+    "822",
+    "823",
+    "824",
+    "827",
+    "829",
+    "831",
+    "832",
+    "833",
+    "841",
+    "843",
+    "845",
+    "851",
+    "872",
+    "873",
+    "875",
+    "876",
+    "877",
     "901",
     "902",
     "903",
     "904",
-    "905"
+    "905",
+    "908",
+    "909",
+    "910",
+    "912",
+    "913",
+    "914",
+    "919",
+    "920",
+    "922",
+    "923",
+    "924",
+    "925",
+    "926",
+    "927",
+    "931",
+    "932",
+    "933",
+    "935",
+    "937",
+    "938",
+    "940",
+    "941",
+    "942",
+    "943",
+    "951",
+    "952",
+    "960",
+    "961",
+    "962",
+    "964",
+    "969",
+    "990"
   ],
   "stationCodes": [
     {
-      "code": "A",
-      "name": "Alingsås"
-    },
-    {
-      "code": "Ag",
-      "name": "Anneberg"
-    },
-    {
-      "code": "Any",
-      "name": "Aneby"
-    },
-    {
-      "code": "Apn",
-      "name": "Aspen"
-    },
-    {
-      "code": "Ar",
-      "name": "Arvika"
-    },
-    {
-      "code": "Arb",
-      "name": "Arboga"
-    },
-    {
-      "code": "Arnc",
-      "name": "Arlanda C"
-    },
-    {
-      "code": "Asd",
-      "name": "Aspedalen"
-    },
-    {
-      "code": "Avky",
-      "name": "Avesta Krylbo"
-    },
-    {
-      "code": "Baa",
-      "name": "Barkåkra"
-    },
-    {
-      "code": "Bdf",
-      "name": "Bodafors"
-    },
-    {
-      "code": "Bf",
-      "name": "Brunflo"
-    },
-    {
-      "code": "Bg",
-      "name": "Berga"
-    },
-    {
-      "code": "Bhb",
-      "name": "Bräkne-Hoby"
-    },
-    {
-      "code": "Bhs",
-      "name": "Bohus"
-    },
-    {
-      "code": "Bib",
-      "name": "Billeberga"
-    },
-    {
-      "code": "Bih",
-      "name": "Billesholm"
-    },
-    {
-      "code": "Bjm",
-      "name": "Bjärnum"
-    },
-    {
-      "code": "Bjuv",
-      "name": "Bjuv"
-    },
-    {
-      "code": "Bl",
-      "name": "Ballingslöv"
+      "code": "Löö",
+      "name": "Lödöse"
     },
     {
       "code": "Blgc",
-      "name": "Borlänge C"
+      "name": "Borlänge central"
     },
     {
-      "code": "Bln",
-      "name": "Björkliden"
+      "code": "Gse",
+      "name": "Gunsen"
     },
     {
-      "code": "Blv",
-      "name": "Burlöv"
+      "code": "Söv",
+      "name": "Skelleftehamns övre"
     },
     {
-      "code": "Bma",
-      "name": "Blomstermåla"
+      "code": "Vsö",
+      "name": "Viresjö"
     },
     {
-      "code": "Bml",
-      "name": "Bromölla"
-    },
-    {
-      "code": "Bn",
-      "name": "Bollnäs"
-    },
-    {
-      "code": "Bor",
-      "name": "Bor"
-    },
-    {
-      "code": "Bro",
-      "name": "Bro"
-    },
-    {
-      "code": "Bry",
-      "name": "Bankeryd"
-    },
-    {
-      "code": "Bsc",
-      "name": "Borås C"
-    },
-    {
-      "code": "Bx",
-      "name": "Boxholm"
-    },
-    {
-      "code": "Bål",
-      "name": "Bålsta"
-    },
-    {
-      "code": "Bån",
-      "name": "Båstad"
-    },
-    {
-      "code": "Bä",
-      "name": "Bräcke"
-    },
-    {
-      "code": "Bäb",
-      "name": "Bäckebron"
-    },
-    {
-      "code": "Cg",
-      "name": "Charlottenberg"
-    },
-    {
-      "code": "Ck",
-      "name": "Karlskrona C"
-    },
-    {
-      "code": "Cr",
-      "name": "Kristianstad C"
-    },
-    {
-      "code": "Cst",
-      "name": "Stockholm C"
-    },
-    {
-      "code": "Dg",
-      "name": "Degerfors"
-    },
-    {
-      "code": "Dis",
-      "name": "Diö"
-    },
-    {
-      "code": "Dl",
-      "name": "Dingle"
-    },
-    {
-      "code": "Dt",
-      "name": "Dingtuna"
-    },
-    {
-      "code": "Du",
-      "name": "Duved"
-    },
-    {
-      "code": "Dös",
-      "name": "Dösjebro"
-    },
-    {
-      "code": "E",
-      "name": "Eslöv"
-    },
-    {
-      "code": "Ek",
-      "name": "Eksjö"
-    },
-    {
-      "code": "Em",
-      "name": "Emmaboda"
-    },
-    {
-      "code": "En",
-      "name": "Edane"
-    },
-    {
-      "code": "Ens",
-      "name": "Enafors"
-    },
-    {
-      "code": "Ep",
-      "name": "Enköping"
-    },
-    {
-      "code": "Et",
-      "name": "Eskilstuna C"
-    },
-    {
-      "code": "F",
-      "name": "Falköping C"
-    },
-    {
-      "code": "Fabp",
-      "name": "Falkenberg"
-    },
-    {
-      "code": "Fal",
-      "name": "Falerum"
-    },
-    {
-      "code": "Fas",
-      "name": "Farsta strand"
-    },
-    {
-      "code": "Fby",
-      "name": "Floby"
-    },
-    {
-      "code": "Fd",
-      "name": "Floda"
-    },
-    {
-      "code": "Fgc",
-      "name": "Fagersta C"
-    },
-    {
-      "code": "Fgn",
-      "name": "Fagersta Norra"
-    },
-    {
-      "code": "Fhm",
-      "name": "Forshem"
-    },
-    {
-      "code": "Flb",
-      "name": "Flemingsberg"
-    },
-    {
-      "code": "Fle",
-      "name": "Flen"
-    },
-    {
-      "code": "Fln",
-      "name": "Falun C"
-    },
-    {
-      "code": "Fm",
-      "name": "Forserum"
-    },
-    {
-      "code": "Fra",
-      "name": "Fristad"
-    },
-    {
-      "code": "Ft",
-      "name": "Fränsta"
-    },
-    {
-      "code": "Fv",
-      "name": "Frövi"
-    },
-    {
-      "code": "Fvk",
-      "name": "Furuvik"
-    },
-    {
-      "code": "För",
-      "name": "Förslöv"
-    },
-    {
-      "code": "Gal",
-      "name": "Gamleby"
-    },
-    {
-      "code": "Gas",
-      "name": "Gamlestaden"
-    },
-    {
-      "code": "Gdö",
-      "name": "Gårdsjö"
-    },
-    {
-      "code": "Gg",
-      "name": "Grängesberg"
-    },
-    {
-      "code": "Glv",
-      "name": "Glumslöv"
-    },
-    {
-      "code": "Gm",
-      "name": "Gemla"
-    },
-    {
-      "code": "Gms",
-      "name": "Grums"
-    },
-    {
-      "code": "Gn",
-      "name": "Gnesta"
-    },
-    {
-      "code": "Gnb",
-      "name": "Gunnesbo"
-    },
-    {
-      "code": "Gnf",
-      "name": "Gagnef"
-    },
-    {
-      "code": "Gnö",
-      "name": "Gnosjö"
-    },
-    {
-      "code": "Gop",
-      "name": "Grästorp"
-    },
-    {
-      "code": "Gss",
-      "name": "Gärsnäs"
-    },
-    {
-      "code": "Gä",
-      "name": "Gävle C"
-    },
-    {
-      "code": "Gö",
-      "name": "Gällö"
-    },
-    {
-      "code": "Hb",
-      "name": "Helsingborg C"
-    },
-    {
-      "code": "Hbd",
-      "name": "Högboda"
-    },
-    {
-      "code": "Hbgb",
-      "name": "Ramlösa"
-    },
-    {
-      "code": "Hd",
-      "name": "Halmstad C"
-    },
-    {
-      "code": "Hdm",
-      "name": "Hedemora"
-    },
-    {
-      "code": "Hdn",
-      "name": "Holmsveden"
-    },
-    {
-      "code": "Hel",
-      "name": "Helenelund"
-    },
-    {
-      "code": "Het",
-      "name": "Hestra"
-    },
-    {
-      "code": "Hf",
-      "name": "Hultsfred"
-    },
-    {
-      "code": "Hfa",
-      "name": "Hemfosa"
-    },
-    {
-      "code": "Hfr",
-      "name": "Hofors"
-    },
-    {
-      "code": "Hgv",
-      "name": "Häggvik"
-    },
-    {
-      "code": "Hh",
-      "name": "Hallstahammar"
-    },
-    {
-      "code": "Hie",
-      "name": "Hyllie"
-    },
-    {
-      "code": "Hjp",
-      "name": "Hjärup"
-    },
-    {
-      "code": "Hka",
-      "name": "Huskvarna"
-    },
-    {
-      "code": "Hkl",
-      "name": "Hudiksvall"
-    },
-    {
-      "code": "Hmö",
-      "name": "Holmsjö"
-    },
-    {
-      "code": "Hnd",
-      "name": "Handen"
-    },
-    {
-      "code": "Hnä",
-      "name": "Hälleforsnäs"
-    },
-    {
-      "code": "Ho",
-      "name": "Habo"
-    },
-    {
-      "code": "Hp",
-      "name": "Haparanda"
-    },
-    {
-      "code": "Hpbg",
-      "name": "Hallsberg"
-    },
-    {
-      "code": "Hrc",
-      "name": "Herrljunga C"
-    },
-    {
-      "code": "Hre",
-      "name": "Horred"
-    },
-    {
-      "code": "Hsd",
-      "name": "Härnösand C"
-    },
-    {
-      "code": "Hu",
-      "name": "Huddinge"
-    },
-    {
-      "code": "Hv",
-      "name": "Hästveda"
-    },
-    {
-      "code": "Hvp",
-      "name": "Hovmantorp"
-    },
-    {
-      "code": "Håp",
-      "name": "Håkantorp"
-    },
-    {
-      "code": "Hås",
-      "name": "Hindås"
-    },
-    {
-      "code": "Häp",
-      "name": "Häljarp"
-    },
-    {
-      "code": "Hö",
-      "name": "Höör"
-    },
-    {
-      "code": "In",
-      "name": "Insjön"
-    },
-    {
-      "code": "Jbo",
-      "name": "Jordbro"
-    },
-    {
-      "code": "Jkb",
-      "name": "Jakobsberg"
-    },
-    {
-      "code": "Jn",
-      "name": "Järna"
-    },
-    {
-      "code": "Jv",
-      "name": "Jonsered"
-    },
-    {
-      "code": "Jö",
-      "name": "Jönköping C"
-    },
-    {
-      "code": "K",
-      "name": "Katrineholm C"
-    },
-    {
-      "code": "Ka",
-      "name": "Kattarp"
-    },
-    {
-      "code": "Kac",
-      "name": "Kalmar C"
-    },
-    {
-      "code": "Kb",
-      "name": "Kungsbacka"
-    },
-    {
-      "code": "Kbä",
-      "name": "Kolbäck"
-    },
-    {
-      "code": "Kd",
-      "name": "Kågeröd"
-    },
-    {
-      "code": "Kda",
-      "name": "Krigslida"
-    },
-    {
-      "code": "Kde",
-      "name": "Kode"
-    },
-    {
-      "code": "Ke",
-      "name": "Karlberg"
-    },
-    {
-      "code": "Kg",
-      "name": "Kävlinge"
-    },
-    {
-      "code": "Kgå",
-      "name": "Klostergården"
-    },
-    {
-      "code": "Kh",
-      "name": "Karlshamn"
-    },
-    {
-      "code": "Khe",
-      "name": "Hede"
-    },
-    {
-      "code": "Khn",
-      "name": "Kristinehamn"
-    },
-    {
-      "code": "Khä",
-      "name": "Kallhäll"
-    },
-    {
-      "code": "Kil",
-      "name": "Kil"
-    },
-    {
-      "code": "Kisa",
-      "name": "Kisa"
-    },
-    {
-      "code": "Kl",
-      "name": "Klippan"
-    },
-    {
-      "code": "Kla",
-      "name": "Kumla"
-    },
-    {
-      "code": "Kls",
-      "name": "Kilafors"
-    },
-    {
-      "code": "Kms",
-      "name": "Kimstad"
-    },
-    {
-      "code": "Kn",
-      "name": "Knivsta"
-    },
-    {
-      "code": "Kon",
-      "name": "Kolmården"
-    },
-    {
-      "code": "Kp",
-      "name": "Köping"
-    },
-    {
-      "code": "Kpg",
-      "name": "Kopparberg"
-    },
-    {
-      "code": "Kr",
-      "name": "Killeberg"
-    },
-    {
-      "code": "Krd",
-      "name": "Kållered"
-    },
-    {
-      "code": "Kvh",
-      "name": "Klevshult"
-    },
-    {
-      "code": "Kvi",
-      "name": "Kvidinge"
-    },
-    {
-      "code": "Kän",
-      "name": "Kungsängen"
-    },
-    {
-      "code": "Kör",
-      "name": "Kungsör"
-    },
-    {
-      "code": "La",
-      "name": "Ludvika"
-    },
-    {
-      "code": "Laov",
-      "name": "Laholm"
-    },
-    {
-      "code": "Lb",
-      "name": "Lingbo"
-    },
-    {
-      "code": "Ld",
-      "name": "Lindesberg"
-    },
-    {
-      "code": "Ldo",
-      "name": "Lindome"
-    },
-    {
-      "code": "Le",
-      "name": "Luleå"
-    },
-    {
-      "code": "Les",
-      "name": "Lödöse Södra"
-    },
-    {
-      "code": "Lg",
-      "name": "Läggesta"
-    },
-    {
-      "code": "Lgm",
-      "name": "Linghem"
-    },
-    {
-      "code": "Lh",
-      "name": "Lammhult"
-    },
-    {
-      "code": "Lis",
-      "name": "Liseberg"
-    },
-    {
-      "code": "Lj",
-      "name": "Ljungskile"
-    },
-    {
-      "code": "Lju",
-      "name": "Ljung"
-    },
-    {
-      "code": "Lkp",
-      "name": "Lidköping"
-    },
-    {
-      "code": "Lkö",
-      "name": "Landskrona"
-    },
-    {
-      "code": "Lme",
-      "name": "Limmared"
-    },
-    {
-      "code": "Lo",
-      "name": "Lessebo"
-    },
-    {
-      "code": "Lp",
-      "name": "Linköping C"
-    },
-    {
-      "code": "Lr",
-      "name": "Lerum"
-    },
-    {
-      "code": "Lrd",
-      "name": "Landeryd"
-    },
-    {
-      "code": "Ls",
-      "name": "Ljusdal"
-    },
-    {
-      "code": "Lsd",
-      "name": "Leksand"
-    },
-    {
-      "code": "Lu",
-      "name": "Lund C"
-    },
-    {
-      "code": "Ly",
-      "name": "Lycksele"
-    },
-    {
-      "code": "Lå",
-      "name": "Laxå"
-    },
-    {
-      "code": "Maa",
-      "name": "Marma"
-    },
-    {
-      "code": "Mc",
-      "name": "Malmö C"
-    },
-    {
-      "code": "Mdn",
-      "name": "Mölndal"
-    },
-    {
-      "code": "Meh",
-      "name": "Mehedeby"
-    },
-    {
-      "code": "Mia",
-      "name": "Maria"
-    },
-    {
-      "code": "Mkl",
-      "name": "Munkedal"
-    },
-    {
-      "code": "Ml",
-      "name": "Mellerud"
-    },
-    {
-      "code": "Mo",
-      "name": "Moheda"
-    },
-    {
-      "code": "Mot",
-      "name": "Motala C"
-    },
-    {
-      "code": "Mr",
-      "name": "Märsta"
-    },
-    {
-      "code": "Mrc",
-      "name": "Mora C"
-    },
-    {
-      "code": "Mrd",
-      "name": "Markaryd"
-    },
-    {
-      "code": "Mru",
-      "name": "Mörrum"
-    },
-    {
-      "code": "Mst",
-      "name": "Mariestad"
-    },
-    {
-      "code": "Mt",
-      "name": "Mantorp"
-    },
-    {
-      "code": "Mu",
-      "name": "Mullsjö"
-    },
-    {
-      "code": "My",
-      "name": "Mjölby"
-    },
-    {
-      "code": "Myk",
-      "name": "Mölnlycke"
-    },
-    {
-      "code": "Må",
-      "name": "Morgongåva"
-    },
-    {
-      "code": "Måp",
-      "name": "Månsarp"
-    },
-    {
-      "code": "Mö",
-      "name": "Mölnbo"
-    },
-    {
-      "code": "Mör",
-      "name": "Mörarp"
-    },
-    {
-      "code": "N",
-      "name": "Nässjö C"
-    },
-    {
-      "code": "Ngd",
-      "name": "Nynäsgård"
-    },
-    {
-      "code": "Nk",
-      "name": "Nyköping C"
-    },
-    {
-      "code": "Nkv",
-      "name": "Nykvarn"
-    },
-    {
-      "code": "Nog",
-      "name": "Nordmaling"
-    },
-    {
-      "code": "Nol",
-      "name": "Nol"
-    },
-    {
-      "code": "Nr",
-      "name": "Norrköping C"
-    },
-    {
-      "code": "Ns",
-      "name": "Norsesund"
-    },
-    {
-      "code": "Nvk",
-      "name": "Norrviken"
-    },
-    {
-      "code": "Nvn",
-      "name": "Notviken"
-    },
-    {
-      "code": "Nyb",
-      "name": "Nybro"
-    },
-    {
-      "code": "Nyc",
-      "name": "Nynäshamn"
-    },
-    {
-      "code": "Nöe",
-      "name": "Nödinge"
-    },
-    {
-      "code": "O",
-      "name": "Osby"
-    },
-    {
-      "code": "Ob",
-      "name": "Ockelbo"
-    },
-    {
-      "code": "P",
-      "name": "Partille"
-    },
-    {
-      "code": "Pt",
-      "name": "Perstorp"
-    },
-    {
-      "code": "Påa",
-      "name": "Påarp"
-    },
-    {
-      "code": "R",
-      "name": "Rotebro"
-    },
-    {
-      "code": "Rb",
-      "name": "Ronneby"
-    },
-    {
-      "code": "Rd",
-      "name": "Rävlanda"
-    },
-    {
-      "code": "Rdg",
-      "name": "Rydsgård"
-    },
-    {
-      "code": "Rf",
-      "name": "Rimforsa"
-    },
-    {
-      "code": "Rs",
-      "name": "Rosersberg"
-    },
-    {
-      "code": "Rv",
-      "name": "Rättvik"
-    },
-    {
-      "code": "Rym",
-      "name": "Rydaholm"
-    },
-    {
-      "code": "Ryä",
-      "name": "Rydebäck"
-    },
-    {
-      "code": "Rön",
-      "name": "Rönninge"
-    },
-    {
-      "code": "Sae",
-      "name": "Sandared"
-    },
-    {
-      "code": "Sal",
-      "name": "Svalöv"
-    },
-    {
-      "code": "Sdr",
-      "name": "Smålandsstenar"
-    },
-    {
-      "code": "Sea",
-      "name": "Svedala"
-    },
-    {
-      "code": "See",
-      "name": "Skene"
-    },
-    {
-      "code": "Sfl",
-      "name": "Säffle"
-    },
-    {
-      "code": "Sg",
-      "name": "Stehag"
-    },
-    {
-      "code": "Shr",
-      "name": "Surahammar"
-    },
-    {
-      "code": "Shv",
-      "name": "Söderhamn"
-    },
-    {
-      "code": "Sk",
-      "name": "Skövde C"
-    },
-    {
-      "code": "Ske",
-      "name": "Skee"
-    },
-    {
-      "code": "Skg",
-      "name": "Skogås"
-    },
-    {
-      "code": "Skn",
-      "name": "Skänninge"
-    },
-    {
-      "code": "Sl",
-      "name": "Sala"
-    },
-    {
-      "code": "Sm",
-      "name": "Sandhem"
-    },
-    {
-      "code": "Smj",
-      "name": "Smedjebacken"
-    },
-    {
-      "code": "Sn",
-      "name": "Stenkullen"
-    },
-    {
-      "code": "Snu",
-      "name": "Stenungsund"
-    },
-    {
-      "code": "Snv",
-      "name": "Sandviken"
-    },
-    {
-      "code": "So",
-      "name": "Solna"
-    },
-    {
-      "code": "Sol",
-      "name": "Sollentuna"
-    },
-    {
-      "code": "Spå",
-      "name": "Spånga"
-    },
-    {
-      "code": "Srp",
-      "name": "Skurup"
-    },
-    {
-      "code": "Srv",
-      "name": "Storvreta"
-    },
-    {
-      "code": "Ss",
-      "name": "Stenstorp"
-    },
-    {
-      "code": "Sst",
-      "name": "Stockholms S"
-    },
-    {
-      "code": "Ssä",
-      "name": "Segersäng"
-    },
-    {
-      "code": "St",
-      "name": "Säter"
-    },
-    {
-      "code": "Sta",
-      "name": "Stuvsta"
-    },
-    {
-      "code": "Stb",
-      "name": "Stångby"
-    },
-    {
-      "code": "Std",
-      "name": "Stöde"
-    },
-    {
-      "code": "Sth",
-      "name": "Stora Höga"
-    },
-    {
-      "code": "Stl",
-      "name": "Ställdalen"
-    },
-    {
-      "code": "Stp",
-      "name": "Svågertorp"
-    },
-    {
-      "code": "Str",
-      "name": "Storlien"
-    },
-    {
-      "code": "Sub",
-      "name": "Sundbyberg"
-    },
-    {
-      "code": "Suc",
-      "name": "Sundsvall C"
-    },
-    {
-      "code": "Sue",
-      "name": "Surte"
-    },
-    {
-      "code": "Sun",
-      "name": "Sunne"
-    },
-    {
-      "code": "Sur",
-      "name": "Skutskär"
-    },
-    {
-      "code": "Sus",
-      "name": "Sunderby sjukhus"
-    },
-    {
-      "code": "Suv",
-      "name": "Sundsvall V"
-    },
-    {
-      "code": "Sv",
-      "name": "Storvik"
-    },
-    {
-      "code": "Svg",
-      "name": "Svenshögen"
-    },
-    {
-      "code": "Sy",
-      "name": "Stockaryd"
-    },
-    {
-      "code": "Syd",
-      "name": "Skillingaryd"
-    },
-    {
-      "code": "Syt",
-      "name": "Skyttorp"
-    },
-    {
-      "code": "Sä",
-      "name": "Sävsjö"
-    },
-    {
-      "code": "Söc",
-      "name": "Södertälje Centrum"
-    },
-    {
-      "code": "Söd",
-      "name": "Södertälje hamn"
-    },
-    {
-      "code": "Sög",
-      "name": "Sölvesborg"
-    },
-    {
-      "code": "Söla",
-      "name": "Sösdala"
-    },
-    {
-      "code": "Söu",
-      "name": "Södertälje Syd (SL)"
-    },
-    {
-      "code": "Söö",
-      "name": "Södertälje Syd"
-    },
-    {
-      "code": "T",
-      "name": "Töreboda"
-    },
-    {
-      "code": "Tbo",
-      "name": "Tobo"
-    },
-    {
-      "code": "Th",
-      "name": "Tenhult"
-    },
-    {
-      "code": "Thn",
-      "name": "Trollhättan"
-    },
-    {
-      "code": "Tip",
-      "name": "Tierp"
-    },
-    {
-      "code": "Tlg",
-      "name": "Tällberg"
-    },
-    {
-      "code": "Tli",
-      "name": "Tomelilla"
-    },
-    {
-      "code": "Tns",
-      "name": "Tranås"
-    },
-    {
-      "code": "Tnu",
-      "name": "Tanum"
-    },
-    {
-      "code": "To",
-      "name": "Torpshammar"
-    },
-    {
-      "code": "Tp",
-      "name": "Teckomatorp"
-    },
-    {
-      "code": "Tre",
-      "name": "Trekanten"
-    },
-    {
-      "code": "Trg",
-      "name": "Trelleborg"
-    },
-    {
-      "code": "Tri",
-      "name": "Triangeln"
-    },
-    {
-      "code": "Trå",
-      "name": "Timrå"
-    },
-    {
-      "code": "Ts",
-      "name": "Tungelsta"
-    },
-    {
-      "code": "Tu",
-      "name": "Tumba"
-    },
-    {
-      "code": "Tul",
-      "name": "Tullinge"
-    },
-    {
-      "code": "Ty",
-      "name": "Tyringe"
-    },
-    {
-      "code": "Tåd",
-      "name": "Trångsund"
-    },
-    {
-      "code": "Tö",
-      "name": "Tjörnarp"
-    },
-    {
-      "code": "U",
-      "name": "Uppsala C"
-    },
-    {
-      "code": "Udl",
-      "name": "Ulriksdal"
-    },
-    {
-      "code": "Un",
-      "name": "Undersåker"
-    },
-    {
-      "code": "Upv",
-      "name": "Upplands Väsby"
-    },
-    {
-      "code": "Uv",
-      "name": "Uddevalla C"
-    },
-    {
-      "code": "Uå",
-      "name": "Umeå C"
-    },
-    {
-      "code": "Uåö",
-      "name": "Umeå Ö"
-    },
-    {
-      "code": "Vaa",
-      "name": "Vara"
-    },
-    {
-      "code": "Vag",
-      "name": "Vargön"
-    },
-    {
-      "code": "Vbd",
-      "name": "Västra Bodarne"
-    },
-    {
-      "code": "Vdi",
-      "name": "Veddige"
-    },
-    {
-      "code": "Ve",
-      "name": "Väse"
-    },
-    {
-      "code": "Ved",
-      "name": "Vedum"
-    },
-    {
-      "code": "Vfa",
-      "name": "Vissefjärda"
-    },
-    {
-      "code": "Vg",
-      "name": "Vänersborg C"
-    },
-    {
-      "code": "Vga",
-      "name": "Vega"
-    },
-    {
-      "code": "Vgd",
-      "name": "Vaggeryd"
-    },
-    {
-      "code": "Vgå",
-      "name": "Vårgårda"
-    },
-    {
-      "code": "Vha",
-      "name": "Vattholma"
-    },
-    {
-      "code": "Vhd",
-      "name": "Vagnhärad"
-    },
-    {
-      "code": "Vhe",
-      "name": "Västerhaninge"
-    },
-    {
-      "code": "Vib",
-      "name": "Vimmerby"
-    },
-    {
-      "code": "Vid",
-      "name": "Västra Ingelstad"
+      "code": "Övm",
+      "name": "Överum"
     },
     {
       "code": "Vk",
       "name": "Västervik"
     },
     {
-      "code": "Vns",
-      "name": "Vännäs"
+      "code": "Vo",
+      "name": "Vansbro"
     },
     {
-      "code": "Vr",
-      "name": "Vingåker"
+      "code": "Säg",
+      "name": "Söräng"
     },
     {
-      "code": "Vs",
-      "name": "Vislanda"
+      "code": "Rum",
+      "name": "Runemo"
     },
     {
-      "code": "Vsd",
-      "name": "Vikingstad"
+      "code": "Edv",
+      "name": "Edsbyverken"
     },
     {
-      "code": "Vso",
-      "name": "Virsbo"
+      "code": "Eds",
+      "name": "Edsbyns södra"
     },
     {
-      "code": "Vta",
-      "name": "Vetlanda"
+      "code": "Dma",
+      "name": "Dannemora"
     },
     {
-      "code": "Vå",
-      "name": "Västerås C"
+      "code": "Hrm",
+      "name": "Hargshamn"
     },
     {
-      "code": "Väc",
-      "name": "Värnamo C"
+      "code": "xErn",
+      "name": "Ervalla NBVJ"
     },
     {
-      "code": "Väy",
-      "name": "Västeraspby"
+      "code": "xL",
+      "name": "Löth"
     },
     {
-      "code": "Vö",
-      "name": "Växjö"
+      "code": "xTp",
+      "name": "Torpa"
     },
     {
-      "code": "Vöv",
-      "name": "Vinslöv"
+      "code": "xÄp",
+      "name": "Älvstorp"
     },
     {
-      "code": "Y",
-      "name": "Ystad"
+      "code": "xPh",
+      "name": "Pershyttan"
     },
     {
-      "code": "Yb",
-      "name": "Ytterby"
+      "code": "xPgn",
+      "name": "Pershyttevägen"
     },
     {
-      "code": "Åbe",
-      "name": "Årstaberg"
+      "code": "xJ",
+      "name": "Järle"
     },
     {
-      "code": "Åg",
-      "name": "Ånge"
+      "code": "xLm",
+      "name": "Lilla Mon"
     },
     {
-      "code": "Åk",
-      "name": "Åkarp"
+      "code": "xSm",
+      "name": "Stora Mon"
     },
     {
-      "code": "Ål",
-      "name": "Åmål"
+      "code": "xKh",
+      "name": "Källarhalsen"
     },
     {
-      "code": "Åp",
-      "name": "Åstorp"
+      "code": "Er",
+      "name": "Ervalla"
     },
     {
-      "code": "Åre",
-      "name": "Åre"
+      "code": "xN",
+      "name": "Nora stad"
     },
     {
-      "code": "Åsa",
-      "name": "Åsa"
+      "code": "xGyt",
+      "name": "Gyttorp"
     },
     {
-      "code": "Åt",
-      "name": "Åmotfors"
-    },
-    {
-      "code": "Åvg",
-      "name": "Åtvidaberg"
-    },
-    {
-      "code": "Äbg",
-      "name": "Ängelsberg"
-    },
-    {
-      "code": "Äh",
-      "name": "Älmhult"
-    },
-    {
-      "code": "Äkb",
-      "name": "Älvkarleby"
-    },
-    {
-      "code": "Än",
-      "name": "Älvängen"
-    },
-    {
-      "code": "Äs",
-      "name": "Älvsjö"
-    },
-    {
-      "code": "Äy",
-      "name": "Älvsbyn"
-    },
-    {
-      "code": "Ö",
-      "name": "Örtofta"
-    },
-    {
-      "code": "Öb",
-      "name": "Örebro S"
-    },
-    {
-      "code": "Öda",
-      "name": "Ödåkra"
-    },
-    {
-      "code": "Ög",
-      "name": "Östra Grevie"
-    },
-    {
-      "code": "Öh",
-      "name": "Örbyhus"
-    },
-    {
-      "code": "Ök",
-      "name": "Örnsköldsvik C"
-    },
-    {
-      "code": "Önd",
-      "name": "Önnestad"
-    },
-    {
-      "code": "Ör",
-      "name": "Örebro C"
-    },
-    {
-      "code": "Ös",
-      "name": "Östersund C"
-    },
-    {
-      "code": "Öso",
-      "name": "Ösmo"
-    },
-    {
-      "code": "Öte",
-      "name": "Östertälje"
-    },
-    {
-      "code": "Öx",
-      "name": "Öxnered"
-    },
-    {
-      "code": "Ak",
-      "name": "Abisko Östra"
-    },
-    {
-      "code": "Bdn",
-      "name": "Boden C"
-    },
-    {
-      "code": "Gvc",
-      "name": "Gällivare C"
-    },
-    {
-      "code": "G",
-      "name": "Göteborg C"
-    },
-    {
-      "code": "Ksc",
-      "name": "Karlstad C"
-    },
-    {
-      "code": "Vbc",
-      "name": "Varberg C"
-    },
-    {
-      "code": "Av",
-      "name": "Alvesta"
-    },
-    {
-      "code": "Hm",
-      "name": "Hässleholm"
-    },
-    {
-      "code": "Ä",
-      "name": "Ängelholm"
-    },
-    {
-      "code": "Bkb",
-      "name": "Barkarby"
-    },
-    {
-      "code": "Ab",
-      "name": "Arbrå"
-    },
-    {
-      "code": "Acm",
-      "name": "Avesta centrum"
-    },
-    {
-      "code": "Ajr",
-      "name": "Arvidsjaur"
-    },
-    {
-      "code": "Akt",
-      "name": "Abisko turiststation"
-    },
-    {
-      "code": "Alv",
-      "name": "Astrid Lindgrens värld"
-    },
-    {
-      "code": "Arnn",
-      "name": "Arlanda N"
-    },
-    {
-      "code": "Arns",
-      "name": "Arlanda S"
-    },
-    {
-      "code": "Asb",
-      "name": "Assberg"
-    },
-    {
-      "code": "At.bad",
-      "name": "Bad Gastein"
-    },
-    {
-      "code": "At.inn",
-      "name": "Innsbruck"
-    },
-    {
-      "code": "At.Sal",
-      "name": "Salzburg"
-    },
-    {
-      "code": "At.Sch",
-      "name": "Schwarzach St Veit"
-    },
-    {
-      "code": "At.wör",
-      "name": "Wörgl"
-    },
-    {
-      "code": "At.zel",
-      "name": "Zell am See"
-    },
-    {
-      "code": "Auk",
-      "name": "Auktsjaur"
-    },
-    {
-      "code": "Ava",
-      "name": "Avaviken"
-    },
-    {
-      "code": "Bdy",
-      "name": "Bredaryd"
-    },
-    {
-      "code": "Bfo",
-      "name": "Billingsfors"
-    },
-    {
-      "code": "Bgm",
-      "name": "Berghem"
-    },
-    {
-      "code": "Bjo",
-      "name": "Björketorp"
-    },
-    {
-      "code": "Bjy",
-      "name": "Björköby"
-    },
-    {
-      "code": "Bmb",
-      "name": "Blomberg"
-    },
-    {
-      "code": "Bnk",
-      "name": "Blattnicksele"
-    },
-    {
-      "code": "Boa",
-      "name": "Borgstena"
-    },
-    {
-      "code": "Boy",
-      "name": "Bollebygd"
-    },
-    {
-      "code": "Brin",
-      "name": "Brinellskolan"
-    },
-    {
-      "code": "Brö",
-      "name": "Bredsjö"
-    },
-    {
-      "code": "Bst",
-      "name": "Bastuträsk"
-    },
-    {
-      "code": "Btg",
-      "name": "Bratteborg"
-    },
-    {
-      "code": "Bth",
-      "name": "Basthagen"
-    },
-    {
-      "code": "Buk",
-      "name": "Brunsberg"
-    },
-    {
-      "code": "Bur",
-      "name": "Buresjön"
-    },
-    {
-      "code": "But",
-      "name": "Buterud"
-    },
-    {
-      "code": "Båa",
-      "name": "Bergåsa"
-    },
-    {
-      "code": "De.aa",
-      "name": "Hamburg-Altona"
-    },
-    {
-      "code": "De.abg",
-      "name": "Hamburg-Bergedorf"
-    },
-    {
-      "code": "De.ah",
-      "name": "Hamburg Hbf"
-    },
-    {
-      "code": "De.ap",
-      "name": "Pinneberg"
-    },
-    {
-      "code": "De.bgs",
-      "name": "Berlin-Gesundbrunnen"
-    },
-    {
-      "code": "De.bl",
-      "name": "Berlin Hbf"
-    },
-    {
-      "code": "De.bsc",
-      "name": "Berlin Schönefeld"
-    },
-    {
-      "code": "De.bzo",
-      "name": "Berlin Zoo. Garten"
-    },
-    {
-      "code": "De.dc",
-      "name": "Chemnitz Hbf"
-    },
-    {
-      "code": "De.dh",
-      "name": "Dresden"
-    },
-    {
-      "code": "De.har",
-      "name": "Hamburg-Harburg"
-    },
-    {
-      "code": "De.mh",
-      "name": "München"
-    },
-    {
-      "code": "Dk.ap",
-      "name": "Aarup"
-    },
-    {
-      "code": "Dk.bd",
-      "name": "Bred"
-    },
-    {
-      "code": "Dk.bo",
-      "name": "Borup"
-    },
-    {
-      "code": "Dk.cph",
-      "name": "Copenhagen Airport"
-    },
-    {
-      "code": "Dk.eb",
-      "name": "Ejby"
-    },
-    {
-      "code": "Dk.fa",
-      "name": "Fredericia"
-    },
-    {
-      "code": "Dk.gae",
-      "name": "Espergaerde"
-    },
-    {
-      "code": "Dk.gd",
-      "name": "Gelsted"
-    },
-    {
-      "code": "Dk.gl",
-      "name": "Glostrup"
-    },
-    {
-      "code": "Dk.hg",
-      "name": "Helsingör"
-    },
-    {
-      "code": "Dk.hh",
-      "name": "Hedehusene"
-    },
-    {
-      "code": "Dk.hl",
-      "name": "Hellerup"
-    },
-    {
-      "code": "Dk.hp",
-      "name": "Holmstrup"
-    },
-    {
-      "code": "Dk.htå",
-      "name": "Höje Taastrup"
-    },
-    {
-      "code": "Dk.hum",
-      "name": "Humlebaek"
-    },
-    {
-      "code": "Dk.ka",
-      "name": "Kauslunde"
-    },
-    {
-      "code": "Dk.kd",
-      "name": "Kolding"
-    },
-    {
-      "code": "Dk.kh",
-      "name": "Köpenhamn H"
-    },
-    {
-      "code": "Dk.kjn",
-      "name": "Köge Nord"
-    },
-    {
-      "code": "Dk.kk",
-      "name": "Österport"
-    },
-    {
-      "code": "Dk.kl",
-      "name": "Klampenborg"
-    },
-    {
-      "code": "Dk.kn",
-      "name": "Nörreport"
-    },
-    {
-      "code": "Dk.kö",
-      "name": "Korsör"
-    },
-    {
-      "code": "Dk.lk",
-      "name": "Lunderskov"
-    },
-    {
-      "code": "Dk.lv",
-      "name": "Langeskov"
-    },
-    {
-      "code": "Dk.md",
-      "name": "Middelfart"
-    },
-    {
-      "code": "Dk.na",
-      "name": "Nörre Åby"
-    },
-    {
-      "code": "Dk.ng",
-      "name": "Nyborg"
-    },
-    {
-      "code": "Dk.ni",
-      "name": "Nivå"
-    },
-    {
-      "code": "Dk.od",
-      "name": "Odense"
-    },
-    {
-      "code": "Dk.oj",
-      "name": "Vojens"
-    },
-    {
-      "code": "Dk.ok",
-      "name": "Kokkedal"
-    },
-    {
-      "code": "Dk.pa",
-      "name": "Padborg"
-    },
-    {
-      "code": "Dk.rg",
-      "name": "Ringsted"
-    },
-    {
-      "code": "Dk.ro",
-      "name": "Roskilde"
-    },
-    {
-      "code": "Dk.rq",
-      "name": "Rödekro"
-    },
-    {
-      "code": "Dk.ru",
-      "name": "Rungsted Kyst"
-    },
-    {
-      "code": "Dk.sc",
-      "name": "Skalbjerg"
-    },
-    {
-      "code": "Dk.sg",
-      "name": "Slagelse"
-    },
-    {
-      "code": "Dk.so",
-      "name": "Sorö"
-    },
-    {
-      "code": "Dk.sq",
-      "name": "Snekkersten"
-    },
-    {
-      "code": "Dk.så",
-      "name": "Skodsborg"
-    },
-    {
-      "code": "Dk.te",
-      "name": "Tinglev"
-    },
-    {
-      "code": "Dk.tl",
-      "name": "Taulov"
-    },
-    {
-      "code": "Dk.tp",
-      "name": "Tommerup"
-    },
-    {
-      "code": "Dk.tåt",
-      "name": "Tårnby"
-    },
-    {
-      "code": "Dk.vb",
-      "name": "Vedbaek"
-    },
-    {
-      "code": "Dk.vm",
-      "name": "Vamdrup"
-    },
-    {
-      "code": "Dk.vy",
-      "name": "Viby Sj"
-    },
-    {
-      "code": "Dk.öre",
-      "name": "Örestad"
-    },
-    {
-      "code": "Dre",
-      "name": "Derome"
-    },
-    {
-      "code": "Dta",
-      "name": "Dorotea"
-    },
-    {
-      "code": "Dtc",
-      "name": "Dorotea camping"
-    },
-    {
-      "code": "Då",
-      "name": "Djurås"
-    },
-    {
-      "code": "Ebk",
-      "name": "Edsbjörke"
-    },
-    {
-      "code": "Ed",
-      "name": "Ed"
-    },
-    {
-      "code": "Ei",
-      "name": "Erikslund"
-    },
-    {
-      "code": "Esn",
-      "name": "Ekenässjön"
-    },
-    {
-      "code": "Fc",
-      "name": "Framnäs city"
-    },
-    {
-      "code": "Feö",
-      "name": "Fågelsjö"
-    },
-    {
-      "code": "Fgå",
-      "name": "Fagerås"
+      "code": "Kröb",
+      "name": "Krökesbo"
     },
     {
       "code": "Fid",
       "name": "Filipstad"
     },
     {
-      "code": "Fiä",
-      "name": "Filsbäck"
-    },
-    {
-      "code": "Fjå",
-      "name": "Fjällåsen"
-    },
-    {
-      "code": "Fki",
-      "name": "Fjälkinge"
-    },
-    {
-      "code": "Fkr",
-      "name": "Fåker"
-    },
-    {
-      "code": "Flgd",
-      "name": "Friluftsgården"
-    },
-    {
-      "code": "Fod",
-      "name": "Forsheda"
-    },
-    {
-      "code": "Frl",
-      "name": "Fritsla"
-    },
-    {
-      "code": "Frå",
-      "name": "Frykåsen"
-    },
-    {
-      "code": "Fs",
-      "name": "Fors"
-    },
-    {
-      "code": "Fud",
-      "name": "Furulund"
-    },
-    {
-      "code": "Gan",
-      "name": "Gantofta"
-    },
-    {
-      "code": "Gdv",
-      "name": "Gröndalsviken"
-    },
-    {
-      "code": "Ghy",
-      "name": "Grythyttan"
-    },
-    {
-      "code": "Gnp",
-      "name": "Gnarp"
-    },
-    {
-      "code": "Gpc",
-      "name": "Geogr. Polcirkeln"
-    },
-    {
-      "code": "Gä.f",
-      "name": "Tåghallen"
-    },
-    {
-      "code": "Gä.g",
-      "name": "Gasklockorna"
-    },
-    {
-      "code": "Gä.h",
-      "name": "Gävle hamn"
-    },
-    {
-      "code": "Gä.j",
-      "name": "Järnvägsmuseum"
-    },
-    {
-      "code": "Hgs",
-      "name": "Häggenås"
-    },
-    {
-      "code": "Hks",
-      "name": "Hackås"
-    },
-    {
-      "code": "Hlf",
-      "name": "Hällefors"
-    },
-    {
-      "code": "Hlk",
-      "name": "Hällekis"
-    },
-    {
-      "code": "Hlr",
-      "name": "Horndals Bruk"
-    },
-    {
-      "code": "Hls",
-      "name": "Hällnäs"
-    },
-    {
-      "code": "Hlv",
-      "name": "Hällevadsholm"
-    },
-    {
-      "code": "Hok",
-      "name": "Hok"
-    },
-    {
-      "code": "Hova",
-      "name": "Hova"
-    },
-    {
-      "code": "Hsr",
-      "name": "Hasslerör"
-    },
-    {
-      "code": "Htg",
-      "name": "Hoting"
-    },
-    {
-      "code": "Hum",
-      "name": "Husum"
-    },
-    {
-      "code": "Hvr",
-      "name": "Håverud"
-    },
-    {
-      "code": "Hvs",
-      "name": "Hovslätt"
-    },
-    {
-      "code": "Hy",
-      "name": "Heby"
-    },
-    {
-      "code": "Höf",
-      "name": "Hörnefors"
-    },
-    {
-      "code": "Höy",
-      "name": "Högsby"
-    },
-    {
-      "code": "Id",
-      "name": "Iggesund"
-    },
-    {
-      "code": "It.bol",
-      "name": "Bolzano"
-    },
-    {
-      "code": "It.ven",
-      "name": "Venedig"
-    },
-    {
-      "code": "Jk",
-      "name": "Jokkmokk"
-    },
-    {
-      "code": "Jli",
-      "name": "Jamtli"
-    },
-    {
-      "code": "Jpn",
-      "name": "Järpen"
-    },
-    {
-      "code": "Jps",
-      "name": "Järpås"
-    },
-    {
-      "code": "Jr",
-      "name": "Järvsö"
-    },
-    {
-      "code": "Jrn",
-      "name": "Jörn"
-    },
-    {
-      "code": "Js",
-      "name": "Jämtlands Sikås"
-    },
-    {
-      "code": "Kbn",
-      "name": "Karbenning"
-    },
-    {
-      "code": "Kid",
-      "name": "Kinnared"
-    },
-    {
-      "code": "Kin",
-      "name": "Kinna"
-    },
-    {
-      "code": "Kjå",
-      "name": "Katterjåkk"
-    },
-    {
-      "code": "Kll",
-      "name": "Källby"
-    },
-    {
-      "code": "Klxv",
-      "name": "Kalix Västra"
-    },
-    {
-      "code": "Kmb",
-      "name": "Kiruna"
-    },
-    {
-      "code": "Knl",
-      "name": "Knalleland"
-    },
-    {
-      "code": "Kns",
-      "name": "Kolsnäs"
-    },
-    {
-      "code": "Kre",
-      "name": "Kristinebergsbadet"
-    },
-    {
-      "code": "Krf",
-      "name": "Kramfors"
-    },
-    {
-      "code": "Krm",
-      "name": "Krokom"
-    },
-    {
-      "code": "Ksus",
-      "name": "Kvicksund"
-    },
-    {
-      "code": "Ktm",
-      "name": "Kaitum"
-    },
-    {
-      "code": "Kvä",
-      "name": "Välsviken"
-    },
-    {
-      "code": "Kvö",
-      "name": "Kvarnsjö"
-    },
-    {
-      "code": "Kåb",
-      "name": "Kåbdalis"
-    },
-    {
-      "code": "Köp",
-      "name": "Köpingebro"
-    },
-    {
-      "code": "Len",
-      "name": "Lene"
-    },
-    {
-      "code": "Lgb",
-      "name": "Långbron"
-    },
-    {
-      "code": "Lhr",
-      "name": "Lillhamra"
-    },
-    {
-      "code": "Lit",
-      "name": "Lit"
-    },
-    {
-      "code": "Ljv",
-      "name": "Ljungaverk"
-    },
-    {
-      "code": "Lma",
-      "name": "Lomma"
-    },
-    {
-      "code": "Lnå",
-      "name": "Lugnås"
-    },
-    {
-      "code": "Lse",
-      "name": "Ljusne"
-    },
-    {
-      "code": "Lup",
-      "name": "Lunnarp"
-    },
-    {
-      "code": "Lvd",
-      "name": "Lövliden"
-    },
-    {
-      "code": "Lve",
-      "name": "Lovene"
-    },
-    {
-      "code": "Lyd",
-      "name": "Lyrestad"
-    },
-    {
-      "code": "Lys",
-      "name": "Lysekil"
-    },
-    {
-      "code": "Lyv",
-      "name": "Lysvik"
-    },
-    {
-      "code": "Låk",
-      "name": "Låktatjåkka"
-    },
-    {
-      "code": "Löb",
-      "name": "Lövberga"
-    },
-    {
-      "code": "Mar",
-      "name": "Marieholm"
-    },
-    {
-      "code": "Mbä",
-      "name": "Malmbäck"
-    },
-    {
-      "code": "Mfn",
-      "name": "Munkflohögen"
-    },
-    {
-      "code": "Mi",
-      "name": "Mörsil"
-    },
-    {
-      "code": "Mk",
-      "name": "Murjek"
-    },
-    {
-      "code": "Mlf",
-      "name": "Meselefors"
-    },
-    {
-      "code": "Mos",
-      "name": "Moskosel"
-    },
-    {
-      "code": "Moy",
-      "name": "Mollaryd"
-    },
-    {
-      "code": "Mpb",
-      "name": "Persborg"
-    },
-    {
-      "code": "Mras",
-      "name": "Morastrand"
-    },
-    {
-      "code": "Mrh",
-      "name": "Marsvinsholm"
-    },
-    {
-      "code": "Mrl",
-      "name": "Mora lasarett"
-    },
-    {
-      "code": "Msl",
-      "name": "Mellansel"
-    },
-    {
-      "code": "Nd",
-      "name": "Nässundet"
-    },
-    {
-      "code": "Nhr",
-      "name": "Norrahammar"
-    },
-    {
-      "code": "Njb",
-      "name": "Njurundabommen"
-    },
-    {
-      "code": "Nka",
-      "name": "Nykroppa"
-    },
-    {
-      "code": "Nl.ams",
-      "name": "Amsterdam"
-    },
-    {
-      "code": "No.bjf",
-      "name": "Bjørnfjell"
-    },
-    {
-      "code": "No.hel",
-      "name": "Hell"
-    },
-    {
-      "code": "No.hld",
-      "name": "Halden"
-    },
-    {
-      "code": "No.kat",
-      "name": "Katterat"
-    },
-    {
-      "code": "No.kvg",
-      "name": "Kongsvinger"
-    },
-    {
-      "code": "No.lls",
-      "name": "Lilleström"
-    },
-    {
-      "code": "No.nk",
-      "name": "Narvik"
-    },
-    {
-      "code": "No.osl",
-      "name": "Oslo"
-    },
-    {
-      "code": "No.rom",
-      "name": "Rombak"
-    },
-    {
-      "code": "No.sbo",
-      "name": "Sarpsborg"
-    },
-    {
-      "code": "No.ski",
-      "name": "Ski"
-    },
-    {
-      "code": "No.sms",
-      "name": "Straumsnes"
-    },
-    {
-      "code": "No.sös",
-      "name": "Sösterbekk"
-    },
-    {
-      "code": "No.tnd",
-      "name": "Trondheim"
-    },
-    {
-      "code": "Ntv",
-      "name": "Nattavaara"
-    },
-    {
-      "code": "Nä",
-      "name": "Nälden"
-    },
-    {
-      "code": "Ol",
-      "name": "Oleby"
-    },
-    {
-      "code": "Om",
-      "name": "Oskarström"
-    },
-    {
-      "code": "Ors",
-      "name": "Orsa"
-    },
-    {
-      "code": "Ory",
-      "name": "Ormaryd"
-    },
-    {
-      "code": "Ot",
-      "name": "Ottebol"
-    },
-    {
-      "code": "Ox",
-      "name": "Oxie"
-    },
-    {
-      "code": "Pj",
-      "name": "Porjus"
-    },
-    {
-      "code": "Pl",
-      "name": "Pilgrimstad"
-    },
-    {
-      "code": "Pt.lis",
-      "name": "Lissabon"
-    },
-    {
-      "code": "Rbh",
-      "name": "Rabbalshede"
-    },
-    {
-      "code": "Rbk",
-      "name": "Råbäck"
-    },
-    {
-      "code": "Rft",
-      "name": "Reftele"
-    },
-    {
-      "code": "Rgn",
-      "name": "Riksgränsen"
-    },
-    {
-      "code": "Rjn",
-      "name": "Röjan"
-    },
-    {
-      "code": "Rkö",
-      "name": "Rocksjön"
-    },
-    {
-      "code": "Rmn",
-      "name": "Ramnäs"
-    },
-    {
-      "code": "Rog",
-      "name": "Rosengård"
-    },
-    {
-      "code": "Rt",
-      "name": "Ransta"
-    },
-    {
-      "code": "Rts",
-      "name": "Rottneros"
-    },
-    {
-      "code": "Röp",
-      "name": "Rörstorp"
-    },
-    {
-      "code": "S",
-      "name": "Sveg"
-    },
-    {
-      "code": "Sarp",
-      "name": "Sannarp"
-    },
-    {
-      "code": "Sbu",
-      "name": "Strömsnäsbruk"
-    },
-    {
-      "code": "Sci",
-      "name": "Stockholm City"
-    },
-    {
-      "code": "Sdnä",
-      "name": "Sandsjönäs"
-    },
-    {
-      "code": "Sdy",
-      "name": "Smedby"
-    },
-    {
-      "code": "Sf",
-      "name": "Storfors"
-    },
-    {
-      "code": "Sgs",
-      "name": "Strängnäs"
-    },
-    {
-      "code": "Sgä",
-      "name": "Slagnäs"
-    },
-    {
-      "code": "Si",
-      "name": "Simrishamn"
-    },
-    {
-      "code": "Sif",
-      "name": "Sikfors"
-    },
-    {
-      "code": "Sjka",
-      "name": "Sjisjka"
-    },
-    {
-      "code": "Skb",
-      "name": "Skinnskatteberg"
-    },
-    {
-      "code": "Skru",
-      "name": "Skållerud"
-    },
-    {
-      "code": "Smd",
-      "name": "Strömstad"
-    },
-    {
-      "code": "Smp",
-      "name": "Smedstorp"
-    },
-    {
-      "code": "Snö",
-      "name": "Stensjön"
-    },
-    {
-      "code": "Sod",
-      "name": "Stockholm Odenplan"
+      "code": "Be",
+      "name": "Backe"
     },
     {
       "code": "Sr",
       "name": "Storå"
     },
     {
-      "code": "Sre",
-      "name": "Söderbärke"
+      "code": "Kp",
+      "name": "Köping"
     },
     {
-      "code": "Srn",
-      "name": "Sörtjärn"
+      "code": "Arb",
+      "name": "Arboga"
     },
     {
-      "code": "Srs",
-      "name": "Sorsele"
+      "code": "Mst",
+      "name": "Mariestad"
     },
     {
-      "code": "Ste",
-      "name": "Svarte"
+      "code": "Lkp",
+      "name": "Lidköping"
     },
     {
-      "code": "Stje",
-      "name": "Stjerneskolan"
+      "code": "Fb",
+      "name": "Forsbacka"
     },
     {
-      "code": "Stlv",
-      "name": "Stora Levene"
+      "code": "Snv",
+      "name": "Sandviken"
     },
     {
-      "code": "Stv",
-      "name": "Stavre"
+      "code": "Fln",
+      "name": "Falun central"
+    },
+    {
+      "code": "Fär",
+      "name": "Fliskär"
+    },
+    {
+      "code": "Åp",
+      "name": "Åstorp"
+    },
+    {
+      "code": "Krd",
+      "name": "Kållered"
+    },
+    {
+      "code": "Hdr",
+      "name": "Halmstad rangerbangård"
+    },
+    {
+      "code": "Vbgb",
+      "name": "Varberg godsbangård"
+    },
+    {
+      "code": "Het",
+      "name": "Hestra"
+    },
+    {
+      "code": "Av",
+      "name": "Alvesta"
+    },
+    {
+      "code": "Lme",
+      "name": "Limmared"
+    },
+    {
+      "code": "Gk",
+      "name": "Göteborg Kville"
+    },
+    {
+      "code": "Uv",
+      "name": "Uddevalla central"
+    },
+    {
+      "code": "Hrbg",
+      "name": "Hallsbergs rangerbangård"
+    },
+    {
+      "code": "Humn",
+      "name": "Husums norra"
     },
     {
       "code": "Sum",
       "name": "Storuman"
     },
     {
-      "code": "Svc",
-      "name": "Svenstavik centrum"
+      "code": "Lyg",
+      "name": "Lyckselesågen"
     },
     {
-      "code": "Tag",
-      "name": "Taberg"
+      "code": "Crs",
+      "name": "Kristianstads södra"
     },
     {
-      "code": "Tby",
-      "name": "Tandsbyn"
+      "code": "xFmö",
+      "name": "Forsmöllan"
     },
     {
-      "code": "Tgp",
-      "name": "Tågarp"
+      "code": "Kl",
+      "name": "Klippan"
     },
     {
-      "code": "Tim",
-      "name": "Timsfors"
+      "code": "xLjd",
+      "name": "Ljungbyheds grusgrop"
     },
     {
-      "code": "Tjsk",
-      "name": "Tjustskolan"
+      "code": "Pt",
+      "name": "Perstorp"
     },
     {
-      "code": "Tlt",
-      "name": "Tolita"
+      "code": "Ätk",
+      "name": "Ättekulla"
     },
     {
-      "code": "Tn",
-      "name": "Tannefors"
+      "code": "Nk",
+      "name": "Nyköpings central"
     },
     {
-      "code": "Tof",
-      "name": "Tofta"
+      "code": "Jögb",
+      "name": "Jönköpings godsbangård"
     },
     {
-      "code": "Top",
-      "name": "Torpåkra"
+      "code": "Rby",
+      "name": "Rockneby"
     },
     {
-      "code": "Tou",
-      "name": "Torup"
+      "code": "Kas",
+      "name": "Kalmar södra"
+    },
+    {
+      "code": "Bma",
+      "name": "Blomstermåla"
+    },
+    {
+      "code": "Skog",
+      "name": "Skoghall"
+    },
+    {
+      "code": "Sun",
+      "name": "Sunne"
+    },
+    {
+      "code": "Kil",
+      "name": "Kil"
     },
     {
       "code": "Toy",
       "name": "Torsby"
     },
     {
-      "code": "Trm",
-      "name": "Trolmen"
+      "code": "Fg",
+      "name": "Finspång"
     },
     {
-      "code": "Tsl",
-      "name": "Tisselskog"
+      "code": "Shr",
+      "name": "Surahammar"
     },
     {
-      "code": "Tså",
-      "name": "Torsåker"
+      "code": "Bml",
+      "name": "Bromölla"
     },
     {
-      "code": "Tvd",
-      "name": "Torved"
+      "code": "Sög",
+      "name": "Sölvesborg"
     },
     {
-      "code": "Tvä",
-      "name": "Tvärålund"
+      "code": "Kh",
+      "name": "Karlshamn"
+    },
+    {
+      "code": "Sf",
+      "name": "Storfors"
+    },
+    {
+      "code": "Kla",
+      "name": "Kumla"
+    },
+    {
+      "code": "Kvf",
+      "name": "Kvillsfors"
+    },
+    {
+      "code": "Lkö",
+      "name": "Landskrona Östra"
+    },
+    {
+      "code": "Hj",
+      "name": "Hjulsbro"
+    },
+    {
+      "code": "Kisa",
+      "name": "Kisa"
+    },
+    {
+      "code": "Svi",
+      "name": "Södra Vi"
+    },
+    {
+      "code": "Vib",
+      "name": "Vimmerby"
+    },
+    {
+      "code": "Foo",
+      "name": "Foodia"
+    },
+    {
+      "code": "Sege",
+      "name": "Sege"
+    },
+    {
+      "code": "Saf",
+      "name": "Staffanstorp"
+    },
+    {
+      "code": "Båp",
+      "name": "Brågarp"
+    },
+    {
+      "code": "Tjs",
+      "name": "Tjugonde slussen"
+    },
+    {
+      "code": "Bfo",
+      "name": "Billingsfors"
+    },
+    {
+      "code": "Bef",
+      "name": "Bengtsfors"
+    },
+    {
+      "code": "Åb",
+      "name": "Åsensbruk"
+    },
+    {
+      "code": "Bbe",
+      "name": "Blyberg"
+    },
+    {
+      "code": "Ben",
+      "name": "Bredviken"
+    },
+    {
+      "code": "Hud",
+      "name": "Hulingsryd"
+    },
+    {
+      "code": "Sid",
+      "name": "Silverdalens bruk"
+    },
+    {
+      "code": "Möa",
+      "name": "Mörlunda"
+    },
+    {
+      "code": "Hf",
+      "name": "Hultsfred"
+    },
+    {
+      "code": "Hvd",
+      "name": "Hjältevad"
+    },
+    {
+      "code": "Oh",
+      "name": "Oskarshamn"
+    },
+    {
+      "code": "N",
+      "name": "Nässjö central"
+    },
+    {
+      "code": "Ek",
+      "name": "Eksjö"
+    },
+    {
+      "code": "Vln",
+      "name": "Vallnäs"
+    },
+    {
+      "code": "Vgd",
+      "name": "Vaggeryd"
+    },
+    {
+      "code": "Bmo",
+      "name": "Båramo"
+    },
+    {
+      "code": "Mbä",
+      "name": "Malmbäck"
+    },
+    {
+      "code": "Lrd",
+      "name": "Landeryd"
+    },
+    {
+      "code": "Vta",
+      "name": "Vetlanda"
+    },
+    {
+      "code": "Åa",
+      "name": "Åseda"
+    },
+    {
+      "code": "Fre",
+      "name": "Fredrikslund"
+    },
+    {
+      "code": "Kac",
+      "name": "Kalmar central"
+    },
+    {
+      "code": "Pii",
+      "name": "Pitkäjärvi"
+    },
+    {
+      "code": "Lys",
+      "name": "Lysekil"
+    },
+    {
+      "code": "Spå",
+      "name": "Spånga"
+    },
+    {
+      "code": "Snl",
+      "name": "Skanlog"
+    },
+    {
+      "code": "Nbr",
+      "name": "Nybybruk"
+    },
+    {
+      "code": "Åks",
+      "name": "Åkers styckebruk"
+    },
+    {
+      "code": "Nkv",
+      "name": "Nykvarn"
+    },
+    {
+      "code": "Fil",
+      "name": "Fillan"
+    },
+    {
+      "code": "Vn",
+      "name": "Värtan"
+    },
+    {
+      "code": "Hyb",
+      "name": "Hyltebruk"
+    },
+    {
+      "code": "Vag",
+      "name": "Vargön"
+    },
+    {
+      "code": "Jäy",
+      "name": "Järlövsby"
+    },
+    {
+      "code": "Sur",
+      "name": "Skutskär"
+    },
+    {
+      "code": "Hkl",
+      "name": "Hudiksvall"
+    },
+    {
+      "code": "Suc",
+      "name": "Sundsvall c"
+    },
+    {
+      "code": "Dns",
+      "name": "Dynäs"
+    },
+    {
+      "code": "Trå",
+      "name": "Timrå"
+    },
+    {
+      "code": "Stu",
+      "name": "Stugsund"
+    },
+    {
+      "code": "Hbr",
+      "name": "Holsbybrunn"
+    },
+    {
+      "code": "Bsd",
+      "name": "Brunnsgård"
+    },
+    {
+      "code": "Trd",
+      "name": "Traryd"
+    },
+    {
+      "code": "Tim",
+      "name": "Timsfors"
+    },
+    {
+      "code": "Sbu",
+      "name": "Strömsnäsbruk"
+    },
+    {
+      "code": "Mrd",
+      "name": "Markaryd"
+    },
+    {
+      "code": "Aal",
+      "name": "Annedal"
+    },
+    {
+      "code": "Of",
+      "name": "Olofström"
+    },
+    {
+      "code": "Kär",
+      "name": "Kärrgruvan"
+    },
+    {
+      "code": "Ös",
+      "name": "Östersunds central"
+    },
+    {
+      "code": "Vld",
+      "name": "Vinlidsberg"
+    },
+    {
+      "code": "Htg",
+      "name": "Hoting"
+    },
+    {
+      "code": "Vmat",
+      "name": "Vilhelmina timmer"
     },
     {
       "code": "Uf",
       "name": "Ulriksfors"
     },
     {
-      "code": "Uö",
-      "name": "Uddevalla Ö"
+      "code": "Bof",
+      "name": "Bofors"
     },
     {
-      "code": "Vad",
-      "name": "Vad"
+      "code": "Vnö",
+      "name": "Vinnö"
     },
     {
-      "code": "Vaj",
-      "name": "Varjisträsk"
+      "code": "Sfl",
+      "name": "Säffle"
     },
     {
-      "code": "Vby",
-      "name": "Vännäsby"
+      "code": "La",
+      "name": "Ludvika"
     },
     {
-      "code": "Vbä",
-      "name": "Verkebäck"
+      "code": "Våb",
+      "name": "Vålberg"
     },
     {
       "code": "Vdb",
       "name": "Värmlands Bro"
     },
     {
-      "code": "Vdn",
-      "name": "Vindeln"
+      "code": "Ål",
+      "name": "Åmål"
     },
     {
-      "code": "Vfo",
-      "name": "Viskafors"
+      "code": "Hlf",
+      "name": "Hällefors"
     },
     {
-      "code": "Vj",
-      "name": "Vassijaure"
+      "code": "Ghyn",
+      "name": "Grythyttans norra"
     },
     {
-      "code": "Vjm",
-      "name": "Vojmån"
+      "code": "Gms",
+      "name": "Grums"
     },
     {
-      "code": "Vl",
-      "name": "Vallsta"
+      "code": "Gbm",
+      "name": "Göteborg Marieholm"
     },
     {
-      "code": "Vma",
-      "name": "Vilhelmina"
+      "code": "Dmn",
+      "name": "Domnarvet"
     },
     {
-      "code": "Vman",
-      "name": "Vilhelmina norra"
+      "code": "Gäb",
+      "name": "Gävle godsbangård"
     },
     {
-      "code": "Vsj",
-      "name": "Vittsjö"
+      "code": "Pöb",
+      "name": "Pölsebo"
     },
     {
-      "code": "Vtn",
-      "name": "Vattnäs"
+      "code": "Gsh",
+      "name": "Göteborg Skandiahamnen"
     },
     {
-      "code": "Våk",
-      "name": "Vallåkra"
+      "code": "Ndt",
+      "name": "Norrsundet"
     },
     {
-      "code": "Vät",
-      "name": "Västra Ämtervik"
+      "code": "Hbgb",
+      "name": "Helsingborgs godsbangård"
     },
     {
-      "code": "xAkm",
-      "name": "Ankarsrum"
+      "code": "Kö",
+      "name": "Karlstads östra"
+    },
+    {
+      "code": "Aik",
+      "name": "Aitik"
+    },
+    {
+      "code": "Khn",
+      "name": "Kristinehamn"
+    },
+    {
+      "code": "Hfr",
+      "name": "Hofors"
+    },
+    {
+      "code": "Äy",
+      "name": "Älvsbyn"
+    },
+    {
+      "code": "xJås",
+      "name": "Jädraås"
+    },
+    {
+      "code": "xTås",
+      "name": "Tallås"
+    },
+    {
+      "code": "xSvb",
+      "name": "Svartbäcken Nedre"
+    },
+    {
+      "code": "xFia",
+      "name": "Finkelboda"
+    },
+    {
+      "code": "xPte",
+      "name": "Pallanite"
+    },
+    {
+      "code": "xÅbo",
+      "name": "Åbo"
+    },
+    {
+      "code": "Avky",
+      "name": "Avesta Krylbo"
+    },
+    {
+      "code": "Brny",
+      "name": "Bro Nygård"
+    },
+    {
+      "code": "Bst",
+      "name": "Bastuträsk"
+    },
+    {
+      "code": "E",
+      "name": "Eslöv"
+    },
+    {
+      "code": "Fv",
+      "name": "Frövi"
+    },
+    {
+      "code": "Gry",
+      "name": "Gryttje"
+    },
+    {
+      "code": "Gst",
+      "name": "Gammelstad"
+    },
+    {
+      "code": "Gä",
+      "name": "Gävle central"
+    },
+    {
+      "code": "Hm",
+      "name": "Hässleholm"
+    },
+    {
+      "code": "Hsb",
+      "name": "Hedensbyn"
+    },
+    {
+      "code": "Hsd",
+      "name": "Härnösands central"
+    },
+    {
+      "code": "Bdn",
+      "name": "Boden central"
+    },
+    {
+      "code": "Gua",
+      "name": "Gullberna"
+    },
+    {
+      "code": "Nr",
+      "name": "Norrköpings central"
+    },
+    {
+      "code": "Thn",
+      "name": "Trollhättan"
+    },
+    {
+      "code": "Id",
+      "name": "Iggesund"
+    },
+    {
+      "code": "In",
+      "name": "Insjön"
+    },
+    {
+      "code": "Klbn",
+      "name": "Klockarbäcken"
+    },
+    {
+      "code": "Le",
+      "name": "Luleå"
+    },
+    {
+      "code": "Lmn",
+      "name": "Långviksmon"
+    },
+    {
+      "code": "Lsb",
+      "name": "Ljusne bruk"
+    },
+    {
+      "code": "Lsp",
+      "name": "Lycksele industrispår"
+    },
+    {
+      "code": "F",
+      "name": "Falköpings central"
+    },
+    {
+      "code": "Mrc",
+      "name": "Mora central"
+    },
+    {
+      "code": "Måp",
+      "name": "Månsarp"
+    },
+    {
+      "code": "Ptå",
+      "name": "Piteå"
+    },
+    {
+      "code": "Slbk",
+      "name": "Solbacka"
+    },
+    {
+      "code": "Slg",
+      "name": "Sällinge"
+    },
+    {
+      "code": "Sne",
+      "name": "Sandarne"
+    },
+    {
+      "code": "Ston",
+      "name": "Stockviksverkens nedre"
+    },
+    {
+      "code": "Sy",
+      "name": "Stockaryd"
+    },
+    {
+      "code": "Sårs",
+      "name": "Söråkers södra"
+    },
+    {
+      "code": "Söd",
+      "name": "Södertälje hamn"
+    },
+    {
+      "code": "Trg",
+      "name": "Trelleborg"
+    },
+    {
+      "code": "Vns",
+      "name": "Vännäs"
+    },
+    {
+      "code": "Vrö",
+      "name": "Värö"
+    },
+    {
+      "code": "wTås",
+      "name": "Tallås Grusgropsväxel"
+    },
+    {
+      "code": "Y",
+      "name": "Ystad"
+    },
+    {
+      "code": "Åbyg",
+      "name": "Åby godsbangård"
+    },
+    {
+      "code": "Åhus",
+      "name": "Åhus"
+    },
+    {
+      "code": "Ör",
+      "name": "Örebro central"
+    },
+    {
+      "code": "xLbr",
+      "name": "Länna bruk"
+    },
+    {
+      "code": "xMl",
+      "name": "Marielund"
+    },
+    {
+      "code": "xB",
+      "name": "Bärby"
+    },
+    {
+      "code": "xUö",
+      "name": "Uppsala Östra"
+    },
+    {
+      "code": "xFrg",
+      "name": "Faringe"
+    },
+    {
+      "code": "xAlg",
+      "name": "Almunge"
+    },
+    {
+      "code": "xLna",
+      "name": "Länna"
+    },
+    {
+      "code": "xMg",
+      "name": "Moga"
+    },
+    {
+      "code": "xLöt",
+      "name": "Löt"
+    },
+    {
+      "code": "xSlä",
+      "name": "Selknä"
+    },
+    {
+      "code": "xLh",
+      "name": "Lövstahagen"
+    },
+    {
+      "code": "xFb",
+      "name": "Funbo"
+    },
+    {
+      "code": "xGa",
+      "name": "Gunsta"
+    },
+    {
+      "code": "xSa",
+      "name": "Skölsta"
+    },
+    {
+      "code": "xÅs",
+      "name": "Årsta"
+    },
+    {
+      "code": "xFl",
+      "name": "Fyrislund"
+    },
+    {
+      "code": "xArl",
+      "name": "Arelid"
+    },
+    {
+      "code": "xA",
+      "name": "Anten"
+    },
+    {
+      "code": "xBb",
+      "name": "Brobacka"
+    },
+    {
+      "code": "xDir",
+      "name": "Dirhuvden"
+    },
+    {
+      "code": "xQo",
+      "name": "Kvarnabo"
+    },
+    {
+      "code": "xGr",
+      "name": "Gräfsnäs"
+    },
+    {
+      "code": "xVht",
+      "name": "Värdshuset"
+    },
+    {
+      "code": "xMfå",
+      "name": "Mariefreds ångbåtsstation"
+    },
+    {
+      "code": "xGhn",
+      "name": "Gripsholmsviken"
+    },
+    {
+      "code": "xJbn",
+      "name": "Jagbacken"
+    },
+    {
+      "code": "xLgn",
+      "name": "Läggesta nedre"
+    },
+    {
+      "code": "xTx",
+      "name": "Taxinge-Näsby"
+    },
+    {
+      "code": "xHön",
+      "name": "Härnön"
+    },
+    {
+      "code": "xSöy",
+      "name": "Sjöbygget"
+    },
+    {
+      "code": "xMfd",
+      "name": "Mariefred"
+    },
+    {
+      "code": "xHhn",
+      "name": "Hjorthagen"
+    },
+    {
+      "code": "xHdt",
+      "name": "Hedlandet"
+    },
+    {
+      "code": "Nvn",
+      "name": "Notviken"
     },
     {
       "code": "xBlä",
       "name": "Blägda"
     },
     {
-      "code": "xFsd",
-      "name": "Fagersand"
+      "code": "xHfp",
+      "name": "Hultsfred smalspår (xHfp)"
+    },
+    {
+      "code": "Vbä",
+      "name": "Verkebäck"
+    },
+    {
+      "code": "xVas",
+      "name": "Valstad"
     },
     {
       "code": "xFåt",
       "name": "Fårhult"
     },
     {
-      "code": "xGnl",
-      "name": "Gnötteln"
+      "code": "xAkm",
+      "name": "Ankarsrum"
     },
     {
-      "code": "xHfh",
-      "name": "Hultsfreds Hembygdspark"
+      "code": "xLåö",
+      "name": "Långsjön"
+    },
+    {
+      "code": "xFsd",
+      "name": "Fagersand"
     },
     {
       "code": "xHjt",
       "name": "Hjorted"
     },
     {
-      "code": "xLåö",
-      "name": "Långsjön"
+      "code": "xTob",
+      "name": "Totebo"
     },
     {
       "code": "xSpä",
@@ -2818,88 +1380,4540 @@
       "name": "Tuna"
     },
     {
-      "code": "xTob",
-      "name": "Totebo"
-    },
-    {
-      "code": "xVas",
-      "name": "Valstad"
+      "code": "xVäm",
+      "name": "Väderum"
     },
     {
       "code": "xVen",
       "name": "Vena"
     },
     {
-      "code": "xVäm",
-      "name": "Väderum"
+      "code": "xGnl",
+      "name": "Gnötteln"
     },
     {
-      "code": "Yl",
-      "name": "Ytterhogdal"
+      "code": "xHfh",
+      "name": "Hultsfreds Hembygdspark"
     },
     {
-      "code": "Åb",
-      "name": "Åsensbruk"
+      "code": "xSjv",
+      "name": "Sjövägen"
     },
     {
-      "code": "Ånn",
-      "name": "Ånn"
+      "code": "xNv",
+      "name": "Näsviken"
     },
     {
-      "code": "Ås",
-      "name": "Ås"
+      "code": "Nld",
+      "name": "Nyland"
     },
     {
-      "code": "Åsal",
-      "name": "Åsarna C"
+      "code": "Oxd",
+      "name": "Oxelösund"
     },
     {
-      "code": "Åsra",
-      "name": "Åsarna S"
+      "code": "Kst",
+      "name": "Kistinge"
     },
     {
-      "code": "Älo",
-      "name": "Älvho"
+      "code": "Fgc",
+      "name": "Fagersta central"
     },
     {
-      "code": "Äsr",
-      "name": "Äskekärr"
+      "code": "xDo",
+      "name": "Delsbo"
     },
     {
-      "code": "Öhl",
-      "name": "Överhogdal"
+      "code": "Ggm",
+      "name": "Grängesbergs malmbangård"
     },
     {
-      "code": "Öjr",
-      "name": "Öjervik"
+      "code": "xHbo",
+      "name": "Hybo"
     },
     {
-      "code": "Ökn",
-      "name": "Örnsköldsvik N"
+      "code": "xTib",
+      "name": "Triabo"
     },
     {
-      "code": "Örs",
-      "name": "Örsjö"
+      "code": "xKpr",
+      "name": "Kopperå"
     },
     {
-      "code": "Ösv",
-      "name": "Östersund V"
+      "code": "xLba",
+      "name": "Långbacka"
     },
     {
-      "code": "Övb",
-      "name": "Överby"
+      "code": "xSdu",
+      "name": "Sandudden"
     },
     {
-      "code": "Övmb",
-      "name": "Överums Bruk"
+      "code": "xFos",
+      "name": "Fredriksfors"
+    },
+    {
+      "code": "xFsa",
+      "name": "Forsa"
+    },
+    {
+      "code": "xHkl",
+      "name": "Hudiksvall (xHkl)"
+    },
+    {
+      "code": "Hmr",
+      "name": "Hammar"
+    },
+    {
+      "code": "xÖdh",
+      "name": "Ödhult"
     },
     {
       "code": "Övn",
       "name": "Östervärn"
     },
     {
-      "code": "Öäg",
-      "name": "Österäng"
+      "code": "xRav",
+      "name": "Ravlundabro"
+    },
+    {
+      "code": "xSoo",
+      "name": "S:t Olof"
+    },
+    {
+      "code": "Ö",
+      "name": "Örtofta"
+    },
+    {
+      "code": "xFgr",
+      "name": "Fagerrör"
+    },
+    {
+      "code": "Hl",
+      "name": "Horndal"
+    },
+    {
+      "code": "xVty",
+      "name": "Vitaby"
+    },
+    {
+      "code": "xBöp",
+      "name": "Brösarp"
+    },
+    {
+      "code": "Äh",
+      "name": "Älmhult"
+    },
+    {
+      "code": "Väc",
+      "name": "Värnamo central"
+    },
+    {
+      "code": "Våv",
+      "name": "Västerås västra"
+    },
+    {
+      "code": "xVst",
+      "name": "Vadstena"
+    },
+    {
+      "code": "Hh",
+      "name": "Hallstahammar"
+    },
+    {
+      "code": "Dg",
+      "name": "Degerfors"
+    },
+    {
+      "code": "Tb",
+      "name": "Tillberga"
+    },
+    {
+      "code": "xBäo",
+      "name": "Bläse kalkbrott"
+    },
+    {
+      "code": "xBäu",
+      "name": "Bläse kalkbruk"
+    },
+    {
+      "code": "Mgb",
+      "name": "Malmö godsbangård"
+    },
+    {
+      "code": "Rts",
+      "name": "Rottneros"
+    },
+    {
+      "code": "Bih",
+      "name": "Billesholm"
+    },
+    {
+      "code": "xIpr",
+      "name": "Impregneringen"
+    },
+    {
+      "code": "Al",
+      "name": "Arlöv"
+    },
+    {
+      "code": "Smj",
+      "name": "Smedjebacken"
+    },
+    {
+      "code": "Mot",
+      "name": "Motala central"
+    },
+    {
+      "code": "xTe",
+      "name": "Tule"
+    },
+    {
+      "code": "xKht",
+      "name": "Kambshagtorp"
+    },
+    {
+      "code": "Bro",
+      "name": "Bro"
+    },
+    {
+      "code": "xNys",
+      "name": "Nygårds Stall Dalhem"
+    },
+    {
+      "code": "wSa",
+      "name": "Skara"
+    },
+    {
+      "code": "xEkn",
+      "name": "Eken"
+    },
+    {
+      "code": "xRok",
+      "name": "Roma kungsgård"
+    },
+    {
+      "code": "Bhs",
+      "name": "Bohus"
+    },
+    {
+      "code": "Nosk",
+      "name": "Nordskogen"
+    },
+    {
+      "code": "xTeg",
+      "name": "Tule grusgrop"
+    },
+    {
+      "code": "xMus",
+      "name": "Munkebos"
+    },
+    {
+      "code": "Vv",
+      "name": "Vallvik"
+    },
+    {
+      "code": "Brh",
+      "name": "Brattheden"
+    },
+    {
+      "code": "xÅa",
+      "name": "Åseda (xÅa)"
+    },
+    {
+      "code": "xTog",
+      "name": "Tomtskog"
+    },
+    {
+      "code": "xMsa",
+      "name": "Målilla Sanatorium"
+    },
+    {
+      "code": "xLäe",
+      "name": "Länninge"
+    },
+    {
+      "code": "xFie",
+      "name": "Fiskåsen"
+    },
+    {
+      "code": "Ljun",
+      "name": "Ljungaverks lastplats"
+    },
+    {
+      "code": "xHäs",
+      "name": "Hultanäs"
+    },
+    {
+      "code": "Uvn",
+      "name": "Ursviken"
+    },
+    {
+      "code": "xÖvl",
+      "name": "Östra Vemmerlöv"
+    },
+    {
+      "code": "Hak",
+      "name": "Hallstavik"
+    },
+    {
+      "code": "xLnb",
+      "name": "Lundsbrunn"
+    },
+    {
+      "code": "xScs",
+      "name": "Scoutstugan"
+    },
+    {
+      "code": "xOhs",
+      "name": "Ohs Bruk"
+    },
+    {
+      "code": "xGyb",
+      "name": "Gyllebosjö"
+    },
+    {
+      "code": "xGim",
+      "name": "Gimarp"
+    },
+    {
+      "code": "xDkn",
+      "name": "Dala kvarn"
+    },
+    {
+      "code": "xHap",
+      "name": "Hultarp"
+    },
+    {
+      "code": "xFla",
+      "name": "Flaten"
+    },
+    {
+      "code": "Bål",
+      "name": "Bålsta"
+    },
+    {
+      "code": "xVsm",
+      "name": "Virserum"
+    },
+    {
+      "code": "Mkln",
+      "name": "Munkedals nedre"
+    },
+    {
+      "code": "Mklh",
+      "name": "Munkedals hamn"
+    },
+    {
+      "code": "Vru",
+      "name": "Vekerum"
+    },
+    {
+      "code": "Ms",
+      "name": "Mosås"
+    },
+    {
+      "code": "xGåv",
+      "name": "Gårdveda"
+    },
+    {
+      "code": "xBn",
+      "name": "Bor Norra"
+    },
+    {
+      "code": "xEyd",
+      "name": "Elgaryd"
+    },
+    {
+      "code": "Vån",
+      "name": "Västerås norra"
+    },
+    {
+      "code": "xVtk",
+      "name": "Vitaby kyrka"
+    },
+    {
+      "code": "xÅtp",
+      "name": "Åtorp"
+    },
+    {
+      "code": "xVir",
+      "name": "Virestad"
+    },
+    {
+      "code": "Fabg",
+      "name": "Falkenbergs godsstation"
+    },
+    {
+      "code": "wSsu",
+      "name": "Sissehult"
+    },
+    {
+      "code": "Lsl",
+      "name": "Långsele"
+    },
+    {
+      "code": "Sbl",
+      "name": "Skärblacka"
+    },
+    {
+      "code": "Lyt",
+      "name": "Lycksele timmer"
+    },
+    {
+      "code": "xHöo",
+      "name": "Hösjömo"
+    },
+    {
+      "code": "xMyå",
+      "name": "Myråsen"
+    },
+    {
+      "code": "xTsk",
+      "name": "Trollskogen"
+    },
+    {
+      "code": "xSn",
+      "name": "Stenkullen"
+    },
+    {
+      "code": "xTve",
+      "name": "Tveta"
+    },
+    {
+      "code": "xHy",
+      "name": "Hesselby"
+    },
+    {
+      "code": "xRaä",
+      "name": "Ravlunda bränneri"
+    },
+    {
+      "code": "Mkl",
+      "name": "Munkedal"
+    },
+    {
+      "code": "xSmk",
+      "name": "Skogsmark"
+    },
+    {
+      "code": "Tpu",
+      "name": "Tappudden"
+    },
+    {
+      "code": "xGby",
+      "name": "Gimarpsby"
+    },
+    {
+      "code": "xEkh",
+      "name": "Ekebohult"
+    },
+    {
+      "code": "xMop",
+      "name": "Mosstorp"
+    },
+    {
+      "code": "Viln",
+      "name": "Vilan"
+    },
+    {
+      "code": "xBös",
+      "name": "Brösarp södra"
+    },
+    {
+      "code": "xRa",
+      "name": "Roma"
+    },
+    {
+      "code": "Gö",
+      "name": "Gällö"
+    },
+    {
+      "code": "wLnb",
+      "name": "Lundsbrunn kurort"
+    },
+    {
+      "code": "Let",
+      "name": "Lilla Edet"
+    },
+    {
+      "code": "Gss",
+      "name": "Gärsnäs"
+    },
+    {
+      "code": "xHjm",
+      "name": "Hjortöström"
+    },
+    {
+      "code": "Snu",
+      "name": "Stenungsund"
+    },
+    {
+      "code": "Wibe",
+      "name": "Wibe"
+    },
+    {
+      "code": "Sär",
+      "name": "Sävenäs rangerbangård"
+    },
+    {
+      "code": "Bjb",
+      "name": "Björneborg"
+    },
+    {
+      "code": "xAsk",
+      "name": "Aska"
+    },
+    {
+      "code": "Fgl",
+      "name": "Fågelsta"
+    },
+    {
+      "code": "Sk",
+      "name": "Skövde central"
+    },
+    {
+      "code": "Ar",
+      "name": "Arvika"
+    },
+    {
+      "code": "Nka",
+      "name": "Nykroppa"
+    },
+    {
+      "code": "Et",
+      "name": "Eskilstuna central"
+    },
+    {
+      "code": "xSlu",
+      "name": "Slussen"
+    },
+    {
+      "code": "Mss",
+      "name": "Mönsterås"
+    },
+    {
+      "code": "Bjf",
+      "name": "Bjørnfjell"
+    },
+    {
+      "code": "Ju",
+      "name": "Jularbo"
+    },
+    {
+      "code": "Jbo",
+      "name": "Jordbro"
+    },
+    {
+      "code": "Kng",
+      "name": "Kvarnängen"
+    },
+    {
+      "code": "Vhe",
+      "name": "Västerhaninge"
+    },
+    {
+      "code": "Hnd",
+      "name": "Handen"
+    },
+    {
+      "code": "Nyc",
+      "name": "Nynäshamns Centrum"
+    },
+    {
+      "code": "Ko",
+      "name": "Kornsjö gränsen"
+    },
+    {
+      "code": "Kör",
+      "name": "Kungsör"
+    },
+    {
+      "code": "Smu",
+      "name": "Smålands Burseryd"
+    },
+    {
+      "code": "Me",
+      "name": "Marmaverken"
+    },
+    {
+      "code": "Åg",
+      "name": "Ånge"
+    },
+    {
+      "code": "Bra",
+      "name": "Brista"
+    },
+    {
+      "code": "Ay",
+      "name": "Alby"
+    },
+    {
+      "code": "Mk",
+      "name": "Murjek"
+    },
+    {
+      "code": "Ls",
+      "name": "Ljusdal"
+    },
+    {
+      "code": "Tm",
+      "name": "Tomteboda bangård"
+    },
+    {
+      "code": "Rs",
+      "name": "Rosersberg"
+    },
+    {
+      "code": "U",
+      "name": "Uppsala central"
+    },
+    {
+      "code": "Bn",
+      "name": "Bollnäs"
+    },
+    {
+      "code": "Upv",
+      "name": "Upplands Väsby"
+    },
+    {
+      "code": "Cst",
+      "name": "Stockholms central"
+    },
+    {
+      "code": "Bsb",
+      "name": "Bensjöbacken"
+    },
+    {
+      "code": "Sl",
+      "name": "Sala"
+    },
+    {
+      "code": "Sv",
+      "name": "Storvik"
+    },
+    {
+      "code": "R",
+      "name": "Rotebro"
+    },
+    {
+      "code": "Fs",
+      "name": "Fors"
+    },
+    {
+      "code": "zRte",
+      "name": "f.d. lp Röste"
+    },
+    {
+      "code": "Vnt",
+      "name": "Vackernäset"
+    },
+    {
+      "code": "Jrn",
+      "name": "Jörn"
+    },
+    {
+      "code": "Öv",
+      "name": "Östavall"
+    },
+    {
+      "code": "Sän",
+      "name": "Sävastklinten"
+    },
+    {
+      "code": "Jho",
+      "name": "Jakobshyttan"
+    },
+    {
+      "code": "Skn",
+      "name": "Skänninge"
+    },
+    {
+      "code": "Cas",
+      "name": "Callans såg"
+    },
+    {
+      "code": "Töv",
+      "name": "Töva"
+    },
+    {
+      "code": "Hs",
+      "name": "Hasselfors"
+    },
+    {
+      "code": "Lå",
+      "name": "Laxå"
+    },
+    {
+      "code": "Äs",
+      "name": "Älvsjö"
+    },
+    {
+      "code": "Äsg",
+      "name": "Älvsjö godsbangård"
+    },
+    {
+      "code": "Sst",
+      "name": "Stockholms Södra"
+    },
+    {
+      "code": "Jn",
+      "name": "Järna"
+    },
+    {
+      "code": "Mh",
+      "name": "Moholm"
+    },
+    {
+      "code": "Gsv",
+      "name": "Göteborg Sävenäs"
+    },
+    {
+      "code": "G",
+      "name": "Göteborgs central"
+    },
+    {
+      "code": "Or",
+      "name": "Olskroken"
+    },
+    {
+      "code": "Hgl",
+      "name": "Hagalund"
+    },
+    {
+      "code": "Hpbg",
+      "name": "Hallsbergs personbangård"
+    },
+    {
+      "code": "Hod",
+      "name": "Holmsund"
+    },
+    {
+      "code": "Gim",
+      "name": "Gimonäs"
+    },
+    {
+      "code": "Uågb",
+      "name": "Umeå godsbangård"
+    },
+    {
+      "code": "Ma",
+      "name": "Mattmar"
+    },
+    {
+      "code": "Kroj",
+      "name": "Krokom OJ"
+    },
+    {
+      "code": "Str",
+      "name": "Storlien"
+    },
+    {
+      "code": "Hmfs",
+      "name": "Hissmofors"
+    },
+    {
+      "code": "Äfs",
+      "name": "Äggfors"
+    },
+    {
+      "code": "Äbg",
+      "name": "Ängelsberg"
+    },
+    {
+      "code": "Hge",
+      "name": "Hagge"
+    },
+    {
+      "code": "Vso",
+      "name": "Virsbo"
+    },
+    {
+      "code": "Vå",
+      "name": "Västerås central"
+    },
+    {
+      "code": "Ep",
+      "name": "Enköping"
+    },
+    {
+      "code": "K",
+      "name": "Katrineholms central"
+    },
+    {
+      "code": "Fi",
+      "name": "Fiskeby"
+    },
+    {
+      "code": "Lp",
+      "name": "Linköpings central"
+    },
+    {
+      "code": "My",
+      "name": "Mjölby"
+    },
+    {
+      "code": "Grd",
+      "name": "Grevaryd"
+    },
+    {
+      "code": "Mc",
+      "name": "Malmö central"
+    },
+    {
+      "code": "Lu",
+      "name": "Lund c"
+    },
+    {
+      "code": "Bx",
+      "name": "Boxholm"
+    },
+    {
+      "code": "O",
+      "name": "Osby"
+    },
+    {
+      "code": "Vs",
+      "name": "Vislanda"
+    },
+    {
+      "code": "Gmp",
+      "name": "Gamlarp"
+    },
+    {
+      "code": "Sui",
+      "name": "Skuckuviken"
+    },
+    {
+      "code": "zKöp",
+      "name": "f.d. Köpingebro"
+    },
+    {
+      "code": "Tli",
+      "name": "Tomelilla"
+    },
+    {
+      "code": "Svk",
+      "name": "Svenstavik"
+    },
+    {
+      "code": "Lom",
+      "name": "Lomsmyren"
+    },
+    {
+      "code": "S",
+      "name": "Sveg"
+    },
+    {
+      "code": "Ors",
+      "name": "Orsa"
+    },
+    {
+      "code": "Bf",
+      "name": "Brunflo"
+    },
+    {
+      "code": "Ruk",
+      "name": "Rundvik"
+    },
+    {
+      "code": "Ökn",
+      "name": "Örnsköldsvik norra"
+    },
+    {
+      "code": "Ara",
+      "name": "Arnäsvall"
+    },
+    {
+      "code": "Ök",
+      "name": "Örnsköldsviks central"
+    },
+    {
+      "code": "Hpn",
+      "name": "Hallsberg Posten"
+    },
+    {
+      "code": "Fok",
+      "name": "Folkesta"
+    },
+    {
+      "code": "Kju",
+      "name": "Kjula"
+    },
+    {
+      "code": "Åggb",
+      "name": "Ånge godsbangård"
+    },
+    {
+      "code": "Kmb",
+      "name": "Kiruna malmbangård"
+    },
+    {
+      "code": "Pea",
+      "name": "Peuravaara"
+    },
+    {
+      "code": "Svv",
+      "name": "Svappavaara"
+    },
+    {
+      "code": "Kos",
+      "name": "Koskullskulle"
+    },
+    {
+      "code": "wAga",
+      "name": "Aga"
+    },
+    {
+      "code": "wGåb",
+      "name": "Gåshaga brygga"
+    },
+    {
+      "code": "wRos",
+      "name": "Ropsten"
+    },
+    {
+      "code": "wTov",
+      "name": "Torsvik"
+    },
+    {
+      "code": "wBag",
+      "name": "Baggeby"
+    },
+    {
+      "code": "wBod",
+      "name": "Bodal"
+    },
+    {
+      "code": "wSkr",
+      "name": "Skärsätra"
+    },
+    {
+      "code": "wKoa",
+      "name": "Kottla"
+    },
+    {
+      "code": "wHöb",
+      "name": "Högberga"
+    },
+    {
+      "code": "wBvi",
+      "name": "Brevik"
+    },
+    {
+      "code": "wKäp",
+      "name": "Käppala"
+    },
+    {
+      "code": "wLab",
+      "name": "Larsberg"
+    },
+    {
+      "code": "wGåh",
+      "name": "Gåshaga"
+    },
+    {
+      "code": "wAlv",
+      "name": "Alvik"
+    },
+    {
+      "code": "wKlv",
+      "name": "Klövervägen"
+    },
+    {
+      "code": "wÅlG",
+      "name": "Ålstens Gård"
+    },
+    {
+      "code": "wHlt",
+      "name": "Höglandstorget"
+    },
+    {
+      "code": "wNob",
+      "name": "Nockeby"
+    },
+    {
+      "code": "wAll",
+      "name": "Alle´parken"
+    },
+    {
+      "code": "wSms",
+      "name": "Smedslätten"
+    },
+    {
+      "code": "wÅls",
+      "name": "Ålstensgatan"
+    },
+    {
+      "code": "wOll",
+      "name": "Olovslund"
+    },
+    {
+      "code": "wNot",
+      "name": "Nockeby torg"
+    },
+    {
+      "code": "Tnk",
+      "name": "Torneträsk"
+    },
+    {
+      "code": "Ak",
+      "name": "Abisko östra"
+    },
+    {
+      "code": "Kå",
+      "name": "Kopparåsen"
+    },
+    {
+      "code": "Kv",
+      "name": "Krokvik"
+    },
+    {
+      "code": "Rut",
+      "name": "Rautas"
+    },
+    {
+      "code": "Rsn",
+      "name": "Rensjön"
+    },
+    {
+      "code": "Bfs",
+      "name": "Bergfors"
+    },
+    {
+      "code": "Sbk",
+      "name": "Stenbacken"
+    },
+    {
+      "code": "Soa",
+      "name": "Stordalen"
+    },
+    {
+      "code": "Bln",
+      "name": "Björkliden"
+    },
+    {
+      "code": "Vj",
+      "name": "Vassijaure"
+    },
+    {
+      "code": "Kpe",
+      "name": "Kaisepakte"
+    },
+    {
+      "code": "Rsi",
+      "name": "Råtsi"
+    },
+    {
+      "code": "Stk",
+      "name": "Sikträsk"
+    },
+    {
+      "code": "Lin",
+      "name": "Linaälv"
+    },
+    {
+      "code": "Lab",
+      "name": "Lappberg"
+    },
+    {
+      "code": "Har",
+      "name": "Harrå"
+    },
+    {
+      "code": "Fjå",
+      "name": "Fjällåsen"
+    },
+    {
+      "code": "Kx",
+      "name": "Kalixfors"
+    },
+    {
+      "code": "Håk",
+      "name": "Håmojåkk"
+    },
+    {
+      "code": "Gy",
+      "name": "Gäddmyr"
+    },
+    {
+      "code": "Kia",
+      "name": "Kirunavaara"
+    },
+    {
+      "code": "Gvc",
+      "name": "Gällivare central"
+    },
+    {
+      "code": "Apt",
+      "name": "Aptas"
+    },
+    {
+      "code": "Mtn",
+      "name": "Mertainen"
+    },
+    {
+      "code": "Kaa",
+      "name": "Koijuvaara"
+    },
+    {
+      "code": "Rps",
+      "name": "Ripats"
+    },
+    {
+      "code": "Pc",
+      "name": "Polcirkeln"
+    },
+    {
+      "code": "Kva",
+      "name": "Koskivaara"
+    },
+    {
+      "code": "Ntv",
+      "name": "Nattavaara"
+    },
+    {
+      "code": "Klv",
+      "name": "Kilvo"
+    },
+    {
+      "code": "Nrt",
+      "name": "Nuortikon"
+    },
+    {
+      "code": "Hrt",
+      "name": "Harrträsk"
+    },
+    {
+      "code": "Tet",
+      "name": "Tolikberget"
+    },
+    {
+      "code": "Hfs",
+      "name": "Holmfors"
+    },
+    {
+      "code": "Lså",
+      "name": "Ljuså"
+    },
+    {
+      "code": "Grs",
+      "name": "Gransjö"
+    },
+    {
+      "code": "Stä",
+      "name": "Sandträsk"
+    },
+    {
+      "code": "Glt",
+      "name": "Gullträsk"
+    },
+    {
+      "code": "Lkä",
+      "name": "Lakaträsk"
+    },
+    {
+      "code": "Nb",
+      "name": "Näsberg"
+    },
+    {
+      "code": "Svb",
+      "name": "Södra Svartbyn"
+    },
+    {
+      "code": "Sus",
+      "name": "Sunderbyns sjukhus"
+    },
+    {
+      "code": "Svt",
+      "name": "Sävast"
+    },
+    {
+      "code": "Sby",
+      "name": "Norra Sunderbyn"
+    },
+    {
+      "code": "Bds",
+      "name": "Bodens södra"
+    },
+    {
+      "code": "Bud",
+      "name": "Buddbyn"
+    },
+    {
+      "code": "Ldl",
+      "name": "Lidlund"
+    },
+    {
+      "code": "Brg",
+      "name": "Brännberg"
+    },
+    {
+      "code": "Thm",
+      "name": "Träskholm"
+    },
+    {
+      "code": "Dbn",
+      "name": "Degerbäcken"
+    },
+    {
+      "code": "Krb",
+      "name": "Karsbäcken"
+    },
+    {
+      "code": "Sto",
+      "name": "Storträsk"
+    },
+    {
+      "code": "Mhn",
+      "name": "Myrheden"
+    },
+    {
+      "code": "Ltk",
+      "name": "Långträsk"
+    },
+    {
+      "code": "Sbi",
+      "name": "Storblåliden"
+    },
+    {
+      "code": "Klr",
+      "name": "Koler"
+    },
+    {
+      "code": "Sts",
+      "name": "Storsund"
+    },
+    {
+      "code": "Jnt",
+      "name": "Järneträsk"
+    },
+    {
+      "code": "Ktä",
+      "name": "Korsträsk"
+    },
+    {
+      "code": "Nyf",
+      "name": "Nyfors"
+    },
+    {
+      "code": "Lrg",
+      "name": "Laduberg"
+    },
+    {
+      "code": "Ht",
+      "name": "Hednoret"
+    },
+    {
+      "code": "Hls",
+      "name": "Hällnäs"
+    },
+    {
+      "code": "Tvb",
+      "name": "Tväråbäck"
+    },
+    {
+      "code": "Tvä",
+      "name": "Tvärålund"
+    },
+    {
+      "code": "Yö",
+      "name": "Yttersjön"
+    },
+    {
+      "code": "Kaä",
+      "name": "Kattisträsk"
+    },
+    {
+      "code": "Vdn",
+      "name": "Vindeln"
+    },
+    {
+      "code": "Etk",
+      "name": "Ekträsk"
+    },
+    {
+      "code": "Luä",
+      "name": "Lubboträsk"
+    },
+    {
+      "code": "Åst",
+      "name": "Åsträsk"
+    },
+    {
+      "code": "Hsö",
+      "name": "Hörnsjö"
+    },
+    {
+      "code": "Hbä",
+      "name": "Högbränna"
+    },
+    {
+      "code": "Nyå",
+      "name": "Nyåker"
+    },
+    {
+      "code": "Bjö",
+      "name": "Björnsjö"
+    },
+    {
+      "code": "Bj",
+      "name": "Björna"
+    },
+    {
+      "code": "Lnv",
+      "name": "Långvattnet"
+    },
+    {
+      "code": "Thö",
+      "name": "Trehörningsjö"
+    },
+    {
+      "code": "Nrs",
+      "name": "Norrfors"
+    },
+    {
+      "code": "Brs",
+      "name": "Brattsbacka"
+    },
+    {
+      "code": "Dgm",
+      "name": "Degermyr"
+    },
+    {
+      "code": "Ge",
+      "name": "Gottne"
+    },
+    {
+      "code": "Oxm",
+      "name": "Oxmyran"
+    },
+    {
+      "code": "Öä",
+      "name": "Öreälv"
+    },
+    {
+      "code": "Fsm",
+      "name": "Forsmo"
+    },
+    {
+      "code": "Slj",
+      "name": "Selsjön"
+    },
+    {
+      "code": "Baö",
+      "name": "Backsjön"
+    },
+    {
+      "code": "Som",
+      "name": "Stormyran"
+    },
+    {
+      "code": "Ap",
+      "name": "Aspeå"
+    },
+    {
+      "code": "Hoå",
+      "name": "Holmån"
+    },
+    {
+      "code": "Sop",
+      "name": "Skorped"
+    },
+    {
+      "code": "Käv",
+      "name": "Kälvattnet"
+    },
+    {
+      "code": "Anö",
+      "name": "Anundsjö"
+    },
+    {
+      "code": "Öså",
+      "name": "Österås"
+    },
+    {
+      "code": "Gnå",
+      "name": "Grönåsen"
+    },
+    {
+      "code": "Msl",
+      "name": "Mellansel"
+    },
+    {
+      "code": "Koj",
+      "name": "Kosjärv"
+    },
+    {
+      "code": "Klx",
+      "name": "Kalix"
+    },
+    {
+      "code": "Bet",
+      "name": "Bruksberget"
+    },
+    {
+      "code": "Ran",
+      "name": "Rian"
+    },
+    {
+      "code": "Vsk",
+      "name": "Vuonoskogen"
+    },
+    {
+      "code": "Hp",
+      "name": "Haparanda"
+    },
+    {
+      "code": "Set",
+      "name": "Stensundberget"
+    },
+    {
+      "code": "Kei",
+      "name": "Keräsjoki"
+    },
+    {
+      "code": "Mjv",
+      "name": "Morjärv"
+    },
+    {
+      "code": "Vtv",
+      "name": "Vitvattnet"
+    },
+    {
+      "code": "Lpk",
+      "name": "Lappträsk"
+    },
+    {
+      "code": "Kri",
+      "name": "Karungi"
+    },
+    {
+      "code": "Nml",
+      "name": "Niemisel"
+    },
+    {
+      "code": "Gen",
+      "name": "Gåsträsken"
+    },
+    {
+      "code": "Sbä",
+      "name": "Sågbäcken"
+    },
+    {
+      "code": "Huö",
+      "name": "Hundsjön"
+    },
+    {
+      "code": "Brå",
+      "name": "Bjurå"
+    },
+    {
+      "code": "Vän",
+      "name": "Vännäs norra"
+    },
+    {
+      "code": "Amk",
+      "name": "Arnemark"
+    },
+    {
+      "code": "Ffs",
+      "name": "Finnforsfallet"
+    },
+    {
+      "code": "Skl",
+      "name": "Skellefteå"
+    },
+    {
+      "code": "Btb",
+      "name": "Brattby"
+    },
+    {
+      "code": "Brd",
+      "name": "Brännland"
+    },
+    {
+      "code": "Uå",
+      "name": "Umeå central"
+    },
+    {
+      "code": "Uåö",
+      "name": "Umeå östra"
+    },
+    {
+      "code": "Öal",
+      "name": "Österalnö"
+    },
+    {
+      "code": "Ajr",
+      "name": "Arvidsjaur"
+    },
+    {
+      "code": "Glk",
+      "name": "Glommersträsk"
+    },
+    {
+      "code": "Norl",
+      "name": "Nordlunda"
+    },
+    {
+      "code": "Håb",
+      "name": "Hålbergsliden"
+    },
+    {
+      "code": "Abb",
+      "name": "Abborrträsk"
+    },
+    {
+      "code": "An",
+      "name": "Arvån"
+    },
+    {
+      "code": "Kat",
+      "name": "Kattisavan"
+    },
+    {
+      "code": "Gun",
+      "name": "Gunnarn"
+    },
+    {
+      "code": "Åm",
+      "name": "Åmsele"
+    },
+    {
+      "code": "Ly",
+      "name": "Lycksele"
+    },
+    {
+      "code": "Btå",
+      "name": "Betåsen"
+    },
+    {
+      "code": "Åd",
+      "name": "Ådalsliden"
+    },
+    {
+      "code": "Tsg",
+      "name": "Tågsjöberg"
+    },
+    {
+      "code": "Ros",
+      "name": "Rossön"
+    },
+    {
+      "code": "Nkr",
+      "name": "Norra Kikkejaur"
+    },
+    {
+      "code": "Vaj",
+      "name": "Varjisträsk"
+    },
+    {
+      "code": "Mtm",
+      "name": "Maitum"
+    },
+    {
+      "code": "Kåb",
+      "name": "Kåbdalis"
+    },
+    {
+      "code": "Pj",
+      "name": "Porjus"
+    },
+    {
+      "code": "Jk",
+      "name": "Jokkmokk"
+    },
+    {
+      "code": "Mos",
+      "name": "Moskosel"
+    },
+    {
+      "code": "Sir",
+      "name": "Sorsele industrispår"
+    },
+    {
+      "code": "Ava",
+      "name": "Avaviken"
+    },
+    {
+      "code": "Lms",
+      "name": "Lomselenäs"
+    },
+    {
+      "code": "Srs",
+      "name": "Sorsele"
+    },
+    {
+      "code": "Sgä",
+      "name": "Slagnäs"
+    },
+    {
+      "code": "Dta",
+      "name": "Dorotea"
+    },
+    {
+      "code": "Sti",
+      "name": "Storbergets industrispår"
+    },
+    {
+      "code": "Lvd",
+      "name": "Lövliden"
+    },
+    {
+      "code": "Mlf",
+      "name": "Meselefors"
+    },
+    {
+      "code": "Vma",
+      "name": "Vilhelmina"
+    },
+    {
+      "code": "Vjm",
+      "name": "Vojmån"
+    },
+    {
+      "code": "Hög",
+      "name": "Högbysjön"
+    },
+    {
+      "code": "Gia",
+      "name": "Gideåbacka"
+    },
+    {
+      "code": "Köa",
+      "name": "Könsa"
+    },
+    {
+      "code": "Sbe",
+      "name": "Saluböle"
+    },
+    {
+      "code": "Nog",
+      "name": "Nordmaling"
+    },
+    {
+      "code": "Non",
+      "name": "Norrsjön"
+    },
+    {
+      "code": "Änö",
+      "name": "Ängersjö"
+    },
+    {
+      "code": "Hös",
+      "name": "Hössjön"
+    },
+    {
+      "code": "Noe",
+      "name": "Norrmjöle"
+    },
+    {
+      "code": "Sök",
+      "name": "Stöcke"
+    },
+    {
+      "code": "Slm",
+      "name": "Solum"
+    },
+    {
+      "code": "Han",
+      "name": "Harasjön"
+    },
+    {
+      "code": "Häb",
+      "name": "Hämrasviken"
+    },
+    {
+      "code": "Bja",
+      "name": "Bjästa"
+    },
+    {
+      "code": "Gån",
+      "name": "Gålnäs"
+    },
+    {
+      "code": "Döe",
+      "name": "Drömme"
+    },
+    {
+      "code": "Dk",
+      "name": "Dockmyr"
+    },
+    {
+      "code": "Kln",
+      "name": "Kälarne"
+    },
+    {
+      "code": "Hå",
+      "name": "Håsjö"
+    },
+    {
+      "code": "Ru",
+      "name": "Ragunda"
+    },
+    {
+      "code": "Bsg",
+      "name": "Bispgården"
+    },
+    {
+      "code": "Fgö",
+      "name": "Fångsjöbacken"
+    },
+    {
+      "code": "Ga",
+      "name": "Graninge"
+    },
+    {
+      "code": "Bön",
+      "name": "Bodsjön"
+    },
+    {
+      "code": "Grö",
+      "name": "Grötingen"
+    },
+    {
+      "code": "Ny",
+      "name": "Nyhem"
+    },
+    {
+      "code": "Ksg",
+      "name": "Karlsberg"
+    },
+    {
+      "code": "Gsn",
+      "name": "Gastsjön"
+    },
+    {
+      "code": "Övö",
+      "name": "Övsjö"
+    },
+    {
+      "code": "Rob",
+      "name": "Roback"
+    },
+    {
+      "code": "Sngå",
+      "name": "Singsån"
+    },
+    {
+      "code": "Hlm",
+      "name": "Helgum"
+    },
+    {
+      "code": "Mdl",
+      "name": "Moradal"
+    },
+    {
+      "code": "Dy",
+      "name": "Dysjön"
+    },
+    {
+      "code": "Bä",
+      "name": "Bräcke"
+    },
+    {
+      "code": "Ågy",
+      "name": "Ångebyn"
+    },
+    {
+      "code": "Jå",
+      "name": "Juån"
+    },
+    {
+      "code": "Osö",
+      "name": "Ovansjö"
+    },
+    {
+      "code": "Ng",
+      "name": "Norrhög"
+    },
+    {
+      "code": "Msö",
+      "name": "Mellansjö"
+    },
+    {
+      "code": "Tl",
+      "name": "Tallåsen"
+    },
+    {
+      "code": "Ltr",
+      "name": "Loster"
+    },
+    {
+      "code": "Öbn",
+      "name": "Örabäcken"
+    },
+    {
+      "code": "Rsö",
+      "name": "Ramsjö"
+    },
+    {
+      "code": "Hnb",
+      "name": "Hälsingenybo"
+    },
+    {
+      "code": "Hnn",
+      "name": "Hennan"
+    },
+    {
+      "code": "Lot",
+      "name": "Lottefors"
+    },
+    {
+      "code": "Små",
+      "name": "Simeå"
+    },
+    {
+      "code": "Ksö",
+      "name": "Karsjö"
+    },
+    {
+      "code": "Ab",
+      "name": "Arbrå"
+    },
+    {
+      "code": "Vl",
+      "name": "Vallsta"
+    },
+    {
+      "code": "Lö",
+      "name": "Lörstrand"
+    },
+    {
+      "code": "Jr",
+      "name": "Järvsö"
+    },
+    {
+      "code": "Skä",
+      "name": "Skästra"
+    },
+    {
+      "code": "Ob",
+      "name": "Ockelbo"
+    },
+    {
+      "code": "Kls",
+      "name": "Kilafors"
+    },
+    {
+      "code": "Rbo",
+      "name": "Röstbo"
+    },
+    {
+      "code": "Mog",
+      "name": "Mo grindar"
+    },
+    {
+      "code": "Hdn",
+      "name": "Holmsveden"
+    },
+    {
+      "code": "Döl",
+      "name": "Döljebro"
+    },
+    {
+      "code": "Du",
+      "name": "Duved"
+    },
+    {
+      "code": "Ens",
+      "name": "Enafors"
+    },
+    {
+      "code": "Sfn",
+      "name": "Storflon"
+    },
+    {
+      "code": "Nä",
+      "name": "Nälden"
+    },
+    {
+      "code": "Tåv",
+      "name": "Trångsviken"
+    },
+    {
+      "code": "Mi",
+      "name": "Mörsil"
+    },
+    {
+      "code": "Jpn",
+      "name": "Järpen"
+    },
+    {
+      "code": "Un",
+      "name": "Undersåker"
+    },
+    {
+      "code": "Åre",
+      "name": "Åre"
+    },
+    {
+      "code": "Ånn",
+      "name": "Ånn"
+    },
+    {
+      "code": "Fax",
+      "name": "Faxån"
+    },
+    {
+      "code": "Stv",
+      "name": "Stavre"
+    },
+    {
+      "code": "Pl",
+      "name": "Pilgrimstad"
+    },
+    {
+      "code": "Ope",
+      "name": "Ope"
+    },
+    {
+      "code": "Ei",
+      "name": "Erikslund"
+    },
+    {
+      "code": "Std",
+      "name": "Stöde"
+    },
+    {
+      "code": "Nsö",
+      "name": "Nedansjö"
+    },
+    {
+      "code": "Jbg",
+      "name": "Johannisberg"
+    },
+    {
+      "code": "To",
+      "name": "Torpshammar"
+    },
+    {
+      "code": "Visk",
+      "name": "Viskan"
+    },
+    {
+      "code": "Ft",
+      "name": "Fränsta"
+    },
+    {
+      "code": "Vm",
+      "name": "Vattjom"
+    },
+    {
+      "code": "Lkm",
+      "name": "Lökom"
+    },
+    {
+      "code": "Möl",
+      "name": "Mörtsal"
+    },
+    {
+      "code": "Spk",
+      "name": "Sprängsviken"
+    },
+    {
+      "code": "Fnö",
+      "name": "Frånö"
+    },
+    {
+      "code": "Krf",
+      "name": "Kramfors"
+    },
+    {
+      "code": "Stå",
+      "name": "Sollefteå"
+    },
+    {
+      "code": "Svj",
+      "name": "Svedje"
+    },
+    {
+      "code": "Väy",
+      "name": "Västeraspby"
+    },
+    {
+      "code": "zPm",
+      "name": "f.d lp Prästmon"
+    },
+    {
+      "code": "zÖgd",
+      "name": "f.d lp  Övergård"
+    },
+    {
+      "code": "Sen",
+      "name": "Stavreviken"
+    },
+    {
+      "code": "Hnl",
+      "name": "Hällenyland"
+    },
+    {
+      "code": "Bia",
+      "name": "Birsta"
+    },
+    {
+      "code": "Hsy",
+      "name": "Hussjöby"
+    },
+    {
+      "code": "Hän",
+      "name": "Häggsjön"
+    },
+    {
+      "code": "Nta",
+      "name": "Nacksta"
+    },
+    {
+      "code": "Gui",
+      "name": "Gussi"
+    },
+    {
+      "code": "Hly",
+      "name": "Hilleby"
+    },
+    {
+      "code": "Tdj",
+      "name": "Trödje"
+    },
+    {
+      "code": "Hfj",
+      "name": "Hamrångefjärden"
+    },
+    {
+      "code": "Krl",
+      "name": "Kringlan"
+    },
+    {
+      "code": "Ax",
+      "name": "Axmarby"
+    },
+    {
+      "code": "Säu",
+      "name": "Sunnäsbruk"
+    },
+    {
+      "code": "Käe",
+      "name": "Källene"
+    },
+    {
+      "code": "Lsn",
+      "name": "Losesjön"
+    },
+    {
+      "code": "Myra",
+      "name": "Myra"
+    },
+    {
+      "code": "Boda",
+      "name": "Boda"
+    },
+    {
+      "code": "Via",
+      "name": "Via"
+    },
+    {
+      "code": "Sten",
+      "name": "Stegsskogen"
+    },
+    {
+      "code": "Håg",
+      "name": "Harmånger"
+    },
+    {
+      "code": "Gnp",
+      "name": "Gnarp"
+    },
+    {
+      "code": "Tjä",
+      "name": "Tjärnvik"
+    },
+    {
+      "code": "Åkg",
+      "name": "Årskogen"
+    },
+    {
+      "code": "Sik",
+      "name": "Svartvik"
+    },
+    {
+      "code": "Åmy",
+      "name": "Åmyran"
+    },
+    {
+      "code": "Gön",
+      "name": "Gårdsjön"
+    },
+    {
+      "code": "Maj",
+      "name": "Maj"
+    },
+    {
+      "code": "Njb",
+      "name": "Njurundabommen"
+    },
+    {
+      "code": "Nly",
+      "name": "Nolby"
+    },
+    {
+      "code": "Shv",
+      "name": "Söderhamns västra"
+    },
+    {
+      "code": "Mbv",
+      "name": "Murbergsviken"
+    },
+    {
+      "code": "Äsb",
+      "name": "Älandsbro"
+    },
+    {
+      "code": "Mb",
+      "name": "Mobodarne"
+    },
+    {
+      "code": "Kfn",
+      "name": "Kolforsen"
+    },
+    {
+      "code": "Osl",
+      "name": "Oslättfors"
+    },
+    {
+      "code": "Aft",
+      "name": "Alfta"
+    },
+    {
+      "code": "Edn",
+      "name": "Edsbyn"
+    },
+    {
+      "code": "Vna",
+      "name": "Voxna"
+    },
+    {
+      "code": "Grn",
+      "name": "Göringen"
+    },
+    {
+      "code": "Js",
+      "name": "Jämtlands Sikås"
+    },
+    {
+      "code": "Åkt",
+      "name": "Åskott"
+    },
+    {
+      "code": "Mfn",
+      "name": "Munkflohögen"
+    },
+    {
+      "code": "Löb",
+      "name": "Lövberga"
+    },
+    {
+      "code": "Lit",
+      "name": "Lit"
+    },
+    {
+      "code": "Öhlg",
+      "name": "Överhogdals grusgrop"
+    },
+    {
+      "code": "Brn",
+      "name": "Brånan"
+    },
+    {
+      "code": "Yl",
+      "name": "Ytterhogdal"
+    },
+    {
+      "code": "Rjn",
+      "name": "Röjan"
+    },
+    {
+      "code": "Åsal",
+      "name": "Åsarna central"
+    },
+    {
+      "code": "Fkr",
+      "name": "Fåker"
+    },
+    {
+      "code": "Fda",
+      "name": "Furudal"
+    },
+    {
+      "code": "Klh",
+      "name": "Kallholsfors"
+    },
+    {
+      "code": "Born",
+      "name": "Born"
+    },
+    {
+      "code": "Feö",
+      "name": "Fågelsjö"
+    },
+    {
+      "code": "Thd",
+      "name": "Tallhed"
+    },
+    {
+      "code": "Älo",
+      "name": "Älvho"
+    },
+    {
+      "code": "Smo",
+      "name": "Strömsbro"
+    },
+    {
+      "code": "Åh",
+      "name": "Åshammar"
+    },
+    {
+      "code": "Msn",
+      "name": "Medskogsheden"
+    },
+    {
+      "code": "Jb",
+      "name": "Järbo"
+    },
+    {
+      "code": "Dgn",
+      "name": "Dalgränsen"
+    },
+    {
+      "code": "Mrs",
+      "name": "Morshyttan"
+    },
+    {
+      "code": "By",
+      "name": "Byvalla"
+    },
+    {
+      "code": "Tså",
+      "name": "Torsåker"
+    },
+    {
+      "code": "Hä",
+      "name": "Hästbo"
+    },
+    {
+      "code": "Snt",
+      "name": "Snyten"
+    },
+    {
+      "code": "Kbn",
+      "name": "Karbenning"
+    },
+    {
+      "code": "Omb",
+      "name": "Ombenning"
+    },
+    {
+      "code": "Nkt",
+      "name": "Näverkärret"
+    },
+    {
+      "code": "Hma",
+      "name": "Hökmora"
+    },
+    {
+      "code": "Dn",
+      "name": "Dagarn"
+    },
+    {
+      "code": "Sba",
+      "name": "Spannarboda"
+    },
+    {
+      "code": "Skb",
+      "name": "Skinnskatteberg"
+    },
+    {
+      "code": "Krn",
+      "name": "Krampen"
+    },
+    {
+      "code": "Vmu",
+      "name": "Villersmuren"
+    },
+    {
+      "code": "Nvl",
+      "name": "Norra Valbo"
+    },
+    {
+      "code": "Kgd",
+      "name": "Kungsgården"
+    },
+    {
+      "code": "Hg",
+      "name": "Hagaström"
+    },
+    {
+      "code": "Gad",
+      "name": "Granstanda"
+    },
+    {
+      "code": "Ryg",
+      "name": "Ryggen"
+    },
+    {
+      "code": "Koä",
+      "name": "Korsnäs"
+    },
+    {
+      "code": "Hno",
+      "name": "Hinsnoret"
+    },
+    {
+      "code": "Orn",
+      "name": "Ornäs"
+    },
+    {
+      "code": "Gäg",
+      "name": "Gräsberg"
+    },
+    {
+      "code": "Slnä",
+      "name": "Sellnäs"
+    },
+    {
+      "code": "Uly",
+      "name": "Ulvshyttan"
+    },
+    {
+      "code": "Rmh",
+      "name": "Rämshyttan"
+    },
+    {
+      "code": "Stl",
+      "name": "Ställdalen"
+    },
+    {
+      "code": "Gg",
+      "name": "Grängesberg"
+    },
+    {
+      "code": "Khy",
+      "name": "Klenshyttan"
+    },
+    {
+      "code": "Hlt",
+      "name": "Herrhult"
+    },
+    {
+      "code": "Dgö",
+      "name": "Daglösen"
+    },
+    {
+      "code": "Gdl",
+      "name": "Geijersdal"
+    },
+    {
+      "code": "Sdm",
+      "name": "Sandmon"
+    },
+    {
+      "code": "Keb",
+      "name": "Kejsarbäcken"
+    },
+    {
+      "code": "Rbä",
+      "name": "Repbäcken"
+    },
+    {
+      "code": "Gnf",
+      "name": "Gagnef"
+    },
+    {
+      "code": "Tlg",
+      "name": "Tällberg"
+    },
+    {
+      "code": "Lsd",
+      "name": "Leksand"
+    },
+    {
+      "code": "Lea",
+      "name": "Leksboda"
+    },
+    {
+      "code": "Rv",
+      "name": "Rättvik"
+    },
+    {
+      "code": "Gså",
+      "name": "Garsås"
+    },
+    {
+      "code": "Mras",
+      "name": "Morastrand"
+    },
+    {
+      "code": "Snb",
+      "name": "Snickarbo"
+    },
+    {
+      "code": "St",
+      "name": "Säter"
+    },
+    {
+      "code": "Gtf",
+      "name": "Gustafs"
+    },
+    {
+      "code": "Luå",
+      "name": "Lustån"
+    },
+    {
+      "code": "Hdm",
+      "name": "Hedemora"
+    },
+    {
+      "code": "Vhy",
+      "name": "Vikmanshyttan"
+    },
+    {
+      "code": "Sau",
+      "name": "Stora Tuna"
+    },
+    {
+      "code": "Gyo",
+      "name": "Grycksbo"
+    },
+    {
+      "code": "Sre",
+      "name": "Söderbärke"
+    },
+    {
+      "code": "Mim",
+      "name": "Mimer"
+    },
+    {
+      "code": "Spy",
+      "name": "Spännarhyttan"
+    },
+    {
+      "code": "Nbg",
+      "name": "Norberg"
+    },
+    {
+      "code": "Kbä",
+      "name": "Kolbäck"
+    },
+    {
+      "code": "Dt",
+      "name": "Dingtuna"
+    },
+    {
+      "code": "Jbk",
+      "name": "Jädersbruk"
+    },
+    {
+      "code": "Vsg",
+      "name": "Valskog"
+    },
+    {
+      "code": "Morp",
+      "name": "Munktorp"
+    },
+    {
+      "code": "Feb",
+      "name": "Fellingsbro"
+    },
+    {
+      "code": "Ålg",
+      "name": "Ålsäng"
+    },
+    {
+      "code": "Öa",
+      "name": "Ökna"
+    },
+    {
+      "code": "Aä",
+      "name": "Alväng"
+    },
+    {
+      "code": "Vka",
+      "name": "Vika"
+    },
+    {
+      "code": "Mrai",
+      "name": "Mora kommun industriområd"
+    },
+    {
+      "code": "Spjb",
+      "name": "Spjutbäcken"
+    },
+    {
+      "code": "Mäk",
+      "name": "Märbäck"
+    },
+    {
+      "code": "Mlg",
+      "name": "Malung"
+    },
+    {
+      "code": "Böo",
+      "name": "Björbo"
+    },
+    {
+      "code": "Dj",
+      "name": "Dala-Järna"
+    },
+    {
+      "code": "Mfj",
+      "name": "Mockfjärd"
+    },
+    {
+      "code": "Råg",
+      "name": "Rågsveden"
+    },
+    {
+      "code": "Ksc",
+      "name": "Karlstad C"
+    },
+    {
+      "code": "Sån",
+      "name": "Stenåsen"
+    },
+    {
+      "code": "Kvä",
+      "name": "Karlstad Välsviken"
+    },
+    {
+      "code": "Skr",
+      "name": "Skåre"
+    },
+    {
+      "code": "Kud",
+      "name": "Klingerud"
+    },
+    {
+      "code": "Srt",
+      "name": "Strömtorp"
+    },
+    {
+      "code": "Öl",
+      "name": "Ölme"
+    },
+    {
+      "code": "Ve",
+      "name": "Väse"
+    },
+    {
+      "code": "Srr",
+      "name": "Skattkärr"
+    },
+    {
+      "code": "Svå",
+      "name": "Svartå"
+    },
+    {
+      "code": "Vdv",
+      "name": "Vedevåg"
+    },
+    {
+      "code": "Rlå",
+      "name": "Rällså"
+    },
+    {
+      "code": "Kpg",
+      "name": "Kopparberg"
+    },
+    {
+      "code": "Ld",
+      "name": "Lindesberg"
+    },
+    {
+      "code": "Knp",
+      "name": "Knapptorp"
+    },
+    {
+      "code": "Vik",
+      "name": "Vikersvik"
+    },
+    {
+      "code": "Kf",
+      "name": "Kortfors"
+    },
+    {
+      "code": "Gr",
+      "name": "Granbergsdal"
+    },
+    {
+      "code": "Kt",
+      "name": "Kapellet"
+    },
+    {
+      "code": "Ke",
+      "name": "Karlberg"
+    },
+    {
+      "code": "Tmö",
+      "name": "Tomteboda övre"
+    },
+    {
+      "code": "So",
+      "name": "Solna"
+    },
+    {
+      "code": "Udl",
+      "name": "Ulriksdal"
+    },
+    {
+      "code": "Åbe",
+      "name": "Årstaberg"
+    },
+    {
+      "code": "Sub",
+      "name": "Sundbyberg"
+    },
+    {
+      "code": "Huv",
+      "name": "Huvudsta"
+    },
+    {
+      "code": "Nst",
+      "name": "Stockholms norra"
+    },
+    {
+      "code": "Sci",
+      "name": "Stockholm City"
+    },
+    {
+      "code": "Sod",
+      "name": "Stockholm Odenplan"
+    },
+    {
+      "code": "Gau",
+      "name": "Garnudden"
+    },
+    {
+      "code": "Uts",
+      "name": "Utsikten"
+    },
+    {
+      "code": "Tu",
+      "name": "Tumba"
+    },
+    {
+      "code": "Södy",
+      "name": "Söderby"
+    },
+    {
+      "code": "Dån",
+      "name": "Dånviken"
+    },
+    {
+      "code": "Öte",
+      "name": "Östertälje"
+    },
+    {
+      "code": "Hu",
+      "name": "Huddinge"
+    },
+    {
+      "code": "Flb",
+      "name": "Flemingsberg"
+    },
+    {
+      "code": "Bre",
+      "name": "Bränninge"
+    },
+    {
+      "code": "Söu",
+      "name": "Södertälje syd undre"
+    },
+    {
+      "code": "Söc",
+      "name": "Södertälje centrum"
+    },
+    {
+      "code": "Fle",
+      "name": "Flen"
+    },
+    {
+      "code": "Gn",
+      "name": "Gnesta"
+    },
+    {
+      "code": "Koe",
+      "name": "Kolke"
+    },
+    {
+      "code": "Sp",
+      "name": "Sparreholm"
+    },
+    {
+      "code": "Skv",
+      "name": "Skebokvarn"
+    },
+    {
+      "code": "Mö",
+      "name": "Mölnbo"
+    },
+    {
+      "code": "B",
+      "name": "Björnlunda"
+    },
+    {
+      "code": "Sh",
+      "name": "Stjärnhov"
+    },
+    {
+      "code": "Nsj",
+      "name": "Nyckelsjön"
+    },
+    {
+      "code": "Spn",
+      "name": "Stolpstugan"
+    },
+    {
+      "code": "Sde",
+      "name": "Sköldinge"
+    },
+    {
+      "code": "Bt",
+      "name": "Baggetorp"
+    },
+    {
+      "code": "Vr",
+      "name": "Vingåker"
+    },
+    {
+      "code": "Km",
+      "name": "Kilsmo"
+    },
+    {
+      "code": "På",
+      "name": "Pålsboda"
+    },
+    {
+      "code": "Hgö",
+      "name": "Högsjö"
+    },
+    {
+      "code": "Söö",
+      "name": "Södertälje syd övre"
+    },
+    {
+      "code": "Bjn",
+      "name": "Björnkulla"
+    },
+    {
+      "code": "Msj",
+      "name": "Malmsjö"
+    },
+    {
+      "code": "Skms",
+      "name": "Skymossen"
+    },
+    {
+      "code": "Täl",
+      "name": "Tälle"
+    },
+    {
+      "code": "Öj",
+      "name": "Östansjö"
+    },
+    {
+      "code": "Hlö",
+      "name": "Hölö"
+    },
+    {
+      "code": "Lre",
+      "name": "Lästringe"
+    },
+    {
+      "code": "Tba",
+      "name": "Tystberga"
+    },
+    {
+      "code": "Ssa",
+      "name": "Sjösa"
+    },
+    {
+      "code": "Ebg",
+      "name": "Enstaberga"
+    },
+    {
+      "code": "Jår",
+      "name": "Jönåker"
+    },
+    {
+      "code": "Åba",
+      "name": "Ålberga"
+    },
+    {
+      "code": "Gtå",
+      "name": "Getå"
+    },
+    {
+      "code": "Vhd",
+      "name": "Vagnhärad"
+    },
+    {
+      "code": "Kon",
+      "name": "Kolmården"
+    },
+    {
+      "code": "Stö",
+      "name": "Strångsjö"
+    },
+    {
+      "code": "Smt",
+      "name": "Simonstorp"
+    },
+    {
+      "code": "xSsu",
+      "name": "Stocksund"
+    },
+    {
+      "code": "xÖst",
+      "name": "Stockholms östra"
+    },
+    {
+      "code": "xDjö",
+      "name": "Djursholms Ösby"
+    },
+    {
+      "code": "xUnv",
+      "name": "Universitetet"
+    },
+    {
+      "code": "xMöb",
+      "name": "Mörby"
+    },
+    {
+      "code": "xRnb",
+      "name": "Roslags Näsby"
+    },
+    {
+      "code": "xTäb",
+      "name": "Täby kyrkby"
+    },
+    {
+      "code": "xKgl",
+      "name": "Kragstalund"
+    },
+    {
+      "code": "xVlt",
+      "name": "Vallentuna"
+    },
+    {
+      "code": "xLdm",
+      "name": "Lindholmen"
+    },
+    {
+      "code": "xKår",
+      "name": "Kårsta"
+    },
+    {
+      "code": "xMnb",
+      "name": "Molnby"
+    },
+    {
+      "code": "xFsu",
+      "name": "Frösunda"
+    },
+    {
+      "code": "xEkg",
+      "name": "Ekskogen"
+    },
+    {
+      "code": "xBvv",
+      "name": "Bråvallavägen"
+    },
+    {
+      "code": "xDje",
+      "name": "Djursholms Ekeby"
+    },
+    {
+      "code": "xEnb",
+      "name": "Enebyberg"
+    },
+    {
+      "code": "xTbl",
+      "name": "Tibble"
+    },
+    {
+      "code": "xEsa",
+      "name": "Ensta"
+    },
+    {
+      "code": "xVis",
+      "name": "Visinge"
+    },
+    {
+      "code": "xBäl",
+      "name": "Bällsta"
+    },
+    {
+      "code": "xOta",
+      "name": "Ormsta"
+    },
+    {
+      "code": "xVdl",
+      "name": "Vedalund"
+    },
+    {
+      "code": "xVev",
+      "name": "Vendevägen"
+    },
+    {
+      "code": "xÖga",
+      "name": "Östberga"
+    },
+    {
+      "code": "xLhl",
+      "name": "Lahäll"
+    },
+    {
+      "code": "xNbe",
+      "name": "Näsbyallé"
+    },
+    {
+      "code": "xNbp",
+      "name": "Näsbypark"
+    },
+    {
+      "code": "xAlp",
+      "name": "Altorp"
+    },
+    {
+      "code": "xRdb",
+      "name": "Rydbo"
+    },
+    {
+      "code": "xTäl",
+      "name": "Täljö"
+    },
+    {
+      "code": "xÅru",
+      "name": "Åkers Runö"
+    },
+    {
+      "code": "xÅbg",
+      "name": "Åkersberga"
+    },
+    {
+      "code": "xÖsk",
+      "name": "Österskär"
+    },
+    {
+      "code": "xHgä",
+      "name": "Hägernäs"
+    },
+    {
+      "code": "xAre",
+      "name": "Arninge"
+    },
+    {
+      "code": "xTug",
+      "name": "Tunagård"
+    },
+    {
+      "code": "xTäc",
+      "name": "Täby Centrum"
+    },
+    {
+      "code": "xGpf",
+      "name": "Galoppfältet"
+    },
+    {
+      "code": "xVbm",
+      "name": "Viggbyholm"
+    },
+    {
+      "code": "Una",
+      "name": "Uppsala norra"
+    },
+    {
+      "code": "Myn",
+      "name": "Myrbacken"
+    },
+    {
+      "code": "Eby",
+      "name": "Ekeby"
+    },
+    {
+      "code": "Säy",
+      "name": "Säby"
+    },
+    {
+      "code": "Kn",
+      "name": "Knivsta"
+    },
+    {
+      "code": "Jla",
+      "name": "Järlåsa"
+    },
+    {
+      "code": "Ist",
+      "name": "Isätra"
+    },
+    {
+      "code": "Bna",
+      "name": "Brunna"
+    },
+    {
+      "code": "Må",
+      "name": "Morgongåva"
+    },
+    {
+      "code": "Mr",
+      "name": "Märsta"
+    },
+    {
+      "code": "Hel",
+      "name": "Helenelund"
+    },
+    {
+      "code": "Sol",
+      "name": "Sollentuna"
+    },
+    {
+      "code": "Hgv",
+      "name": "Häggvik"
+    },
+    {
+      "code": "Skby",
+      "name": "Skavstaby"
+    },
+    {
+      "code": "Jlo",
+      "name": "Järlebo"
+    },
+    {
+      "code": "Tbo",
+      "name": "Tobo"
+    },
+    {
+      "code": "Säp",
+      "name": "Skärpan"
+    },
+    {
+      "code": "Sam",
+      "name": "Samnan"
+    },
+    {
+      "code": "Srv",
+      "name": "Storvreta"
+    },
+    {
+      "code": "Sas",
+      "name": "Salsta"
+    },
+    {
+      "code": "Öh",
+      "name": "Örbyhus"
+    },
+    {
+      "code": "Tip",
+      "name": "Tierp"
+    },
+    {
+      "code": "Os",
+      "name": "Orrskog"
+    },
+    {
+      "code": "Mrm",
+      "name": "Marma"
+    },
+    {
+      "code": "Bom",
+      "name": "Bomansberget"
+    },
+    {
+      "code": "Gmo",
+      "name": "Gimo"
+    },
+    {
+      "code": "Arne",
+      "name": "Arlanda nedre"
+    },
+    {
+      "code": "Arnc",
+      "name": "Arlanda central"
+    },
+    {
+      "code": "Arns",
+      "name": "Arlanda södra"
+    },
+    {
+      "code": "Arnn",
+      "name": "Arlanda norra"
+    },
+    {
+      "code": "Bvr",
+      "name": "Blackvreten"
+    },
+    {
+      "code": "Bdo",
+      "name": "Broddbo"
+    },
+    {
+      "code": "Ry",
+      "name": "Rosshyttan"
+    },
+    {
+      "code": "Rt",
+      "name": "Ransta"
+    },
+    {
+      "code": "Tot",
+      "name": "Toresta"
+    },
+    {
+      "code": "Eko",
+      "name": "Ekolsund"
+    },
+    {
+      "code": "Lub",
+      "name": "Lundby"
+    },
+    {
+      "code": "Ttu",
+      "name": "Tortuna"
+    },
+    {
+      "code": "Gib",
+      "name": "Grillby"
+    },
+    {
+      "code": "Bkb",
+      "name": "Barkarby"
+    },
+    {
+      "code": "Jkb",
+      "name": "Jakobsberg"
+    },
+    {
+      "code": "Khä",
+      "name": "Kallhäll"
+    },
+    {
+      "code": "Duo",
+      "name": "Duvbo"
+    },
+    {
+      "code": "Kän",
+      "name": "Kungsängen"
+    },
+    {
+      "code": "Rke",
+      "name": "Rekarne"
+    },
+    {
+      "code": "Alä",
+      "name": "Almnäs"
+    },
+    {
+      "code": "Gru",
+      "name": "Grundbro"
+    },
+    {
+      "code": "Mby",
+      "name": "Malmby"
+    },
+    {
+      "code": "Sgs",
+      "name": "Strängnäs"
+    },
+    {
+      "code": "Häd",
+      "name": "Härad"
+    },
+    {
+      "code": "Bva",
+      "name": "Barva"
+    },
+    {
+      "code": "Ryb",
+      "name": "Ryssjöbrink"
+    },
+    {
+      "code": "Lg",
+      "name": "Läggesta"
+    },
+    {
+      "code": "Gttu",
+      "name": "Gamla Tortuna"
+    },
+    {
+      "code": "xStä",
+      "name": "Storängen"
+    },
+    {
+      "code": "xNeg",
+      "name": "Neglinge"
+    },
+    {
+      "code": "xSik",
+      "name": "Sickla"
+    },
+    {
+      "code": "xLiä",
+      "name": "Lillängen"
+    },
+    {
+      "code": "xSdn",
+      "name": "Saltsjö-Duvnäs"
+    },
+    {
+      "code": "xÖsv",
+      "name": "Östervik"
+    },
+    {
+      "code": "xFsä",
+      "name": "Fisksätra"
+    },
+    {
+      "code": "xIgb",
+      "name": "Igelboda"
+    },
+    {
+      "code": "xRvä",
+      "name": "Ringvägen"
+    },
+    {
+      "code": "xNka",
+      "name": "Nacka"
+    },
+    {
+      "code": "xSjl",
+      "name": "Saltsjö-Järla"
+    },
+    {
+      "code": "xHed",
+      "name": "Henriksdal"
+    },
+    {
+      "code": "xSbn",
+      "name": "Saltsjöbaden"
+    },
+    {
+      "code": "xTip",
+      "name": "Tippen"
+    },
+    {
+      "code": "xTab",
+      "name": "Tattby"
+    },
+    {
+      "code": "xEvb",
+      "name": "Erstaviksbadet"
+    },
+    {
+      "code": "xSln",
+      "name": "Solsidan"
+    },
+    {
+      "code": "Skg",
+      "name": "Skogås"
+    },
+    {
+      "code": "Hön",
+      "name": "Högdalen"
+    },
+    {
+      "code": "Fas",
+      "name": "Farsta strand"
+    },
+    {
+      "code": "Ssä",
+      "name": "Segersäng"
+    },
+    {
+      "code": "Öso",
+      "name": "Ösmo"
+    },
+    {
+      "code": "Hfa",
+      "name": "Hemfosa"
+    },
+    {
+      "code": "Ts",
+      "name": "Tungelsta"
+    },
+    {
+      "code": "Nks",
+      "name": "Nyköping södra"
+    },
+    {
+      "code": "Vre",
+      "name": "Vrena"
+    },
+    {
+      "code": "Sii",
+      "name": "Silinge"
+    },
+    {
+      "code": "Ksu",
+      "name": "Kvicksund"
+    },
+    {
+      "code": "Ssh",
+      "name": "Strömsholm"
+    },
+    {
+      "code": "Fsö",
+      "name": "Flens övre"
+    },
+    {
+      "code": "Mlö",
+      "name": "Mellösa"
+    },
+    {
+      "code": "Hnä",
+      "name": "Hälleforsnäs"
+    },
+    {
+      "code": "Hål",
+      "name": "Hållsta"
+    },
+    {
+      "code": "Skrp",
+      "name": "Skogstorp"
+    },
+    {
+      "code": "Bgv",
+      "name": "Bälgviken"
+    },
+    {
+      "code": "Åbs",
+      "name": "Åby södra"
+    },
+    {
+      "code": "Kms",
+      "name": "Kimstad"
+    },
+    {
+      "code": "Nh",
+      "name": "Norsholm"
+    },
+    {
+      "code": "Vsd",
+      "name": "Vikingstad"
+    },
+    {
+      "code": "Mt",
+      "name": "Mantorp"
+    },
+    {
+      "code": "Gi",
+      "name": "Gistad"
+    },
+    {
+      "code": "Lgm",
+      "name": "Linghem"
+    },
+    {
+      "code": "Vt",
+      "name": "Vretstorp"
+    },
+    {
+      "code": "Lln",
+      "name": "Linddalen"
+    },
+    {
+      "code": "Gdö",
+      "name": "Gårdsjö"
+    },
+    {
+      "code": "Ss",
+      "name": "Stenstorp"
+    },
+    {
+      "code": "Väv",
+      "name": "Välevattnet"
+    },
+    {
+      "code": "Sle",
+      "name": "Slätte"
+    },
+    {
+      "code": "Vä",
+      "name": "Väring"
+    },
+    {
+      "code": "T",
+      "name": "Töreboda"
+    },
+    {
+      "code": "Rmtp",
+      "name": "Regumatorp"
+    },
+    {
+      "code": "Fa",
+      "name": "Finnerödja"
+    },
+    {
+      "code": "Äl",
+      "name": "Älgarås"
+    },
+    {
+      "code": "Fn",
+      "name": "Falköpings norra"
+    },
+    {
+      "code": "Å",
+      "name": "Åsbro"
+    },
+    {
+      "code": "Lmo",
+      "name": "Löcknamon"
+    },
+    {
+      "code": "D",
+      "name": "Degerön"
+    },
+    {
+      "code": "Öna",
+      "name": "Önaskogen"
+    },
+    {
+      "code": "Skm",
+      "name": "Stenkumla"
+    },
+    {
+      "code": "Hsa",
+      "name": "Hovsta"
+    },
+    {
+      "code": "Hsr",
+      "name": "Hasslerör"
+    },
+    {
+      "code": "Lnå",
+      "name": "Lugnås"
+    },
+    {
+      "code": "Lve",
+      "name": "Lovene"
+    },
+    {
+      "code": "Jps",
+      "name": "Järpås"
+    },
+    {
+      "code": "Hova",
+      "name": "Hova"
+    },
+    {
+      "code": "Lyd",
+      "name": "Lyrestad"
+    },
+    {
+      "code": "Fhm",
+      "name": "Forshem"
+    },
+    {
+      "code": "Am",
+      "name": "Almedal"
+    },
+    {
+      "code": "Gro",
+      "name": "Gubbero"
+    },
+    {
+      "code": "Lis",
+      "name": "Liseberg"
+    },
+    {
+      "code": "Gas",
+      "name": "Gamlestaden"
+    },
+    {
+      "code": "Sel",
+      "name": "Sävedalen"
+    },
+    {
+      "code": "P",
+      "name": "Partille"
+    },
+    {
+      "code": "Gli",
+      "name": "Göteborg Lindholmen"
+    },
+    {
+      "code": "Ghg",
+      "name": "Göteborgs Haga"
+    },
+    {
+      "code": "Kvn",
+      "name": "Korsvägen"
+    },
+    {
+      "code": "Hrc",
+      "name": "Herrljunga central"
+    },
+    {
+      "code": "Fby",
+      "name": "Floby"
+    },
+    {
+      "code": "Vgå",
+      "name": "Vårgårda"
+    },
+    {
+      "code": "Agg",
+      "name": "Algutsgården"
+    },
+    {
+      "code": "Kä",
+      "name": "Källeryd"
+    },
+    {
+      "code": "Hrv",
+      "name": "Herrljunga västra"
+    },
+    {
+      "code": "A",
+      "name": "Alingsås"
+    },
+    {
+      "code": "J",
+      "name": "Jonsered östra"
+    },
+    {
+      "code": "Fd",
+      "name": "Floda"
+    },
+    {
+      "code": "Lr",
+      "name": "Lerum"
+    },
+    {
+      "code": "Bgs",
+      "name": "Bryngenäs"
+    },
+    {
+      "code": "Ndv",
+      "name": "Norsesund västra"
+    },
+    {
+      "code": "Rbh",
+      "name": "Rabbalshede"
+    },
+    {
+      "code": "Kgs",
+      "name": "Kragenäs"
+    },
+    {
+      "code": "Dl",
+      "name": "Dingle"
+    },
+    {
+      "code": "Tnu",
+      "name": "Tanum"
+    },
+    {
+      "code": "Ske",
+      "name": "Skee"
+    },
+    {
+      "code": "Smd",
+      "name": "Strömstad"
+    },
+    {
+      "code": "Hal",
+      "name": "Hallinden"
+    },
+    {
+      "code": "Bsa",
+      "name": "Brastad"
+    },
+    {
+      "code": "Lye",
+      "name": "Lyse"
+    },
+    {
+      "code": "Lj",
+      "name": "Ljungskile"
+    },
+    {
+      "code": "Svg",
+      "name": "Svenshögen"
+    },
+    {
+      "code": "Ghd",
+      "name": "Grohed"
+    },
+    {
+      "code": "Sve",
+      "name": "Säve"
+    },
+    {
+      "code": "Yb",
+      "name": "Ytterby"
+    },
+    {
+      "code": "Kde",
+      "name": "Kode"
+    },
+    {
+      "code": "Sth",
+      "name": "Stora Höga"
+    },
+    {
+      "code": "Mdn",
+      "name": "Mölndals nedre"
+    },
+    {
+      "code": "Lgd",
+      "name": "Ledsgård"
+    },
+    {
+      "code": "Kb",
+      "name": "Kungsbacka"
+    },
+    {
+      "code": "Ldo",
+      "name": "Lindome"
+    },
+    {
+      "code": "Lek",
+      "name": "Lekarekulle"
+    },
+    {
+      "code": "Tye",
+      "name": "Tyllered"
+    },
+    {
+      "code": "Fabp",
+      "name": "Falkenberg personstation"
+    },
+    {
+      "code": "Teo",
+      "name": "Torebo"
+    },
+    {
+      "code": "Btp",
+      "name": "Biskopstorp"
+    },
+    {
+      "code": "Ea",
+      "name": "Eldsberga"
+    },
+    {
+      "code": "He",
+      "name": "Heberg"
+    },
+    {
+      "code": "Vbc",
+      "name": "Varbergs central"
+    },
+    {
+      "code": "Få",
+      "name": "Frillesås"
+    },
+    {
+      "code": "Bp",
+      "name": "Brännarp"
+    },
+    {
+      "code": "Haa",
+      "name": "Hamra"
+    },
+    {
+      "code": "Laov",
+      "name": "Laholm västra"
+    },
+    {
+      "code": "Bån",
+      "name": "Båstad norra"
+    },
+    {
+      "code": "För",
+      "name": "Förslöv"
+    },
+    {
+      "code": "Ä",
+      "name": "Ängelholm"
+    },
+    {
+      "code": "Vip",
+      "name": "Viarp"
+    },
+    {
+      "code": "Baa",
+      "name": "Barkåkra"
+    },
+    {
+      "code": "Hd",
+      "name": "Halmstads central"
+    },
+    {
+      "code": "Fur",
+      "name": "Furet"
+    },
+    {
+      "code": "Fgå",
+      "name": "Fagerås"
+    },
+    {
+      "code": "Bu",
+      "name": "Brunsbergstunneln"
+    },
+    {
+      "code": "Ot",
+      "name": "Ottebol"
+    },
+    {
+      "code": "Hbd",
+      "name": "Högboda"
+    },
+    {
+      "code": "En",
+      "name": "Edane"
+    },
+    {
+      "code": "Åt",
+      "name": "Åmotfors"
+    },
+    {
+      "code": "Cg",
+      "name": "Charlottenberg"
+    },
+    {
+      "code": "Än",
+      "name": "Älvängen"
+    },
+    {
+      "code": "Agb",
+      "name": "Agnesberg"
+    },
+    {
+      "code": "Alh",
+      "name": "Alvhem"
+    },
+    {
+      "code": "Öx",
+      "name": "Öxnered"
+    },
+    {
+      "code": "Tbn",
+      "name": "Torbacken"
+    },
+    {
+      "code": "Veas",
+      "name": "Velanda Södra"
+    },
+    {
+      "code": "Vpm",
+      "name": "Varpemossen"
+    },
+    {
+      "code": "Drt",
+      "name": "Dals Rostock"
+    },
+    {
+      "code": "Mon",
+      "name": "Mon"
+    },
+    {
+      "code": "Bäf",
+      "name": "Bäckefors"
+    },
+    {
+      "code": "Ed",
+      "name": "Ed"
+    },
+    {
+      "code": "Rås",
+      "name": "Råskogen"
+    },
+    {
+      "code": "Ml",
+      "name": "Mellerud"
+    },
+    {
+      "code": "Skbl",
+      "name": "Skälebol"
+    },
+    {
+      "code": "Byä",
+      "name": "Byälven"
+    },
+    {
+      "code": "Sgm",
+      "name": "Segmon"
+    },
+    {
+      "code": "Kpm",
+      "name": "Köpmannebro"
+    },
+    {
+      "code": "Erk",
+      "name": "Erikstad"
+    },
+    {
+      "code": "Töe",
+      "name": "Tösse"
+    },
+    {
+      "code": "Ånm",
+      "name": "Ånimskog"
+    },
+    {
+      "code": "Bjh",
+      "name": "Bjurhem"
+    },
+    {
+      "code": "El",
+      "name": "Edsvalla"
+    },
+    {
+      "code": "Brl",
+      "name": "Brålanda"
+    },
+    {
+      "code": "Fdf",
+      "name": "Frändefors"
+    },
+    {
+      "code": "Boy",
+      "name": "Bollebygd"
+    },
+    {
+      "code": "Häy",
+      "name": "Härryda"
+    },
+    {
+      "code": "Hås",
+      "name": "Hindås"
+    },
+    {
+      "code": "Rd",
+      "name": "Rävlanda"
+    },
+    {
+      "code": "Rö",
+      "name": "Rödberg"
+    },
+    {
+      "code": "Sae",
+      "name": "Sandared"
+    },
+    {
+      "code": "Mdö",
+      "name": "Mölndals övre"
+    },
+    {
+      "code": "Myk",
+      "name": "Mölnlycke"
+    },
+    {
+      "code": "Ryr",
+      "name": "Ryr"
+    },
+    {
+      "code": "Gop",
+      "name": "Grästorp"
+    },
+    {
+      "code": "Vg",
+      "name": "Vänersborg central"
+    },
+    {
+      "code": "Håp",
+      "name": "Håkantorp"
+    },
+    {
+      "code": "Vaa",
+      "name": "Vara"
+    },
+    {
+      "code": "Ved",
+      "name": "Vedum"
+    },
+    {
+      "code": "Fra",
+      "name": "Fristad"
+    },
+    {
+      "code": "Lju",
+      "name": "Ljung"
+    },
+    {
+      "code": "Boa",
+      "name": "Borgstena"
+    },
+    {
+      "code": "Bsc",
+      "name": "Borås central"
+    },
+    {
+      "code": "Knl",
+      "name": "Knalleland"
+    },
+    {
+      "code": "Vfo",
+      "name": "Viskafors"
+    },
+    {
+      "code": "Vdi",
+      "name": "Veddige"
+    },
+    {
+      "code": "See",
+      "name": "Skene"
+    },
+    {
+      "code": "Hre",
+      "name": "Horred"
+    },
+    {
+      "code": "Bäb",
+      "name": "Bäckebron"
+    },
+    {
+      "code": "Lyv",
+      "name": "Lysvik"
+    },
+    {
+      "code": "Hvr",
+      "name": "Håverud"
+    },
+    {
+      "code": "Rån",
+      "name": "Råsjön"
+    },
+    {
+      "code": "Tsl",
+      "name": "Tisselskog"
+    },
+    {
+      "code": "Lgb",
+      "name": "Långbron"
+    },
+    {
+      "code": "Dld",
+      "name": "Dals Långed"
+    },
+    {
+      "code": "Vf",
+      "name": "Vartofta"
+    },
+    {
+      "code": "Fm",
+      "name": "Forserum"
+    },
+    {
+      "code": "Bry",
+      "name": "Bankeryd"
+    },
+    {
+      "code": "Jö",
+      "name": "Jönköpings central"
+    },
+    {
+      "code": "Hka",
+      "name": "Huskvarna"
+    },
+    {
+      "code": "Äng",
+      "name": "Äng"
+    },
+    {
+      "code": "Sm",
+      "name": "Sandhem"
+    },
+    {
+      "code": "Mu",
+      "name": "Mullsjö"
+    },
+    {
+      "code": "Th",
+      "name": "Tenhult"
+    },
+    {
+      "code": "Ho",
+      "name": "Habo"
+    },
+    {
+      "code": "Bor",
+      "name": "Bor"
+    },
+    {
+      "code": "Rym",
+      "name": "Rydaholm"
+    },
+    {
+      "code": "Röp",
+      "name": "Rörstorp"
+    },
+    {
+      "code": "Apd",
+      "name": "Aplared"
+    },
+    {
+      "code": "Grm",
+      "name": "Grimsås"
+    },
+    {
+      "code": "Hil",
+      "name": "Hillared"
+    },
+    {
+      "code": "Gnö",
+      "name": "Gnosjö"
+    },
+    {
+      "code": "Hto",
+      "name": "Hillerstorp"
+    },
+    {
+      "code": "Soe",
+      "name": "Stolpen"
+    },
+    {
+      "code": "Sph",
+      "name": "Skeppshult"
+    },
+    {
+      "code": "Syd",
+      "name": "Skillingaryd"
+    },
+    {
+      "code": "Sdr",
+      "name": "Smålandsstenar"
+    },
+    {
+      "code": "Kvh",
+      "name": "Klevshult"
+    },
+    {
+      "code": "Hrl",
+      "name": "Hörle"
+    },
+    {
+      "code": "Fod",
+      "name": "Forsheda"
+    },
+    {
+      "code": "Rft",
+      "name": "Reftele"
+    },
+    {
+      "code": "Bög",
+      "name": "Brännögård"
+    },
+    {
+      "code": "Tou",
+      "name": "Torup"
+    },
+    {
+      "code": "Om",
+      "name": "Oskarström"
+    },
+    {
+      "code": "Smn",
+      "name": "Sommen"
+    },
+    {
+      "code": "Frd",
+      "name": "Frinnaryd"
+    },
+    {
+      "code": "Ras",
+      "name": "Ralingsås"
+    },
+    {
+      "code": "Fls",
+      "name": "Flisby"
+    },
+    {
+      "code": "Lkn",
+      "name": "Lindekullen"
+    },
+    {
+      "code": "Tns",
+      "name": "Tranås"
+    },
+    {
+      "code": "Vim",
+      "name": "Vimnarp"
+    },
+    {
+      "code": "Gp",
+      "name": "Gripenberg"
+    },
+    {
+      "code": "Gt",
+      "name": "Grimstorp"
+    },
+    {
+      "code": "Gåp",
+      "name": "Gåvetorp"
+    },
+    {
+      "code": "Utp",
+      "name": "Ulvstorp"
+    },
+    {
+      "code": "Ahm",
+      "name": "Aleholm"
+    },
+    {
+      "code": "Rk",
+      "name": "Rörvik"
+    },
+    {
+      "code": "Lns",
+      "name": "Lidnäs"
+    },
+    {
+      "code": "Mo",
+      "name": "Moheda"
+    },
+    {
+      "code": "Era",
+      "name": "Eneryda"
+    },
+    {
+      "code": "Bld",
+      "name": "Blädinge"
+    },
+    {
+      "code": "Diö",
+      "name": "Diö Norra"
+    },
+    {
+      "code": "Tun",
+      "name": "Tunneby"
+    },
+    {
+      "code": "Hv",
+      "name": "Hästveda"
+    },
+    {
+      "code": "Mud",
+      "name": "Mosselund"
+    },
+    {
+      "code": "Gm",
+      "name": "Gemla"
+    },
+    {
+      "code": "Vö",
+      "name": "Växjö"
+    },
+    {
+      "code": "Räp",
+      "name": "Räppe"
+    },
+    {
+      "code": "Em",
+      "name": "Emmaboda"
+    },
+    {
+      "code": "Ård",
+      "name": "Åryd"
+    },
+    {
+      "code": "Hvp",
+      "name": "Hovmantorp"
+    },
+    {
+      "code": "Lo",
+      "name": "Lessebo"
+    },
+    {
+      "code": "Sru",
+      "name": "Skruv"
+    },
+    {
+      "code": "Vfa",
+      "name": "Vissefjärda"
+    },
+    {
+      "code": "Hmö",
+      "name": "Holmsjö"
+    },
+    {
+      "code": "Spj",
+      "name": "Spjutsbygd"
+    },
+    {
+      "code": "Ck",
+      "name": "Karlskrona central"
+    },
+    {
+      "code": "Örs",
+      "name": "Örsjö"
+    },
+    {
+      "code": "Nyb",
+      "name": "Nybro"
+    },
+    {
+      "code": "Tre",
+      "name": "Trekanten"
+    },
+    {
+      "code": "Kba",
+      "name": "Korsberga"
+    },
+    {
+      "code": "Esn",
+      "name": "Ekenässjön"
+    },
+    {
+      "code": "Ory",
+      "name": "Ormaryd"
+    },
+    {
+      "code": "Hul",
+      "name": "Hult"
+    },
+    {
+      "code": "Mnd",
+      "name": "Mariannelund"
+    },
+    {
+      "code": "Bg",
+      "name": "Berga"
+    },
+    {
+      "code": "Gng",
+      "name": "Gullringen"
+    },
+    {
+      "code": "Vibh",
+      "name": "Vimmerby Hamra"
+    },
+    {
+      "code": "Sro",
+      "name": "Storebro"
+    },
+    {
+      "code": "Rf",
+      "name": "Rimforsa"
+    },
+    {
+      "code": "Bsä",
+      "name": "Bjärka-Säby"
+    },
+    {
+      "code": "Fal",
+      "name": "Falerum"
+    },
+    {
+      "code": "Gal",
+      "name": "Gamleby"
+    },
+    {
+      "code": "Åvg",
+      "name": "Åtvidaberg"
+    },
+    {
+      "code": "Nl",
+      "name": "Nelhammar"
+    },
+    {
+      "code": "Hkö",
+      "name": "Hökön"
+    },
+    {
+      "code": "Rud",
+      "name": "Ruda"
+    },
+    {
+      "code": "Lrp",
+      "name": "Lockarp"
+    },
+    {
+      "code": "Fsb",
+      "name": "Fosieby"
+    },
+    {
+      "code": "Blv",
+      "name": "Burlöv"
+    },
+    {
+      "code": "Hb",
+      "name": "Helsingborgs central"
+    },
+    {
+      "code": "Väd",
+      "name": "Vätteryd"
+    },
+    {
+      "code": "Tö",
+      "name": "Tjörnarp"
+    },
+    {
+      "code": "Mlb",
+      "name": "Mellby"
+    },
+    {
+      "code": "Sg",
+      "name": "Stehag"
+    },
+    {
+      "code": "Thl",
+      "name": "Tornhill"
+    },
+    {
+      "code": "Hö",
+      "name": "Höör"
+    },
+    {
+      "code": "Dat",
+      "name": "Dammstorp"
+    },
+    {
+      "code": "Kgå",
+      "name": "Klostergården"
+    },
+    {
+      "code": "Hjp",
+      "name": "Hjärup"
+    },
+    {
+      "code": "Åk",
+      "name": "Åkarp"
+    },
+    {
+      "code": "Vid",
+      "name": "Västra Ingelstad"
+    },
+    {
+      "code": "Ög",
+      "name": "Östra Grevie"
+    },
+    {
+      "code": "Svö",
+      "name": "Skytts Vemmerlöv"
+    },
+    {
+      "code": "Lnk",
+      "name": "Lernacken"
+    },
+    {
+      "code": "Stp",
+      "name": "Svågertorp"
+    },
+    {
+      "code": "Mia",
+      "name": "Maria"
+    },
+    {
+      "code": "Pö",
+      "name": "Pålsjö"
+    },
+    {
+      "code": "Vh",
+      "name": "Vegeholm"
+    },
+    {
+      "code": "Ka",
+      "name": "Kattarp"
+    },
+    {
+      "code": "Öda",
+      "name": "Ödåkra"
+    },
+    {
+      "code": "Hlp",
+      "name": "Hasslarp"
+    },
+    {
+      "code": "Kd",
+      "name": "Kågeröd"
+    },
+    {
+      "code": "Sal",
+      "name": "Svalöv"
+    },
+    {
+      "code": "Sie",
+      "name": "Stävie"
+    },
+    {
+      "code": "Fl",
+      "name": "Flädie"
+    },
+    {
+      "code": "Lma",
+      "name": "Lomma"
+    },
+    {
+      "code": "Tp",
+      "name": "Teckomatorp"
+    },
+    {
+      "code": "Gan",
+      "name": "Gantofta"
+    },
+    {
+      "code": "Tgp",
+      "name": "Tågarp"
+    },
+    {
+      "code": "Våk",
+      "name": "Vallåkra"
+    },
+    {
+      "code": "Bib",
+      "name": "Billeberga"
+    },
+    {
+      "code": "Gnd",
+      "name": "Genevad"
+    },
+    {
+      "code": "Knä",
+      "name": "Knäred"
+    },
+    {
+      "code": "Bjm",
+      "name": "Bjärnum"
+    },
+    {
+      "code": "Vto",
+      "name": "Västra Torup"
+    },
+    {
+      "code": "Kvi",
+      "name": "Kvidinge"
+    },
+    {
+      "code": "Käb",
+      "name": "Kärreberga"
+    },
+    {
+      "code": "Fin",
+      "name": "Finja"
+    },
+    {
+      "code": "Ty",
+      "name": "Tyringe"
+    },
+    {
+      "code": "Hyl",
+      "name": "Hyllstofta"
+    },
+    {
+      "code": "Bjuv",
+      "name": "Bjuv"
+    },
+    {
+      "code": "Mör",
+      "name": "Mörarp"
+    },
+    {
+      "code": "Påa",
+      "name": "Påarp"
+    },
+    {
+      "code": "Kg",
+      "name": "Kävlinge"
+    },
+    {
+      "code": "Atp",
+      "name": "Attarp"
+    },
+    {
+      "code": "Vöv",
+      "name": "Vinslöv"
+    },
+    {
+      "code": "Önd",
+      "name": "Önnestad"
+    },
+    {
+      "code": "Cr",
+      "name": "Kristianstads central"
+    },
+    {
+      "code": "Kap",
+      "name": "Karpalund"
+    },
+    {
+      "code": "Crgb",
+      "name": "Kristianstad GBG"
+    },
+    {
+      "code": "Åmn",
+      "name": "Ångsågsmossen"
+    },
+    {
+      "code": "Bhb",
+      "name": "Bräkne-Hoby"
+    },
+    {
+      "code": "Fki",
+      "name": "Fjälkinge"
+    },
+    {
+      "code": "Sak",
+      "name": "Sandbäck"
+    },
+    {
+      "code": "Mru",
+      "name": "Mörrum"
+    },
+    {
+      "code": "Rb",
+      "name": "Ronneby"
+    },
+    {
+      "code": "Nät",
+      "name": "Nättraby"
+    },
+    {
+      "code": "Tri",
+      "name": "Triangeln"
+    },
+    {
+      "code": "Hie",
+      "name": "Hyllie"
+    },
+    {
+      "code": "Saö",
+      "name": "Skabersjö"
+    },
+    {
+      "code": "Lmm",
+      "name": "Lemmeströ"
+    },
+    {
+      "code": "Srp",
+      "name": "Skurup"
+    },
+    {
+      "code": "Rye",
+      "name": "Rynge"
+    },
+    {
+      "code": "Vlb",
+      "name": "Vilhelmsborg"
+    },
+    {
+      "code": "Sea",
+      "name": "Svedala"
+    },
+    {
+      "code": "Rdg",
+      "name": "Rydsgård"
+    },
+    {
+      "code": "Si",
+      "name": "Simrishamn"
+    },
+    {
+      "code": "Phm",
+      "name": "Peberholm"
+    },
+    {
+      "code": "Cph",
+      "name": "Copenhagen Airport"
     }
   ]
 }

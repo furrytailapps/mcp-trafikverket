@@ -7,10 +7,17 @@
  * API Documentation: https://lastkajen.trafikverket.se/assets/Lastkajen2_API_Information.pdf
  *
  * Authentication: Bearer token from LASTKAJEN_API_TOKEN environment variable
- * Token expires ~24 hours, refresh via POST /api/Identity/Login
+ * Token expires ~24 hours (86399 seconds), refresh via POST /api/Identity/Login
+ *
+ * Correct API Endpoints (verified from PDF v1.4, 2023-01-24):
+ * - POST /api/Identity/Login - Get access token
+ * - GET /api/DataPackage/GetPublishedDataPackages - List all data packages
+ * - GET /api/DataPackage/GetDataPackageFiles/{id} - Get files in a package
+ * - GET /api/file/GetDataPackageDownloadToken?id=&fileName= - Get download token (60s validity)
+ * - GET /api/File/GetDataPackageFile?token= - Download file (no auth needed)
  */
 
-const LASTKAJEN_API_BASE = 'https://lastkajen.trafikverket.se/api';
+const LASTKAJEN_API_BASE = 'https://lastkajen.trafikverket.se';
 
 function getApiToken(): string {
   const token = process.env.LASTKAJEN_API_TOKEN;
@@ -20,18 +27,15 @@ function getApiToken(): string {
   return token;
 }
 
-interface ApiResponse<T> {
-  data: T;
-  success: boolean;
-  message?: string;
-}
-
 /**
  * Make an authenticated request to the Lastkajen API
+ * Note: The API returns data directly, not wrapped in { data, success, message }
  */
 async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const token = getApiToken();
   const url = `${LASTKAJEN_API_BASE}${endpoint}`;
+
+  console.log(`[lastkajen-api] GET ${endpoint}`);
 
   const response = await fetch(url, {
     ...options,
@@ -43,53 +47,214 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
   });
 
   if (!response.ok) {
-    throw new Error(`Lastkajen API error: ${response.status} ${response.statusText}`);
+    const errorText = await response.text().catch(() => '');
+    throw new Error(`Lastkajen API error: ${response.status} ${response.statusText} - ${errorText}`);
   }
 
-  const json = (await response.json()) as ApiResponse<T>;
-
-  if (!json.success) {
-    throw new Error(`Lastkajen API error: ${json.message || 'Unknown error'}`);
-  }
-
-  return json.data;
+  return response.json() as Promise<T>;
 }
 
 // ============================================================================
-// API ENDPOINTS
+// API TYPES (based on API documentation v1.4)
 // ============================================================================
 
-// NOTE: The exact endpoint paths need to be verified from the API documentation.
-// These are placeholder implementations based on common REST API patterns.
-// Update these once we have access to the actual API documentation.
+/** Response from /api/Identity/Login */
+export interface LoginResponse {
+  access_token: string;
+  expires_in: number; // 86399 (~24 hours)
+  is_external: boolean;
+}
+
+/** Data package from /api/DataPackage/GetPublishedDataPackages */
+export interface DataPackage {
+  id: number;
+  targetFolder: {
+    id: number;
+    name: string;
+    path: string;
+  };
+  sourceFolder: string;
+  name: string;
+  description: string;
+  published: boolean;
+}
+
+/** File link from GetDataPackageFiles response */
+export interface FileLink {
+  href: string;
+  rel: string;
+  method: string;
+  isTemplated: boolean;
+}
+
+/** File in a data package from /api/DataPackage/GetDataPackageFiles/{id} */
+export interface DataPackageFile {
+  isFolder: boolean;
+  name: string;
+  size: string;
+  dateTime: string;
+  links: FileLink[];
+}
+
+// ============================================================================
+// API ENDPOINTS (verified from PDF documentation)
+// ============================================================================
 
 /**
  * Refresh the API token using username/password credentials
  *
- * @param username - Lastkajen username
+ * POST /api/Identity/Login
+ *
+ * @param username - Lastkajen username (email)
  * @param password - Lastkajen password
- * @returns New API token
+ * @returns Login response with access_token
  */
-export async function refreshToken(username: string, password: string): Promise<string> {
-  const response = await fetch(`${LASTKAJEN_API_BASE}/Identity/Login`, {
+export async function refreshToken(username: string, password: string): Promise<LoginResponse> {
+  console.log('[lastkajen-api] POST /api/Identity/Login');
+
+  const response = await fetch(`${LASTKAJEN_API_BASE}/api/Identity/Login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ UserName: username, Password: password }),
   });
 
   if (!response.ok) {
     throw new Error(`Token refresh failed: ${response.status} ${response.statusText}`);
   }
 
-  const json = (await response.json()) as { token: string };
-  return json.token;
+  return response.json() as Promise<LoginResponse>;
 }
 
 /**
- * Get list of available NJDB products/datasets
+ * Get list of all published data packages
+ *
+ * GET /api/DataPackage/GetPublishedDataPackages
+ *
+ * Known railway packages (as of 2026-02):
+ * - ID 10144: "Järnvägsnät med grundegenskaper" (Railway network with basic properties)
  */
+export async function getPublishedDataPackages(): Promise<DataPackage[]> {
+  return apiRequest<DataPackage[]>('/api/DataPackage/GetPublishedDataPackages');
+}
+
+/**
+ * Get files in a specific data package
+ *
+ * GET /api/DataPackage/GetDataPackageFiles/{id}
+ *
+ * @param packageId - ID of the data package (e.g., 10144 for railway basic properties)
+ */
+export async function getDataPackageFiles(packageId: number): Promise<DataPackageFile[]> {
+  return apiRequest<DataPackageFile[]>(`/api/DataPackage/GetDataPackageFiles/${packageId}`);
+}
+
+/**
+ * Get a download token for a specific file
+ *
+ * GET /api/file/GetDataPackageDownloadToken?id={id}&fileName={fileName}
+ *
+ * Token is single-use and expires after 60 seconds!
+ *
+ * @param packageId - ID of the data package
+ * @param fileName - Name of the file to download
+ * @returns Download token (GUID string)
+ */
+export async function getDownloadToken(packageId: number, fileName: string): Promise<string> {
+  const params = new URLSearchParams({
+    id: packageId.toString(),
+    fileName: fileName,
+  });
+
+  return apiRequest<string>(`/api/file/GetDataPackageDownloadToken?${params}`);
+}
+
+/**
+ * Download a file using a download token
+ *
+ * GET /api/File/GetDataPackageFile?token={token}
+ *
+ * Note: This endpoint does NOT require authentication (token-based)
+ *
+ * @param downloadToken - Token from getDownloadToken (valid for 60 seconds, single use)
+ * @returns File content as ArrayBuffer (usually a ZIP file)
+ */
+export async function downloadFile(downloadToken: string): Promise<ArrayBuffer> {
+  console.log('[lastkajen-api] GET /api/File/GetDataPackageFile (downloading file...)');
+
+  const response = await fetch(
+    `${LASTKAJEN_API_BASE}/api/File/GetDataPackageFile?token=${encodeURIComponent(downloadToken)}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+  }
+
+  return response.arrayBuffer();
+}
+
+// ============================================================================
+// HIGH-LEVEL CONVENIENCE FUNCTIONS
+// ============================================================================
+
+/**
+ * Download a data package file by package ID and filename
+ *
+ * Combines getDownloadToken + downloadFile into one call.
+ * Note: Token expires after 60 seconds, so this downloads immediately.
+ *
+ * @param packageId - ID of the data package
+ * @param fileName - Name of the file to download
+ * @returns File content as ArrayBuffer
+ */
+export async function downloadPackageFile(packageId: number, fileName: string): Promise<ArrayBuffer> {
+  console.log(`[lastkajen-api] Downloading ${fileName} from package ${packageId}`);
+
+  // Get download token (valid for 60 seconds)
+  const token = await getDownloadToken(packageId, fileName);
+
+  // Download immediately (token is single-use)
+  return downloadFile(token);
+}
+
+/**
+ * List all railway-related data packages
+ *
+ * Filters published packages to only return railway (Järnväg) packages.
+ */
+export async function getRailwayDataPackages(): Promise<DataPackage[]> {
+  const packages = await getPublishedDataPackages();
+
+  // Filter for railway packages (path contains Järnväg or railway-related terms)
+  return packages.filter(
+    (pkg) =>
+      pkg.name.toLowerCase().includes('järnväg') ||
+      pkg.name.toLowerCase().includes('järnvägsnät') ||
+      pkg.targetFolder.path.toLowerCase().includes('järnväg')
+  );
+}
+
+// ============================================================================
+// KNOWN PACKAGE IDS (discovered via browser exploration)
+// ============================================================================
+
+/**
+ * Known railway data package IDs from Lastkajen
+ * These may change over time - verify via getPublishedDataPackages()
+ */
+export const RAILWAY_PACKAGE_IDS = {
+  /** Railway network with basic properties (tracks, geometry, etc.) - 18.5MB GeoPackage */
+  BASIC_PROPERTIES: 10144,
+} as const;
+
+// ============================================================================
+// LEGACY EXPORTS (for backwards compatibility with old code)
+// ============================================================================
+
+// These match the old interface but use the new implementation
+
+/** @deprecated Use getPublishedDataPackages instead */
 export async function getAvailableProducts(): Promise<
   Array<{
     id: string;
@@ -98,54 +263,28 @@ export async function getAvailableProducts(): Promise<
     format: string;
   }>
 > {
-  return apiRequest<
-    Array<{
-      id: string;
-      name: string;
-      description: string;
-      format: string;
-    }>
-  >('/Products');
+  const packages = await getPublishedDataPackages();
+  return packages.map((pkg) => ({
+    id: pkg.id.toString(),
+    name: pkg.name,
+    description: pkg.description,
+    format: 'geopackage', // Lastkajen primarily uses GeoPackage format
+  }));
 }
 
-/**
- * Request a data download for a specific product
- *
- * @param productId - ID of the product to download
- * @returns Download token (valid for 60 seconds)
- */
+/** @deprecated Use getDownloadToken + downloadFile instead */
 export async function requestDownload(productId: string): Promise<{ downloadToken: string; expiresIn: number }> {
-  return apiRequest<{ downloadToken: string; expiresIn: number }>(`/Products/${productId}/Download`, {
-    method: 'POST',
-  });
-}
-
-/**
- * Download a file using a download token
- *
- * @param downloadToken - Token from requestDownload
- * @returns File content as string (JSON/GeoJSON)
- */
-export async function downloadFile(downloadToken: string): Promise<string> {
-  const response = await fetch(`${LASTKAJEN_API_BASE}/Download/${downloadToken}`, {
-    headers: {
-      Authorization: `Bearer ${getApiToken()}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Download failed: ${response.status} ${response.statusText}`);
-  }
-
-  return response.text();
+  // This would need a filename - the old API assumed direct product download
+  // For now, throw an error to indicate the API has changed
+  throw new Error(
+    'requestDownload is deprecated. Lastkajen API requires a filename. ' +
+      'Use getDataPackageFiles() to list files, then getDownloadToken(packageId, fileName).'
+  );
 }
 
 // ============================================================================
-// NJDB-SPECIFIC ENDPOINTS (to be verified with API docs)
+// NJDB DATA TYPES (for future GeoPackage parsing)
 // ============================================================================
-
-// These endpoints are placeholders. The actual Lastkajen API structure
-// needs to be verified from the official documentation.
 
 export interface NJDBTrackData {
   id: string;
@@ -197,42 +336,44 @@ export interface NJDBBridgeData {
 }
 
 /**
- * Fetch all tracks from NJDB
+ * NJDB Data Access
  *
- * NOTE: This is a placeholder. The actual endpoint needs to be determined
- * from Lastkajen API documentation.
+ * Infrastructure data (tracks, tunnels, bridges) is stored in /data/*.json files.
+ * These are synced from Lastkajen GeoPackage via:
+ *   1. download-railway-data.ts - Downloads GeoPackage from Lastkajen API
+ *   2. convert-geopackage.ts - Converts GeoPackage to JSON format
+ *
+ * The MCP tools read directly from JSON files via data-loader.ts.
+ * These fetch functions are kept for backward compatibility but return empty arrays.
+ * Use the data-loader module to access the actual infrastructure data.
  */
 export async function fetchTracks(): Promise<NJDBTrackData[]> {
-  // TODO: Replace with actual Lastkajen API endpoint
-  // The API might use WFS, REST, or a custom query format
-
-  // For now, return empty array - sync script will skip if API unavailable
-  console.log('[lastkajen-api] fetchTracks() - API endpoint not yet implemented');
+  console.log('[lastkajen-api] fetchTracks() - Use data-loader.ts to read from /data/tracks.json');
   return [];
 }
 
-/**
- * Fetch all tunnels from NJDB
- */
 export async function fetchTunnels(): Promise<NJDBTunnelData[]> {
-  console.log('[lastkajen-api] fetchTunnels() - API endpoint not yet implemented');
+  console.log('[lastkajen-api] fetchTunnels() - Use data-loader.ts to read from /data/tunnels.json');
   return [];
 }
 
-/**
- * Fetch all bridges from NJDB
- */
 export async function fetchBridges(): Promise<NJDBBridgeData[]> {
-  console.log('[lastkajen-api] fetchBridges() - API endpoint not yet implemented');
+  console.log('[lastkajen-api] fetchBridges() - Use data-loader.ts to read from /data/bridges.json');
   return [];
 }
 
-// Export client for testing
+// Export client for testing and data sync
 export const lastkajenApi = {
   refreshToken,
+  getPublishedDataPackages,
+  getDataPackageFiles,
+  getDownloadToken,
+  downloadFile,
+  downloadPackageFile,
+  getRailwayDataPackages,
+  // Legacy (kept for backward compatibility)
   getAvailableProducts,
   requestDownload,
-  downloadFile,
   fetchTracks,
   fetchTunnels,
   fetchBridges,

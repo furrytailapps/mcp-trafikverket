@@ -33,10 +33,14 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.25.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/unzipper": "^0.10.11",
+    "better-sqlite3": "^12.6.2",
     "mcp-handler": "^1.0.5",
     "next": "^14.2.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
+    "unzipper": "^0.12.3",
     "zod": "^3.24.0"
   },
   "devDependencies": {
@@ -46,6 +50,7 @@
     "eslint": "^8.0.0",
     "eslint-config-next": "^14.2.0",
     "prettier": "^3.7.4",
+    "tsx": "^4.21.0",
     "typescript": "^5.0.0"
   }
 }

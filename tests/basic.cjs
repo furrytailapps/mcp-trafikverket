@@ -121,7 +121,7 @@ async function main() {
     console.log('   FAILED:', describeResult.error?.message || 'Unknown error');
   }
 
-  // Test 4: Call get_infrastructure (uses sample data)
+  // Test 4: Call get_infrastructure (uses NJDB data from Lastkajen)
   console.log('\n4. Testing trafikverket_get_infrastructure with trackId="182"...');
   const infraResult = await testMCP('tools/call', {
     name: 'trafikverket_get_infrastructure',
