@@ -24,29 +24,56 @@ Construction/infrastructure companies (NRC, COWI) using yesper.ai who need:
 
 This MCP uses two different Trafikverket data sources:
 
-| Source         | Endpoint                            | Type            | Data                | Status    |
-| -------------- | ----------------------------------- | --------------- | ------------------- | --------- |
-| **Lastkajen**  | `lastkajen.trafikverket.se`         | REST API        | NJDB infrastructure | JSON sync |
-| **Trafikinfo** | `api.trafikinfo.trafikverket.se/v2` | API (XML POST)  | Real-time data      | Live      |
+| Source         | Endpoint                            | Type           | Data                | Status    |
+| -------------- | ----------------------------------- | -------------- | ------------------- | --------- |
+| **Lastkajen**  | `lastkajen.trafikverket.se`         | REST API       | NJDB infrastructure | JSON sync |
+| **Trafikinfo** | `api.trafikinfo.trafikverket.se/v2` | API (XML POST) | Real-time data      | Live      |
 
 ### Data Sync Architecture
 
 ```
-┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│  Vercel Cron    │────▶│  Lastkajen API   │────▶│  /data/*.json   │
-│  (daily 3am)    │     │  (REST + Bearer) │     │  (git-tracked)  │
-└─────────────────┘     └──────────────────┘     └─────────────────┘
-                                                          │
-                                                          ▼
-                                                 ┌─────────────────┐
-                                                 │  MCP Tools      │
-                                                 │  (read JSON)    │
-                                                 └─────────────────┘
+┌─────────────────────────────────────────────────────────────────────┐
+│                        AUTOMATED SYNC                               │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  GitHub Actions (weekly)              Vercel Cron (daily)           │
+│  ┌─────────────────┐                  ┌─────────────────┐           │
+│  │ Infrastructure  │                  │    Stations     │           │
+│  │ tracks/tunnels/ │                  │ (Trafikinfo API)│           │
+│  │ bridges         │                  └────────┬────────┘           │
+│  └────────┬────────┘                           │                    │
+│           │                                    │                    │
+│           ▼                                    ▼                    │
+│  ┌─────────────────┐                  ┌─────────────────┐           │
+│  │ Lastkajen API   │                  │ stations.json   │           │
+│  │ (GeoPackage)    │                  └─────────────────┘           │
+│  └────────┬────────┘                                                │
+│           │                                                         │
+│           ▼                                                         │
+│  ┌─────────────────┐                                                │
+│  │ Git commit      │──── Triggers Vercel deploy ────▶               │
+│  │ data/*.json     │                                                │
+│  └─────────────────┘                                                │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                           ┌─────────────────┐
+                           │  MCP Tools      │
+                           │  (read JSON)    │
+                           └─────────────────┘
 ```
 
+**Two sync mechanisms:**
+
+| What                                          | How                                   | Frequency               | Trigger                                     |
+| --------------------------------------------- | ------------------------------------- | ----------------------- | ------------------------------------------- |
+| **Infrastructure** (tracks, tunnels, bridges) | GitHub Actions → Lastkajen GeoPackage | Weekly (Sunday 3am UTC) | `.github/workflows/sync-infrastructure.yml` |
+| **Stations**                                  | Vercel Cron → Trafikinfo API          | Daily (3am UTC)         | `/api/cron/sync`                            |
+
 - **Infrastructure data** is stored in `/data/*.json` files (git-tracked for reliability)
-- **Vercel Cron** syncs data daily at 3am UTC via `/api/cron/sync`
-- **Manual sync**: `npx tsx src/scripts/sync-lastkajen.ts`
+- **GitHub Actions** downloads GeoPackage, converts to JSON, commits to repo → triggers Vercel deploy
+- **Token auto-refresh**: `lastkajen-api.ts` automatically refreshes expired tokens using credentials
 
 ## Available Tools (4)
 
@@ -60,6 +87,9 @@ This MCP uses two different Trafikverket data sources:
 ## Project Structure
 
 ```
+.github/workflows/
+└── sync-infrastructure.yml       # Weekly GeoPackage sync via GitHub Actions
+
 data/                             # Infrastructure data (git-tracked)
 ├── tracks.json
 ├── tunnels.json
@@ -104,20 +134,44 @@ src/
 
 ## Environment Variables
 
+### Vercel (Production)
+
+```bash
+# Trafikinfo API (for real-time data: incidents, crossings, road conditions)
+TRAFIKVERKET_API_KEY=xxx
+```
+
+### GitHub Actions (for weekly infrastructure sync)
+
+Set these in GitHub repo Settings → Secrets → Actions:
+
+```bash
+# Lastkajen credentials (for auto-refresh token)
+LASTKAJEN_USERNAME=xxx    # Lastkajen account email
+LASTKAJEN_PASSWORD=xxx    # Lastkajen account password
+```
+
+### Local Development
+
 ```bash
 # .env.local
 
-# Trafikinfo API (for real-time data: incidents, crossings, road conditions)
+# Trafikinfo API
 TRAFIKVERKET_API_KEY=xxx
 
-# Lastkajen API (for NJDB infrastructure data)
-LASTKAJEN_API_TOKEN=xxx
+# Lastkajen - use EITHER credentials (auto-refresh) OR token (manual)
+LASTKAJEN_USERNAME=xxx
+LASTKAJEN_PASSWORD=xxx
+# OR
+LASTKAJEN_API_TOKEN=xxx   # Manual token (expires in 24h)
 ```
 
 **Getting API Keys:**
 
 - Trafikinfo: https://api.trafikinfo.trafikverket.se/Account/Register
 - Lastkajen: https://lastkajen.trafikverket.se (create account)
+
+**Token Auto-Refresh:** The `lastkajen-api.ts` module automatically refreshes expired tokens when `LASTKAJEN_USERNAME` and `LASTKAJEN_PASSWORD` are set. Falls back to `LASTKAJEN_API_TOKEN` if credentials are not available.
 
 ## Coordinate System
 
@@ -295,7 +349,21 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 
 ## Data Sync
 
-Infrastructure data is synced via GeoPackage from Lastkajen:
+### Automated (Production)
+
+| Data                                          | Sync Method                  | Schedule                |
+| --------------------------------------------- | ---------------------------- | ----------------------- |
+| **Infrastructure** (tracks, tunnels, bridges) | GitHub Actions workflow      | Weekly (Sunday 3am UTC) |
+| **Stations**                                  | Vercel Cron `/api/cron/sync` | Daily (3am UTC)         |
+
+The GitHub Actions workflow:
+
+1. Downloads GeoPackage from Lastkajen (auto-refreshes token)
+2. Converts to JSON
+3. Commits updated data files to repo
+4. Vercel auto-deploys on commit
+
+### Manual (Local Development)
 
 ```bash
 # Full infrastructure sync (tracks, tunnels, bridges)
@@ -305,16 +373,17 @@ npx tsx src/scripts/convert-geopackage.ts     # Convert to JSON
 # Station sync only (from Trafikinfo API)
 npx tsx src/scripts/sync-lastkajen.ts
 
-# Check sync status
-curl http://localhost:3000/api/cron/sync
+# Trigger GitHub Actions workflow manually
+gh workflow run sync-infrastructure.yml
 
 # View current data freshness
 # Use trafikverket_describe_data with dataType="data_freshness"
 ```
 
 **Data sources:**
-- Tracks, tunnels, bridges: Lastkajen GeoPackage (NJDB)
-- Stations: Trafikinfo API (has richer metadata like platforms, accessibility)
+
+- Tracks, tunnels, bridges: Lastkajen GeoPackage (NJDB) via GitHub Actions
+- Stations: Trafikinfo API (has richer metadata like platforms, accessibility) via Vercel Cron
 
 ## LIKE Filter Implementation
 

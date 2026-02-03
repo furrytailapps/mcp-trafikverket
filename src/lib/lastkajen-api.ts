@@ -19,6 +19,71 @@
 
 const LASTKAJEN_API_BASE = 'https://lastkajen.trafikverket.se';
 
+// ============================================================================
+// TOKEN MANAGEMENT (Auto-refresh for production deployment)
+// ============================================================================
+
+/**
+ * Cached token with expiry tracking
+ * Token is stored in memory and auto-refreshed when expired
+ */
+let cachedToken: { token: string; expiresAt: number } | null = null;
+
+/**
+ * Get a valid API token, auto-refreshing if needed
+ *
+ * Priority:
+ * 1. Cached token if still valid (5 minute buffer)
+ * 2. Auto-refresh using LASTKAJEN_USERNAME + LASTKAJEN_PASSWORD
+ * 3. Fall back to LASTKAJEN_API_TOKEN (for manual override/testing)
+ *
+ * @returns Valid access token
+ * @throws Error if no valid credentials available
+ */
+export async function getValidToken(): Promise<string> {
+  // Check if we have a valid cached token (with 5 minute buffer)
+  if (cachedToken && Date.now() < cachedToken.expiresAt) {
+    console.log('[lastkajen-api] Using cached token');
+    return cachedToken.token;
+  }
+
+  // Try auto-refresh with username/password
+  const username = process.env.LASTKAJEN_USERNAME;
+  const password = process.env.LASTKAJEN_PASSWORD;
+
+  if (username && password) {
+    console.log('[lastkajen-api] Auto-refreshing token...');
+    try {
+      const response = await refreshToken(username, password);
+      // Cache with 5 minute buffer before expiry
+      cachedToken = {
+        token: response.access_token,
+        expiresAt: Date.now() + (response.expires_in - 300) * 1000,
+      };
+      console.log(`[lastkajen-api] Token refreshed, expires in ${Math.round(response.expires_in / 3600)} hours`);
+      return cachedToken.token;
+    } catch (error) {
+      console.error('[lastkajen-api] Token refresh failed:', error);
+      // Fall through to try LASTKAJEN_API_TOKEN
+    }
+  }
+
+  // Fall back to manual token (for testing or override)
+  const envToken = process.env.LASTKAJEN_API_TOKEN;
+  if (envToken) {
+    console.log('[lastkajen-api] Using LASTKAJEN_API_TOKEN from environment');
+    return envToken;
+  }
+
+  throw new Error(
+    'No Lastkajen credentials available. Set LASTKAJEN_USERNAME + LASTKAJEN_PASSWORD ' +
+      'for auto-refresh, or LASTKAJEN_API_TOKEN for manual override.',
+  );
+}
+
+/**
+ * @deprecated Use getValidToken() for auto-refresh support
+ */
 function getApiToken(): string {
   const token = process.env.LASTKAJEN_API_TOKEN;
   if (!token) {
@@ -30,9 +95,11 @@ function getApiToken(): string {
 /**
  * Make an authenticated request to the Lastkajen API
  * Note: The API returns data directly, not wrapped in { data, success, message }
+ *
+ * Uses getValidToken() for automatic token management and refresh.
  */
 async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const token = getApiToken();
+  const token = await getValidToken();
   const url = `${LASTKAJEN_API_BASE}${endpoint}`;
 
   console.log(`[lastkajen-api] GET ${endpoint}`);
@@ -40,7 +107,7 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
   const response = await fetch(url, {
     ...options,
     headers: {
-      Authorization: `Bearer ${token}`,
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
       ...options.headers,
     },
@@ -183,9 +250,7 @@ export async function getDownloadToken(packageId: number, fileName: string): Pro
 export async function downloadFile(downloadToken: string): Promise<ArrayBuffer> {
   console.log('[lastkajen-api] GET /api/File/GetDataPackageFile (downloading file...)');
 
-  const response = await fetch(
-    `${LASTKAJEN_API_BASE}/api/File/GetDataPackageFile?token=${encodeURIComponent(downloadToken)}`
-  );
+  const response = await fetch(`${LASTKAJEN_API_BASE}/api/File/GetDataPackageFile?token=${encodeURIComponent(downloadToken)}`);
 
   if (!response.ok) {
     throw new Error(`Download failed: ${response.status} ${response.statusText}`);
@@ -231,7 +296,7 @@ export async function getRailwayDataPackages(): Promise<DataPackage[]> {
     (pkg) =>
       pkg.name.toLowerCase().includes('järnväg') ||
       pkg.name.toLowerCase().includes('järnvägsnät') ||
-      pkg.targetFolder.path.toLowerCase().includes('järnväg')
+      pkg.targetFolder.path.toLowerCase().includes('järnväg'),
   );
 }
 
@@ -278,7 +343,7 @@ export async function requestDownload(productId: string): Promise<{ downloadToke
   // For now, throw an error to indicate the API has changed
   throw new Error(
     'requestDownload is deprecated. Lastkajen API requires a filename. ' +
-      'Use getDataPackageFiles() to list files, then getDownloadToken(packageId, fileName).'
+      'Use getDataPackageFiles() to list files, then getDownloadToken(packageId, fileName).',
   );
 }
 

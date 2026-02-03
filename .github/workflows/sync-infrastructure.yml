@@ -1,0 +1,91 @@
+# Weekly infrastructure data sync from Lastkajen
+#
+# Downloads GeoPackage from Trafikverket's Lastkajen API and converts to JSON.
+# Runs every Sunday at 3am UTC. Can also be triggered manually.
+#
+# Required secrets:
+#   LASTKAJEN_USERNAME - Lastkajen account email
+#   LASTKAJEN_PASSWORD - Lastkajen account password
+#
+# The workflow commits updated JSON files back to the repository,
+# which triggers Vercel to redeploy with fresh data.
+
+name: Sync Infrastructure Data
+
+on:
+  schedule:
+    # Weekly on Sunday at 3am UTC
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+    # Allow manual trigger from GitHub UI
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp-trafikverket
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: mcp-trafikverket/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download GeoPackage from Lastkajen
+        env:
+          LASTKAJEN_USERNAME: ${{ secrets.LASTKAJEN_USERNAME }}
+          LASTKAJEN_PASSWORD: ${{ secrets.LASTKAJEN_PASSWORD }}
+        run: npx tsx src/scripts/download-railway-data.ts
+
+      - name: Convert GeoPackage to JSON
+        run: npx tsx src/scripts/convert-geopackage.ts
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet data/ || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "chore: sync infrastructure data from Lastkajen
+
+          Automated weekly sync of railway infrastructure data:
+          - tracks.json
+          - tunnels.json
+          - bridges.json
+          - metadata.json
+          - sync-status.json
+
+          Source: Trafikverket Lastkajen GeoPackage"
+          git push
+
+      - name: Summary
+        run: |
+          echo "## Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f data/sync-status.json ]; then
+            echo "### Data Counts" >> $GITHUB_STEP_SUMMARY
+            cat data/sync-status.json | jq -r '"- Tracks: \(.counts.tracks)\n- Tunnels: \(.counts.tunnels)\n- Bridges: \(.counts.bridges)\n- Last sync: \(.lastSync)"' >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ "${{ steps.changes.outputs.has_changes }}" == "true" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Changes committed and pushed." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "No changes detected." >> $GITHUB_STEP_SUMMARY
+          fi
