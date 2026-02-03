@@ -22,9 +22,6 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: mcp-trafikverket
 
     steps:
       - name: Checkout repository
@@ -37,7 +34,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: mcp-trafikverket/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
