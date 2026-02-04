@@ -100,6 +100,13 @@ function parseWkbToCoordinates(wkb: Buffer): number[][] | null {
   }
 }
 
+interface SpeedLimitsByClass {
+  classA?: { with: number; against: number };
+  classB?: { with: number; against: number };
+  classC?: { with: number; against: number };
+  classS?: { with: number; against: number };
+}
+
 interface Track {
   id: string;
   designation: string;
@@ -116,6 +123,18 @@ interface Track {
     type: 'LineString';
     coordinates: number[][];
   };
+
+  // Additional properties for maintenance planning
+  lineCategory?: string;
+  speedLimits?: SpeedLimitsByClass;
+  maintenanceContact?: string;
+  status?: string;
+  kmFrom?: string;
+  kmTo?: string;
+  region?: string;
+  municipality?: string;
+  county?: string;
+  trackType?: string;
 }
 
 interface Tunnel {
@@ -201,6 +220,27 @@ async function main() {
     const infraName = (row.Infrafnam as string) || '';
     const sthMed = (row.STH_A_med as number) || 0;
 
+    // Additional properties for maintenance planning
+    const lineCategory = (row.Linjekat as string) || '';
+    const maintenanceContact = (row.UHkontNam as string) || '';
+    const status = (row.Status as string) || '';
+    const kmFrom = (row.KmFr as string) || '';
+    const kmTo = (row.KmTi as string) || '';
+    const region = (row.Region as string) || '';
+    const municipality = (row.Kommun as string) || '';
+    const county = (row.Lan as string) || '';
+    const trackType = (row.SpTyp as string) || '';
+
+    // Speed limits by vehicle class (with/against traffic direction)
+    const sthAWith = (row.STH_A_med as number) || 0;
+    const sthAAgainst = (row.STH_A_mot as number) || 0;
+    const sthBWith = (row.STH_B_med as number) || 0;
+    const sthBAgainst = (row.STH_B_mot as number) || 0;
+    const sthCWith = (row.STH_C_med as number) || 0;
+    const sthCAgainst = (row.STH_C_mot as number) || 0;
+    const sthSWith = (row.STH_S_med as number) || 0;
+    const sthSAgainst = (row.STH_S_mot as number) || 0;
+
     // Track: aggregate by Bandel
     if (bandel && bandel !== 'null') {
       const existing = tracksMap.get(bandel);
@@ -212,6 +252,13 @@ async function main() {
           existing.geometry.coordinates.push(...coords);
         }
       } else {
+        // Build speed limits object (only include non-zero values)
+        const speedLimits: SpeedLimitsByClass = {};
+        if (sthAWith || sthAAgainst) speedLimits.classA = { with: sthAWith, against: sthAAgainst };
+        if (sthBWith || sthBAgainst) speedLimits.classB = { with: sthBWith, against: sthBAgainst };
+        if (sthCWith || sthCAgainst) speedLimits.classC = { with: sthCWith, against: sthCAgainst };
+        if (sthSWith || sthSAgainst) speedLimits.classS = { with: sthSWith, against: sthSAgainst };
+
         tracksMap.set(bandel, {
           id: `TRK-${bandel}`,
           designation: bandel,
@@ -228,6 +275,18 @@ async function main() {
             type: 'LineString' as const,
             coordinates: coords,
           },
+
+          // Additional properties (only include if present)
+          ...(lineCategory && lineCategory !== 'null' && { lineCategory }),
+          ...(Object.keys(speedLimits).length > 0 && { speedLimits }),
+          ...(maintenanceContact && maintenanceContact !== 'null' && { maintenanceContact }),
+          ...(status && status !== 'null' && { status }),
+          ...(kmFrom && kmFrom !== 'null' && { kmFrom }),
+          ...(kmTo && kmTo !== 'null' && { kmTo }),
+          ...(region && region !== 'null' && { region }),
+          ...(municipality && municipality !== 'null' && { municipality }),
+          ...(county && county !== 'null' && { county }),
+          ...(trackType && trackType !== 'null' && { trackType }),
         });
       }
     }

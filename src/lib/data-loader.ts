@@ -19,6 +19,8 @@ import {
   type ElectrificationSection,
   type Station,
   type InfrastructureManager,
+  type Yard,
+  type AccessRestriction,
 } from '@/types/njdb-api';
 import { type SyncStatus } from '@/types/sync-types';
 
@@ -33,6 +35,8 @@ interface DataCache {
   switches?: Switch[];
   electrification?: ElectrificationSection[];
   stations?: Station[];
+  yards?: Yard[];
+  accessRestrictions?: AccessRestriction[];
   managers?: InfrastructureManager[];
   trackDesignations?: string[];
   stationCodes?: { code: string; name: string }[];
@@ -63,20 +67,23 @@ async function ensureCacheLoaded(): Promise<void> {
   if (isCacheValid()) return;
 
   // Load all data files in parallel
-  const [tracks, tunnels, bridges, switches, electrification, stations, metadata, syncStatus] = await Promise.all([
-    loadJsonFile<Track[]>('tracks.json'),
-    loadJsonFile<Tunnel[]>('tunnels.json'),
-    loadJsonFile<Bridge[]>('bridges.json'),
-    loadJsonFile<Switch[]>('switches.json'),
-    loadJsonFile<ElectrificationSection[]>('electrification.json'),
-    loadJsonFile<Station[]>('stations.json'),
-    loadJsonFile<{
-      managers: InfrastructureManager[];
-      trackDesignations: string[];
-      stationCodes: { code: string; name: string }[];
-    }>('metadata.json'),
-    loadJsonFile<SyncStatus>('sync-status.json'),
-  ]);
+  const [tracks, tunnels, bridges, switches, electrification, stations, yards, accessRestrictions, metadata, syncStatus] =
+    await Promise.all([
+      loadJsonFile<Track[]>('tracks.json'),
+      loadJsonFile<Tunnel[]>('tunnels.json'),
+      loadJsonFile<Bridge[]>('bridges.json'),
+      loadJsonFile<Switch[]>('switches.json'),
+      loadJsonFile<ElectrificationSection[]>('electrification.json'),
+      loadJsonFile<Station[]>('stations.json'),
+      loadJsonFile<Yard[]>('yards.json'),
+      loadJsonFile<AccessRestriction[]>('access-restrictions.json'),
+      loadJsonFile<{
+        managers: InfrastructureManager[];
+        trackDesignations: string[];
+        stationCodes: { code: string; name: string }[];
+      }>('metadata.json'),
+      loadJsonFile<SyncStatus>('sync-status.json'),
+    ]);
 
   cache.tracks = tracks || [];
   cache.tunnels = tunnels || [];
@@ -84,6 +91,8 @@ async function ensureCacheLoaded(): Promise<void> {
   cache.switches = switches || [];
   cache.electrification = electrification || [];
   cache.stations = stations || [];
+  cache.yards = yards || [];
+  cache.accessRestrictions = accessRestrictions || [];
   cache.managers = metadata?.managers || [];
   cache.trackDesignations = metadata?.trackDesignations || [];
   cache.stationCodes = metadata?.stationCodes || [];
@@ -121,6 +130,16 @@ export async function loadElectrification(): Promise<ElectrificationSection[]> {
 export async function loadStations(): Promise<Station[]> {
   await ensureCacheLoaded();
   return cache.stations || [];
+}
+
+export async function loadYards(): Promise<Yard[]> {
+  await ensureCacheLoaded();
+  return cache.yards || [];
+}
+
+export async function loadAccessRestrictions(): Promise<AccessRestriction[]> {
+  await ensureCacheLoaded();
+  return cache.accessRestrictions || [];
 }
 
 export async function loadInfrastructureManagers(): Promise<InfrastructureManager[]> {

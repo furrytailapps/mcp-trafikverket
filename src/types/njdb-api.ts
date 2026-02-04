@@ -32,6 +32,13 @@ export interface TrackProperties {
 
 export type TrackFeature = GeoJsonFeature<GeoJsonLineString, TrackProperties>;
 
+export interface SpeedLimitsByClass {
+  classA?: { with: number; against: number };
+  classB?: { with: number; against: number };
+  classC?: { with: number; against: number };
+  classS?: { with: number; against: number };
+}
+
 export interface Track {
   id: string;
   designation?: string;
@@ -45,6 +52,18 @@ export interface Track {
   numberOfTracks?: number;
   length?: number;
   geometry: GeoJsonLineString;
+
+  // Additional properties for maintenance planning
+  lineCategory?: string; // Linjekat - axle load class (D2, E4, etc.)
+  speedLimits?: SpeedLimitsByClass; // Speed limits by vehicle class
+  maintenanceContact?: string; // UHkontNam - who to call
+  status?: string; // Status - Öppen, Avstängd, Nedlagd
+  kmFrom?: string; // KmFr - start kilometer marker
+  kmTo?: string; // KmTi - end kilometer marker
+  region?: string; // Region
+  municipality?: string; // Kommun
+  county?: string; // Län
+  trackType?: string; // SpTyp - nhsp (main), ssp (side), ahsp
 }
 
 // ============================================================================
@@ -193,6 +212,50 @@ export interface Station {
 }
 
 // ============================================================================
+// YARD DATA (Depots, staging areas)
+// ============================================================================
+
+export interface YardProperties {
+  yardId?: string;
+  name?: string;
+  inspireId?: string;
+  validFrom?: string;
+}
+
+export type YardFeature = GeoJsonFeature<GeoJsonPoint, YardProperties>;
+
+export interface Yard {
+  id: string;
+  name?: string;
+  inspireId?: string;
+  validFrom?: string;
+  geometry: GeoJsonPoint;
+}
+
+// ============================================================================
+// ACCESS RESTRICTION DATA
+// ============================================================================
+
+export interface AccessRestrictionProperties {
+  restrictionId?: string;
+  restriction?: 'public' | 'private' | 'physically_impossible';
+  direction?: string;
+  inspireId?: string;
+  validFrom?: string;
+}
+
+export type AccessRestrictionFeature = GeoJsonFeature<GeoJsonPoint, AccessRestrictionProperties>;
+
+export interface AccessRestriction {
+  id: string;
+  restriction: 'public' | 'private' | 'physically_impossible';
+  direction?: string;
+  inspireId?: string;
+  validFrom?: string;
+  geometry: GeoJsonPoint;
+}
+
+// ============================================================================
 // COMBINED INFRASTRUCTURE RESPONSE
 // ============================================================================
 
@@ -204,6 +267,8 @@ export interface SegmentInfrastructure {
   switches: Switch[];
   electrification: ElectrificationSection[];
   stations: Station[];
+  yards: Yard[];
+  accessRestrictions: AccessRestriction[];
 }
 
 export interface InfrastructureQueryResult {
@@ -216,6 +281,8 @@ export interface InfrastructureQueryResult {
   switches?: Switch[];
   electrification?: ElectrificationSection[];
   stations?: Station[];
+  yards?: Yard[];
+  accessRestrictions?: AccessRestriction[];
 }
 
 // ============================================================================

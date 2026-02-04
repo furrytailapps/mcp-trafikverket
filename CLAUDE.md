@@ -77,12 +77,12 @@ This MCP uses two different Trafikverket data sources:
 
 ## Available Tools (4)
 
-| Tool                              | Description                                                                                      |
-| --------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `trafikverket_get_infrastructure` | Railway infrastructure from NJDB (tracks, tunnels, bridges, switches, electrification, stations) |
-| `trafikverket_get_crossings`      | Level crossings from Trafikinfo API                                                              |
-| `trafikverket_get_operations`     | Real-time data: incidents, road conditions, parking                                              |
-| `trafikverket_describe_data`      | Metadata discovery: track IDs, station codes, infrastructure managers                            |
+| Tool                              | Description                                                                                                                  |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `trafikverket_get_infrastructure` | Railway infrastructure from NJDB (tracks, tunnels, bridges, switches, electrification, stations, yards, access restrictions) |
+| `trafikverket_get_crossings`      | Level crossings from Trafikinfo API                                                                                          |
+| `trafikverket_get_operations`     | Real-time data: incidents, road conditions, parking                                                                          |
+| `trafikverket_describe_data`      | Metadata discovery: track IDs, station codes, infrastructure managers                                                        |
 
 ## Project Structure
 
@@ -91,12 +91,14 @@ This MCP uses two different Trafikverket data sources:
 └── sync-infrastructure.yml       # Weekly GeoPackage sync via GitHub Actions
 
 data/                             # Infrastructure data (git-tracked)
-├── tracks.json
-├── tunnels.json
-├── bridges.json
-├── switches.json
+├── tracks.json                   # 283 tracks with enhanced properties
+├── tunnels.json                  # 214 tunnels
+├── bridges.json                  # 4,053 bridges
+├── switches.json                 # 15,492 junction points (from INSPIRE TN)
 ├── electrification.json
-├── stations.json
+├── stations.json                 # 1,388 stations
+├── yards.json                    # 1,138 railway yards/depots
+├── access-restrictions.json      # 10,778 private/restricted track sections
 ├── metadata.json                 # managers, track designations, station codes
 └── sync-status.json              # last sync timestamp and counts
 
@@ -285,6 +287,12 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 // Get only bridges on segment 421
 { "queryType": "bridges", "trackId": "421" }
 
+// Get yards/depots near a track (for staging equipment)
+{ "queryType": "yards", "trackId": "182" }
+
+// Get access restrictions (private/restricted sections)
+{ "queryType": "access_restrictions", "trackId": "182" }
+
 // Get all level crossings on segment 182
 { "trackId": "182" }
 
@@ -348,6 +356,9 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 | Tunnels/bridges             | HIGH     | Clearance verification, structure maintenance |
 | Electrification sections    | HIGH     | Safety zones, power outage planning           |
 | Level crossings             | HIGH     | Road-rail interface work                      |
+| Switches (15k+ junctions)   | HIGH     | Network topology, routing decisions           |
+| Yards/depots (1,138)        | HIGH     | Equipment staging, depot locations            |
+| Access restrictions         | HIGH     | Private/public track sections, access permits |
 | Train incidents             | MEDIUM   | Work scheduling around disruptions            |
 | Road conditions             | MEDIUM   | Heavy equipment transport                     |
 | Parking                     | LOW      | Staging areas near stations                   |
@@ -370,7 +381,11 @@ The `geometryDetail` parameter reduces response size by 95-99% for infrastructur
 
 ## Notes
 
-- **Infrastructure data from Lastkajen**: The `/data/*.json` files contain real NJDB infrastructure data (283 tracks, 214 tunnels, 4053 bridges) synced from Trafikverket's Lastkajen GeoPackage.
+- **Infrastructure data from Lastkajen**: The `/data/*.json` files contain real NJDB infrastructure data synced from Trafikverket's Lastkajen GeoPackage and INSPIRE TN packages:
+  - 283 tracks (with enhanced properties: speed limits by class, status, line category, maintenance contact)
+  - 214 tunnels, 4,053 bridges
+  - 15,492 switches (junction points from INSPIRE TN Railway Node)
+  - 1,138 yards/depots, 10,778 access restrictions
 - **Trafikinfo tools use live data**: The `trafikverket_get_crossings` and `trafikverket_get_operations` tools query the live Trafikinfo API.
 - All tools follow the flat schema pattern (no nested objects)
 - Trafikinfo API uses XML POST requests, handled by `xml-builder.ts`

@@ -198,11 +198,7 @@ export function formatPointGeometry(geometry: GeoJsonPoint, detail: GeometryDeta
  * @param segEnd - End of line segment [lon, lat]
  * @returns Distance in degrees
  */
-function pointToSegmentDistance(
-  point: [number, number],
-  segStart: [number, number],
-  segEnd: [number, number],
-): number {
+function pointToSegmentDistance(point: [number, number], segStart: [number, number], segEnd: [number, number]): number {
   const [px, py] = point;
   const [x1, y1] = segStart;
   const [x2, y2] = segEnd;

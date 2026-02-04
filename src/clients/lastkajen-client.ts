@@ -13,6 +13,8 @@ import {
   loadSwitches,
   loadElectrification,
   loadStations,
+  loadYards,
+  loadAccessRestrictions,
   loadInfrastructureManagers,
   loadTrackDesignations,
   loadStationCodes,
@@ -35,6 +37,8 @@ import {
   type Switch,
   type ElectrificationSection,
   type Station,
+  type Yard,
+  type AccessRestriction,
   type SegmentInfrastructure,
   type InfrastructureManager,
 } from '@/types/njdb-api';
@@ -218,6 +222,30 @@ function transformStationGeometry(station: Station, detail: GeometryDetail): Sta
   return { ...station, geometry: transformedGeometry };
 }
 
+/**
+ * Transform a yard's geometry based on detail level
+ */
+function transformYardGeometry(yard: Yard, detail: GeometryDetail): Yard {
+  const transformedGeometry = formatPointGeometry(yard.geometry, detail);
+  if (!transformedGeometry) {
+    const { geometry: _, ...yardWithoutGeometry } = yard;
+    return yardWithoutGeometry as Yard;
+  }
+  return { ...yard, geometry: transformedGeometry };
+}
+
+/**
+ * Transform an access restriction's geometry based on detail level
+ */
+function transformAccessRestrictionGeometry(restriction: AccessRestriction, detail: GeometryDetail): AccessRestriction {
+  const transformedGeometry = formatPointGeometry(restriction.geometry, detail);
+  if (!transformedGeometry) {
+    const { geometry: _, ...restrictionWithoutGeometry } = restriction;
+    return restrictionWithoutGeometry as AccessRestriction;
+  }
+  return { ...restriction, geometry: transformedGeometry };
+}
+
 // ============================================================================
 // API FUNCTIONS
 // ============================================================================
@@ -235,24 +263,34 @@ async function getSegmentInfrastructure(
 
   if (!rawResult) {
     // Load all data from JSON files
-    const [allTracks, allTunnels, allBridges, allSwitches, allElectrification, allStations] = await Promise.all([
-      loadTracks(),
-      loadTunnels(),
-      loadBridges(),
-      loadSwitches(),
-      loadElectrification(),
-      loadStations(),
-    ]);
+    const [allTracks, allTunnels, allBridges, allSwitches, allElectrification, allStations, allYards, allAccessRestrictions] =
+      await Promise.all([
+        loadTracks(),
+        loadTunnels(),
+        loadBridges(),
+        loadSwitches(),
+        loadElectrification(),
+        loadStations(),
+        loadYards(),
+        loadAccessRestrictions(),
+      ]);
 
     const track = allTracks.find((t) => t.id === trackId || t.designation === trackId);
 
-    // Filter stations by proximity to track geometry
-    // Simplify track once for performance, then check each station
+    // Filter stations, yards, and access restrictions by proximity to track geometry
+    // Simplify track once for performance, then check each point
     let nearbyStations: Station[] = [];
+    let nearbyYards: Yard[] = [];
+    let nearbyRestrictions: AccessRestriction[] = [];
+
     if (track && track.geometry) {
       const simplifiedTrack = simplifyTrackForStationFilter(track.geometry);
       nearbyStations = allStations.filter(
         (station) => station.geometry && isPointNearSimplifiedTrack(station.geometry, simplifiedTrack),
+      );
+      nearbyYards = allYards.filter((yard) => yard.geometry && isPointNearSimplifiedTrack(yard.geometry, simplifiedTrack));
+      nearbyRestrictions = allAccessRestrictions.filter(
+        (r) => r.geometry && isPointNearSimplifiedTrack(r.geometry, simplifiedTrack),
       );
     }
 
@@ -264,6 +302,8 @@ async function getSegmentInfrastructure(
       switches: allSwitches.filter((s) => s.trackId === trackId),
       electrification: allElectrification.filter((e) => e.trackId === trackId),
       stations: nearbyStations,
+      yards: nearbyYards,
+      accessRestrictions: nearbyRestrictions,
     };
 
     setCache(cacheKey, rawResult);
@@ -278,6 +318,8 @@ async function getSegmentInfrastructure(
     switches: rawResult.switches.map((s) => transformSwitchGeometry(s, geometryDetail)),
     electrification: rawResult.electrification.map((e) => transformElectrificationGeometry(e, geometryDetail)),
     stations: rawResult.stations.map((s) => transformStationGeometry(s, geometryDetail)),
+    yards: rawResult.yards.map((y) => transformYardGeometry(y, geometryDetail)),
+    accessRestrictions: rawResult.accessRestrictions.map((r) => transformAccessRestrictionGeometry(r, geometryDetail)),
   };
 }
 
@@ -320,6 +362,11 @@ const getBridgesByBBox = createBBoxQuery<Bridge>(loadBridges, transformBridgeGeo
 const getSwitchesByBBox = createBBoxQuery<Switch>(loadSwitches, transformSwitchGeometry);
 const getElectrificationByBBox = createBBoxQuery<ElectrificationSection>(loadElectrification, transformElectrificationGeometry);
 const getStationsByBBox = createBBoxQuery<Station>(loadStations, transformStationGeometry);
+const getYardsByBBox = createBBoxQuery<Yard>(loadYards, transformYardGeometry);
+const getAccessRestrictionsByBBox = createBBoxQuery<AccessRestriction>(
+  loadAccessRestrictions,
+  transformAccessRestrictionGeometry,
+);
 
 // ============================================================================
 // METADATA
@@ -404,6 +451,8 @@ export const lastkajenClient = {
   getSwitchesByBBox,
   getElectrificationByBBox,
   getStationsByBBox,
+  getYardsByBBox,
+  getAccessRestrictionsByBBox,
 
   // Metadata
   getInfrastructureManagers,

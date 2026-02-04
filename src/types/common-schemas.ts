@@ -47,7 +47,7 @@ export const bboxSchema = z
  * Infrastructure query types
  */
 export const infrastructureQueryTypeSchema = z
-  .enum(['tracks', 'tunnels', 'bridges', 'switches', 'electrification', 'stations', 'all'])
+  .enum(['tracks', 'tunnels', 'bridges', 'switches', 'electrification', 'stations', 'yards', 'access_restrictions', 'all'])
   .describe('Type of infrastructure to query');
 
 /**

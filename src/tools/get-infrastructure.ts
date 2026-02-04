@@ -17,7 +17,7 @@ import type { InfrastructureQueryResult } from '@/types/njdb-api';
 export const getInfrastructureInputSchema = {
   queryType: infrastructureQueryTypeSchema.describe(
     'Type of infrastructure to query. Use "all" to get complete infrastructure for a track segment. ' +
-      'Options: tracks, tunnels, bridges, switches, electrification, stations, all',
+      'Options: tracks, tunnels, bridges, switches, electrification, stations, yards, access_restrictions, all',
   ),
 
   // PRIMARY: Query by track segment ID
@@ -61,14 +61,24 @@ export const getInfrastructureTool = {
     'Get railway infrastructure data from NJDB (Nationella Järnvägsdatabasen). ' +
     'PRIMARY: Query by track segment ID for maintenance planning (e.g., trackId="182"). ' +
     'SECONDARY: Query by geographic location (latitude/longitude with radius, or bbox). ' +
-    'Returns track geometries, tunnels, bridges, switches, electrification sections, and stations. ' +
+    'Returns track geometries, tunnels, bridges, switches (15k+ junction points), electrification sections, ' +
+    'stations, yards (depots/staging areas), and access restrictions (private/public track sections). ' +
     'Responses include lastSync timestamp indicating data freshness. ' +
     'Note: electrified filter only applies to tracks queryType.',
   inputSchema: getInfrastructureInputSchema,
 };
 
 type GetInfrastructureInput = {
-  queryType: 'tracks' | 'tunnels' | 'bridges' | 'switches' | 'electrification' | 'stations' | 'all';
+  queryType:
+    | 'tracks'
+    | 'tunnels'
+    | 'bridges'
+    | 'switches'
+    | 'electrification'
+    | 'stations'
+    | 'yards'
+    | 'access_restrictions'
+    | 'all';
   trackId?: string;
   latitude?: number;
   longitude?: number;
@@ -113,13 +123,17 @@ export const getInfrastructureHandler = withErrorHandling(async (args: GetInfras
           segmentData.bridges.length +
           segmentData.switches.length +
           segmentData.electrification.length +
-          segmentData.stations.length,
+          segmentData.stations.length +
+          segmentData.yards.length +
+          segmentData.accessRestrictions.length,
         track: segmentData.track,
         tunnels: segmentData.tunnels,
         bridges: segmentData.bridges,
         switches: segmentData.switches,
         electrification: segmentData.electrification,
         stations: segmentData.stations,
+        yards: segmentData.yards,
+        accessRestrictions: segmentData.accessRestrictions,
       };
     }
 
@@ -149,6 +163,16 @@ export const getInfrastructureHandler = withErrorHandling(async (args: GetInfras
         };
       case 'stations':
         return { queryType, trackId, lastSync, count: segmentData.stations.length, stations: segmentData.stations };
+      case 'yards':
+        return { queryType, trackId, lastSync, count: segmentData.yards.length, yards: segmentData.yards };
+      case 'access_restrictions':
+        return {
+          queryType,
+          trackId,
+          lastSync,
+          count: segmentData.accessRestrictions.length,
+          accessRestrictions: segmentData.accessRestrictions,
+        };
     }
   }
 
@@ -209,14 +233,28 @@ export const getInfrastructureHandler = withErrorHandling(async (args: GetInfras
       result.count = stations.length;
       break;
     }
+    case 'yards': {
+      const yards = await lastkajenClient.getYardsByBBox(parsedBBox, limit, geometryDetail);
+      result.yards = yards;
+      result.count = yards.length;
+      break;
+    }
+    case 'access_restrictions': {
+      const accessRestrictions = await lastkajenClient.getAccessRestrictionsByBBox(parsedBBox, limit, geometryDetail);
+      result.accessRestrictions = accessRestrictions;
+      result.count = accessRestrictions.length;
+      break;
+    }
     case 'all': {
-      const [tracks, tunnels, bridges, switches, electrification, stations] = await Promise.all([
+      const [tracks, tunnels, bridges, switches, electrification, stations, yards, accessRestrictions] = await Promise.all([
         lastkajenClient.getTracksByBBox(parsedBBox, limit, geometryDetail),
         lastkajenClient.getTunnelsByBBox(parsedBBox, limit, geometryDetail),
         lastkajenClient.getBridgesByBBox(parsedBBox, limit, geometryDetail),
         lastkajenClient.getSwitchesByBBox(parsedBBox, limit, geometryDetail),
         lastkajenClient.getElectrificationByBBox(parsedBBox, limit, geometryDetail),
         lastkajenClient.getStationsByBBox(parsedBBox, limit, geometryDetail),
+        lastkajenClient.getYardsByBBox(parsedBBox, limit, geometryDetail),
+        lastkajenClient.getAccessRestrictionsByBBox(parsedBBox, limit, geometryDetail),
       ]);
 
       let filteredTracks = tracks;
@@ -234,8 +272,17 @@ export const getInfrastructureHandler = withErrorHandling(async (args: GetInfras
       result.switches = switches;
       result.electrification = electrification;
       result.stations = stations;
+      result.yards = yards;
+      result.accessRestrictions = accessRestrictions;
       result.count =
-        filteredTracks.length + tunnels.length + bridges.length + switches.length + electrification.length + stations.length;
+        filteredTracks.length +
+        tunnels.length +
+        bridges.length +
+        switches.length +
+        electrification.length +
+        stations.length +
+        yards.length +
+        accessRestrictions.length;
       break;
     }
   }
