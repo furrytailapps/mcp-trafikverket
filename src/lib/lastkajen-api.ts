@@ -17,6 +17,8 @@
  * - GET /api/File/GetDataPackageFile?token= - Download file (no auth needed)
  */
 
+import { ValidationError, UpstreamApiError } from './errors';
+
 const LASTKAJEN_API_BASE = 'https://lastkajen.trafikverket.se';
 
 // ============================================================================
@@ -43,7 +45,6 @@ let cachedToken: { token: string; expiresAt: number } | null = null;
 export async function getValidToken(): Promise<string> {
   // Check if we have a valid cached token (with 5 minute buffer)
   if (cachedToken && Date.now() < cachedToken.expiresAt) {
-    console.log('[lastkajen-api] Using cached token');
     return cachedToken.token;
   }
 
@@ -52,7 +53,6 @@ export async function getValidToken(): Promise<string> {
   const password = process.env.LASTKAJEN_PASSWORD;
 
   if (username && password) {
-    console.log('[lastkajen-api] Auto-refreshing token...');
     try {
       const response = await refreshToken(username, password);
       // Cache with 5 minute buffer before expiry
@@ -60,10 +60,8 @@ export async function getValidToken(): Promise<string> {
         token: response.access_token,
         expiresAt: Date.now() + (response.expires_in - 300) * 1000,
       };
-      console.log(`[lastkajen-api] Token refreshed, expires in ${Math.round(response.expires_in / 3600)} hours`);
       return cachedToken.token;
-    } catch (error) {
-      console.error('[lastkajen-api] Token refresh failed:', error);
+    } catch {
       // Fall through to try LASTKAJEN_API_TOKEN
     }
   }
@@ -71,11 +69,10 @@ export async function getValidToken(): Promise<string> {
   // Fall back to manual token (for testing or override)
   const envToken = process.env.LASTKAJEN_API_TOKEN;
   if (envToken) {
-    console.log('[lastkajen-api] Using LASTKAJEN_API_TOKEN from environment');
     return envToken;
   }
 
-  throw new Error(
+  throw new ValidationError(
     'No Lastkajen credentials available. Set LASTKAJEN_USERNAME + LASTKAJEN_PASSWORD ' +
       'for auto-refresh, or LASTKAJEN_API_TOKEN for manual override.',
   );
@@ -87,7 +84,7 @@ export async function getValidToken(): Promise<string> {
 function getApiToken(): string {
   const token = process.env.LASTKAJEN_API_TOKEN;
   if (!token) {
-    throw new Error('LASTKAJEN_API_TOKEN environment variable is not set');
+    throw new ValidationError('LASTKAJEN_API_TOKEN environment variable is not set');
   }
   return token;
 }
@@ -102,8 +99,6 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
   const token = await getValidToken();
   const url = `${LASTKAJEN_API_BASE}${endpoint}`;
 
-  console.log(`[lastkajen-api] GET ${endpoint}`);
-
   const response = await fetch(url, {
     ...options,
     headers: {
@@ -115,7 +110,11 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => '');
-    throw new Error(`Lastkajen API error: ${response.status} ${response.statusText} - ${errorText}`);
+    throw new UpstreamApiError(
+      `Lastkajen API error: ${response.statusText}${errorText ? ` - ${errorText}` : ''}`,
+      response.status,
+      'lastkajen.trafikverket.se',
+    );
   }
 
   return response.json() as Promise<T>;
@@ -177,8 +176,6 @@ export interface DataPackageFile {
  * @returns Login response with access_token
  */
 export async function refreshToken(username: string, password: string): Promise<LoginResponse> {
-  console.log('[lastkajen-api] POST /api/Identity/Login');
-
   const response = await fetch(`${LASTKAJEN_API_BASE}/api/Identity/Login`, {
     method: 'POST',
     headers: {
@@ -188,7 +185,7 @@ export async function refreshToken(username: string, password: string): Promise<
   });
 
   if (!response.ok) {
-    throw new Error(`Token refresh failed: ${response.status} ${response.statusText}`);
+    throw new UpstreamApiError(`Token refresh failed: ${response.statusText}`, response.status, 'lastkajen.trafikverket.se');
   }
 
   return response.json() as Promise<LoginResponse>;
@@ -248,12 +245,10 @@ export async function getDownloadToken(packageId: number, fileName: string): Pro
  * @returns File content as ArrayBuffer (usually a ZIP file)
  */
 export async function downloadFile(downloadToken: string): Promise<ArrayBuffer> {
-  console.log('[lastkajen-api] GET /api/File/GetDataPackageFile (downloading file...)');
-
   const response = await fetch(`${LASTKAJEN_API_BASE}/api/File/GetDataPackageFile?token=${encodeURIComponent(downloadToken)}`);
 
   if (!response.ok) {
-    throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+    throw new UpstreamApiError(`Download failed: ${response.statusText}`, response.status, 'lastkajen.trafikverket.se');
   }
 
   return response.arrayBuffer();
@@ -274,8 +269,6 @@ export async function downloadFile(downloadToken: string): Promise<ArrayBuffer> 
  * @returns File content as ArrayBuffer
  */
 export async function downloadPackageFile(packageId: number, fileName: string): Promise<ArrayBuffer> {
-  console.log(`[lastkajen-api] Downloading ${fileName} from package ${packageId}`);
-
   // Get download token (valid for 60 seconds)
   const token = await getDownloadToken(packageId, fileName);
 
@@ -412,18 +405,18 @@ export interface NJDBBridgeData {
  * These fetch functions are kept for backward compatibility but return empty arrays.
  * Use the data-loader module to access the actual infrastructure data.
  */
+/** @deprecated Use data-loader.ts to read from /data/tracks.json */
 export async function fetchTracks(): Promise<NJDBTrackData[]> {
-  console.log('[lastkajen-api] fetchTracks() - Use data-loader.ts to read from /data/tracks.json');
   return [];
 }
 
+/** @deprecated Use data-loader.ts to read from /data/tunnels.json */
 export async function fetchTunnels(): Promise<NJDBTunnelData[]> {
-  console.log('[lastkajen-api] fetchTunnels() - Use data-loader.ts to read from /data/tunnels.json');
   return [];
 }
 
+/** @deprecated Use data-loader.ts to read from /data/bridges.json */
 export async function fetchBridges(): Promise<NJDBBridgeData[]> {
-  console.log('[lastkajen-api] fetchBridges() - Use data-loader.ts to read from /data/bridges.json');
   return [];
 }
 

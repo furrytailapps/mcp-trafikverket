@@ -81,9 +81,7 @@ function parseWkbToCoordinates(wkb: Buffer): number[][] | null {
 
     if (geomType === WKB_LINESTRING) {
       const numPointsOffset = offset + 5;
-      const numPoints = isLittleEndian
-        ? wkb.readUInt32LE(numPointsOffset)
-        : wkb.readUInt32BE(numPointsOffset);
+      const numPoints = isLittleEndian ? wkb.readUInt32LE(numPointsOffset) : wkb.readUInt32BE(numPointsOffset);
 
       const coords: number[][] = [];
       let coordOffset = numPointsOffset + 4;

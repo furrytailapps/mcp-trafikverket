@@ -1,0 +1,6 @@
+# Ignore temp data files (downloaded GeoPackages)
+data/temp/
+
+# Ignore large GeoPackage files anywhere
+*.gpkg
+*.zip

@@ -84,3 +84,14 @@ export const limitSchema = z.number().min(1).max(100).describe('Maximum number o
 export const largeLimitSchema = z.number().min(1).max(500).describe('Maximum number of results. Default: 100, max: 500.');
 
 export const crossingsLimitSchema = z.number().min(1).max(200).describe('Maximum number of results. Default: 50, max: 200.');
+
+/**
+ * Geometry detail levels for controlling response size
+ * Reduces response tokens by 95-99% with 'corridor' (default) vs 'precise'
+ */
+export const geometryDetailSchema = z.enum(['metadata', 'corridor', 'precise']).describe(
+  `Level of coordinate detail in response:
+- "metadata": Properties only, no coordinates. Use when you only need track info (speed, electrification, length).
+- "corridor": Simplified path (~50-100 points). Use for querying weather/geology along the track. (Default)
+- "precise": All coordinates. Use only when you need to draw the track accurately on a map.`,
+);

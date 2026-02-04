@@ -180,9 +180,10 @@ export function filterIncidentsBySeverity(incidents: TrainIncident[], severity: 
       case 'high':
         return highSeverityTypes.some((t) => msgType.includes(t.toLowerCase()) || restriction.includes(t.toLowerCase()));
       case 'medium':
+        // Return medium severity items only (exclude high severity)
         return (
-          highSeverityTypes.some((t) => msgType.includes(t.toLowerCase()) || restriction.includes(t.toLowerCase())) ||
-          mediumSeverityTypes.some((t) => msgType.includes(t.toLowerCase()) || restriction.includes(t.toLowerCase()))
+          mediumSeverityTypes.some((t) => msgType.includes(t.toLowerCase()) || restriction.includes(t.toLowerCase())) &&
+          !highSeverityTypes.some((t) => msgType.includes(t.toLowerCase()) || restriction.includes(t.toLowerCase()))
         );
       case 'low':
       default:

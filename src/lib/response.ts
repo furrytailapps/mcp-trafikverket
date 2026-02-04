@@ -57,7 +57,6 @@ export function withErrorHandling<T, R>(handler: (args: T) => Promise<R>): (args
       const result = await handler(args);
       return successResponse(result);
     } catch (error) {
-      console.error('Tool execution error:', error);
       return errorResponse(error instanceof Error ? error : new Error(String(error)));
     }
   };

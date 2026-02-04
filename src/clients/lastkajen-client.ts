@@ -20,6 +20,15 @@ import {
   clearDataCache,
 } from '@/lib/data-loader';
 import {
+  type GeometryDetail,
+  formatLineGeometry,
+  formatLineStructureGeometry,
+  formatStructureGeometry,
+  formatPointGeometry,
+  simplifyTrackForStationFilter,
+  isPointNearSimplifiedTrack,
+} from '@/lib/geometry-utils';
+import {
   type Track,
   type Tunnel,
   type Bridge,
@@ -133,75 +142,184 @@ function geometryIntersectsBBox(
 }
 
 // ============================================================================
+// GEOMETRY TRANSFORMATION
+// ============================================================================
+
+/**
+ * Transform a track's geometry based on detail level
+ */
+function transformTrackGeometry(track: Track, detail: GeometryDetail): Track {
+  const transformedGeometry = formatLineGeometry(track.geometry, detail);
+  if (!transformedGeometry) {
+    // For metadata level, return track without geometry
+    const { geometry: _, ...trackWithoutGeometry } = track;
+    return trackWithoutGeometry as Track;
+  }
+  return { ...track, geometry: transformedGeometry };
+}
+
+/**
+ * Transform a tunnel's geometry based on detail level
+ */
+function transformTunnelGeometry(tunnel: Tunnel, detail: GeometryDetail): Tunnel {
+  const transformedGeometry = formatLineStructureGeometry(tunnel.geometry, detail);
+  if (!transformedGeometry) {
+    const { geometry: _, ...tunnelWithoutGeometry } = tunnel;
+    return tunnelWithoutGeometry as Tunnel;
+  }
+  return { ...tunnel, geometry: transformedGeometry };
+}
+
+/**
+ * Transform a bridge's geometry based on detail level
+ */
+function transformBridgeGeometry(bridge: Bridge, detail: GeometryDetail): Bridge {
+  const transformedGeometry = formatStructureGeometry(bridge.geometry, detail);
+  if (!transformedGeometry) {
+    const { geometry: _, ...bridgeWithoutGeometry } = bridge;
+    return bridgeWithoutGeometry as Bridge;
+  }
+  return { ...bridge, geometry: transformedGeometry };
+}
+
+/**
+ * Transform a switch's geometry based on detail level
+ */
+function transformSwitchGeometry(sw: Switch, detail: GeometryDetail): Switch {
+  const transformedGeometry = formatPointGeometry(sw.geometry, detail);
+  if (!transformedGeometry) {
+    const { geometry: _, ...switchWithoutGeometry } = sw;
+    return switchWithoutGeometry as Switch;
+  }
+  return { ...sw, geometry: transformedGeometry };
+}
+
+/**
+ * Transform an electrification section's geometry based on detail level
+ */
+function transformElectrificationGeometry(section: ElectrificationSection, detail: GeometryDetail): ElectrificationSection {
+  const transformedGeometry = formatLineGeometry(section.geometry, detail);
+  if (!transformedGeometry) {
+    const { geometry: _, ...sectionWithoutGeometry } = section;
+    return sectionWithoutGeometry as ElectrificationSection;
+  }
+  return { ...section, geometry: transformedGeometry };
+}
+
+/**
+ * Transform a station's geometry based on detail level
+ */
+function transformStationGeometry(station: Station, detail: GeometryDetail): Station {
+  const transformedGeometry = formatPointGeometry(station.geometry, detail);
+  if (!transformedGeometry) {
+    const { geometry: _, ...stationWithoutGeometry } = station;
+    return stationWithoutGeometry as Station;
+  }
+  return { ...station, geometry: transformedGeometry };
+}
+
+// ============================================================================
 // API FUNCTIONS
 // ============================================================================
 
 /**
  * Get all infrastructure for a track segment
  */
-async function getSegmentInfrastructure(trackId: string): Promise<SegmentInfrastructure> {
+async function getSegmentInfrastructure(
+  trackId: string,
+  geometryDetail: GeometryDetail = 'corridor',
+): Promise<SegmentInfrastructure> {
+  // Cache the raw data, not the transformed data (to allow different detail levels)
   const cacheKey = `segment:${trackId}`;
-  const cached = getCached<SegmentInfrastructure>(cacheKey);
-  if (cached) return cached;
+  let rawResult = getCached<SegmentInfrastructure>(cacheKey);
 
-  // Load all data from JSON files
-  const [allTracks, allTunnels, allBridges, allSwitches, allElectrification, allStations] = await Promise.all([
-    loadTracks(),
-    loadTunnels(),
-    loadBridges(),
-    loadSwitches(),
-    loadElectrification(),
-    loadStations(),
-  ]);
+  if (!rawResult) {
+    // Load all data from JSON files
+    const [allTracks, allTunnels, allBridges, allSwitches, allElectrification, allStations] = await Promise.all([
+      loadTracks(),
+      loadTunnels(),
+      loadBridges(),
+      loadSwitches(),
+      loadElectrification(),
+      loadStations(),
+    ]);
 
-  const track = allTracks.find((t) => t.id === trackId || t.designation === trackId);
+    const track = allTracks.find((t) => t.id === trackId || t.designation === trackId);
 
-  const result: SegmentInfrastructure = {
+    // Filter stations by proximity to track geometry
+    // Simplify track once for performance, then check each station
+    let nearbyStations: Station[] = [];
+    if (track && track.geometry) {
+      const simplifiedTrack = simplifyTrackForStationFilter(track.geometry);
+      nearbyStations = allStations.filter(
+        (station) => station.geometry && isPointNearSimplifiedTrack(station.geometry, simplifiedTrack),
+      );
+    }
+
+    rawResult = {
+      trackId,
+      track: track || undefined,
+      tunnels: allTunnels.filter((t) => t.trackId === trackId),
+      bridges: allBridges.filter((b) => b.trackId === trackId),
+      switches: allSwitches.filter((s) => s.trackId === trackId),
+      electrification: allElectrification.filter((e) => e.trackId === trackId),
+      stations: nearbyStations,
+    };
+
+    setCache(cacheKey, rawResult);
+  }
+
+  // Transform geometries based on detail level
+  return {
     trackId,
-    track: track || undefined,
-    tunnels: allTunnels.filter((t) => t.trackId === trackId),
-    bridges: allBridges.filter((b) => b.trackId === trackId),
-    switches: allSwitches.filter((s) => s.trackId === trackId),
-    electrification: allElectrification.filter((e) => e.trackId === trackId),
-    stations: allStations, // Stations are associated differently - return all for now
+    track: rawResult.track ? transformTrackGeometry(rawResult.track, geometryDetail) : undefined,
+    tunnels: rawResult.tunnels.map((t) => transformTunnelGeometry(t, geometryDetail)),
+    bridges: rawResult.bridges.map((b) => transformBridgeGeometry(b, geometryDetail)),
+    switches: rawResult.switches.map((s) => transformSwitchGeometry(s, geometryDetail)),
+    electrification: rawResult.electrification.map((e) => transformElectrificationGeometry(e, geometryDetail)),
+    stations: rawResult.stations.map((s) => transformStationGeometry(s, geometryDetail)),
   };
-
-  setCache(cacheKey, result);
-  return result;
 }
 
 /**
- * Factory function for creating bbox query functions
+ * Factory function for creating bbox query functions with geometry transformation
  */
 function createBBoxQuery<T extends { geometry?: { type: string; coordinates: number[] | number[][] | number[][][] } }>(
   loadFn: () => Promise<T[]>,
+  transformFn: (item: T, detail: GeometryDetail) => T,
   cachePrefix?: string,
-): (bbox: BBox, limit?: number) => Promise<T[]> {
-  return async function (bbox: BBox, limit?: number): Promise<T[]> {
-    if (cachePrefix) {
-      const cacheKey = `${cachePrefix}:bbox:${bbox.minLon},${bbox.minLat},${bbox.maxLon},${bbox.maxLat}`;
+): (bbox: BBox, limit?: number, geometryDetail?: GeometryDetail) => Promise<T[]> {
+  return async function (bbox: BBox, limit?: number, geometryDetail: GeometryDetail = 'corridor'): Promise<T[]> {
+    // Cache raw data only
+    const cacheKey = cachePrefix ? `${cachePrefix}:bbox:${bbox.minLon},${bbox.minLat},${bbox.maxLon},${bbox.maxLat}` : null;
+    let filtered: T[];
+
+    if (cacheKey) {
       const cached = getCached<T[]>(cacheKey);
-      if (cached) return cached.slice(0, limit);
+      if (cached) {
+        filtered = cached;
+      } else {
+        const allItems = await loadFn();
+        filtered = allItems.filter((item) => item.geometry && geometryIntersectsBBox(item.geometry, bbox));
+        setCache(cacheKey, filtered);
+      }
+    } else {
+      const allItems = await loadFn();
+      filtered = allItems.filter((item) => item.geometry && geometryIntersectsBBox(item.geometry, bbox));
     }
 
-    const allItems = await loadFn();
-    const filtered = allItems.filter((item) => item.geometry && geometryIntersectsBBox(item.geometry, bbox));
-
-    if (cachePrefix) {
-      const cacheKey = `${cachePrefix}:bbox:${bbox.minLon},${bbox.minLat},${bbox.maxLon},${bbox.maxLat}`;
-      setCache(cacheKey, filtered);
-    }
-
-    return filtered.slice(0, limit || 100);
+    // Apply limit then transform (transform is more expensive, so limit first)
+    const limited = filtered.slice(0, limit || 100);
+    return limited.map((item) => transformFn(item, geometryDetail));
   };
 }
 
-const getTracksByBBox = createBBoxQuery<Track>(loadTracks, 'tracks');
-const getTunnelsByBBox = createBBoxQuery<Tunnel>(loadTunnels);
-const getBridgesByBBox = createBBoxQuery<Bridge>(loadBridges);
-const getSwitchesByBBox = createBBoxQuery<Switch>(loadSwitches);
-const getElectrificationByBBox = createBBoxQuery<ElectrificationSection>(loadElectrification);
-const getStationsByBBox = createBBoxQuery<Station>(loadStations);
+const getTracksByBBox = createBBoxQuery<Track>(loadTracks, transformTrackGeometry, 'tracks');
+const getTunnelsByBBox = createBBoxQuery<Tunnel>(loadTunnels, transformTunnelGeometry);
+const getBridgesByBBox = createBBoxQuery<Bridge>(loadBridges, transformBridgeGeometry);
+const getSwitchesByBBox = createBBoxQuery<Switch>(loadSwitches, transformSwitchGeometry);
+const getElectrificationByBBox = createBBoxQuery<ElectrificationSection>(loadElectrification, transformElectrificationGeometry);
+const getStationsByBBox = createBBoxQuery<Station>(loadStations, transformStationGeometry);
 
 // ============================================================================
 // METADATA

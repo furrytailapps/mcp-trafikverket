@@ -39,7 +39,7 @@ async function testMCP(method, params = {}) {
     headers: {
       'Content-Type': 'application/json',
       'Content-Length': Buffer.byteLength(data),
-      Accept: 'application/json, text/event-stream',
+      'Accept': 'application/json, text/event-stream',
     },
   };
 
@@ -226,6 +226,60 @@ async function main() {
     recordTest('Infrastructure - by bbox', false, `(error: ${error.message})`);
   }
 
+  // 4e: geometryDetail="corridor" (default) - should have simplified geometry
+  // Using track "001" which has 47,747 coords in precise mode
+  try {
+    const result = await testMCP('tools/call', {
+      name: 'trafikverket_get_infrastructure',
+      arguments: { queryType: 'tracks', trackId: '001' },
+    });
+    const data = JSON.parse(result.result?.content?.[0]?.text || '{}');
+    const track = data.tracks?.[0];
+    const coordCount = track?.geometry?.coordinates?.length || 0;
+    // Corridor should have simplified coordinates (significantly less than precise mode)
+    // Track 001 goes from 47,747 → ~4,000 (91% reduction)
+    const hasSimplifiedGeometry = coordCount > 0 && coordCount < 10000;
+    recordTest('Infrastructure - geometryDetail=corridor (default)', hasSimplifiedGeometry, `(${coordCount} coords)`);
+  } catch (error) {
+    recordTest('Infrastructure - geometryDetail=corridor (default)', false, `(error: ${error.message})`);
+  }
+
+  // 4f: geometryDetail="metadata" - should have no geometry
+  try {
+    const result = await testMCP('tools/call', {
+      name: 'trafikverket_get_infrastructure',
+      arguments: { queryType: 'tracks', trackId: '001', geometryDetail: 'metadata' },
+    });
+    const data = JSON.parse(result.result?.content?.[0]?.text || '{}');
+    const track = data.tracks?.[0];
+    // Metadata: no geometry but properties should exist
+    const hasNoGeometry = track && !track.geometry;
+    const hasProperties = track?.id || track?.designation || track?.speedLimit !== undefined;
+    recordTest(
+      'Infrastructure - geometryDetail=metadata',
+      hasNoGeometry && hasProperties,
+      `(geometry: ${track?.geometry ? 'present' : 'absent'}, properties: ${hasProperties ? 'present' : 'absent'})`,
+    );
+  } catch (error) {
+    recordTest('Infrastructure - geometryDetail=metadata', false, `(error: ${error.message})`);
+  }
+
+  // 4g: geometryDetail="precise" - should have full geometry
+  try {
+    const result = await testMCP('tools/call', {
+      name: 'trafikverket_get_infrastructure',
+      arguments: { queryType: 'tracks', trackId: '001', geometryDetail: 'precise' },
+    });
+    const data = JSON.parse(result.result?.content?.[0]?.text || '{}');
+    const track = data.tracks?.[0];
+    const coordCount = track?.geometry?.coordinates?.length || 0;
+    // Precise should have many coordinates (track 001 has 47,747)
+    const hasManyCoords = coordCount > 1000;
+    recordTest('Infrastructure - geometryDetail=precise', hasManyCoords, `(${coordCount} coords)`);
+  } catch (error) {
+    recordTest('Infrastructure - geometryDetail=precise', false, `(error: ${error.message})`);
+  }
+
   // ============ trafikverket_get_crossings ============
   console.log('\n5. Testing trafikverket_get_crossings...');
 
@@ -286,7 +340,11 @@ async function main() {
       arguments: { latitude: 59.86, longitude: 17.64, radiusKm: 30, protectionType: 'barriers' },
     });
     const data = JSON.parse(result.result?.content?.[0]?.text || '{}');
-    recordTest('Crossings - with protection filter', data.crossings !== undefined, `(found ${data.count} barrier crossings near Uppsala)`);
+    recordTest(
+      'Crossings - with protection filter',
+      data.crossings !== undefined,
+      `(found ${data.count} barrier crossings near Uppsala)`,
+    );
   } catch (error) {
     recordTest('Crossings - with protection filter', false, `(error: ${error.message})`);
   }
@@ -313,7 +371,11 @@ async function main() {
       arguments: { queryType: 'incidents', severity: 'high' },
     });
     const data = JSON.parse(result.result?.content?.[0]?.text || '{}');
-    recordTest('Operations - incidents (high severity)', data.incidents !== undefined, `(found ${data.count} high severity incidents)`);
+    recordTest(
+      'Operations - incidents (high severity)',
+      data.incidents !== undefined,
+      `(found ${data.count} high severity incidents)`,
+    );
   } catch (error) {
     recordTest('Operations - incidents (high severity)', false, `(error: ${error.message})`);
   }
@@ -325,7 +387,11 @@ async function main() {
       arguments: { queryType: 'road_conditions', latitude: 59.33, longitude: 18.07, radiusKm: 50 },
     });
     const data = JSON.parse(result.result?.content?.[0]?.text || '{}');
-    recordTest('Operations - road_conditions by location', data.conditions !== undefined, `(found ${data.count} conditions near Stockholm)`);
+    recordTest(
+      'Operations - road_conditions by location',
+      data.conditions !== undefined,
+      `(found ${data.count} conditions near Stockholm)`,
+    );
   } catch (error) {
     recordTest('Operations - road_conditions by location', false, `(error: ${error.message})`);
   }

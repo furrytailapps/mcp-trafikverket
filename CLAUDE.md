@@ -276,7 +276,7 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 // ========== SEGMENT-BASED QUERIES (Primary Use Case) ==========
 
 // "We need to do maintenance on segment 182 this week"
-// Returns ALL infrastructure (track, tunnels, bridges, switches, electrification)
+// Returns ALL infrastructure with simplified corridor geometry (default)
 { "queryType": "all", "trackId": "182" }
 
 // Get only tunnels on segment 182
@@ -287,6 +287,18 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 
 // Get all level crossings on segment 182
 { "trackId": "182" }
+
+// ========== GEOMETRY DETAIL LEVELS ==========
+
+// Metadata only - no coordinates (for property queries)
+{ "queryType": "tracks", "trackId": "182", "geometryDetail": "metadata" }
+
+// Corridor (default) - simplified path (~50-100 points)
+// Use for cross-MCP queries (SMHI weather, SGU geology along track)
+{ "queryType": "tracks", "trackId": "182", "geometryDetail": "corridor" }
+
+// Precise - all coordinates (for accurate map visualization)
+{ "queryType": "tracks", "trackId": "182", "geometryDetail": "precise" }
 
 // ========== GEOGRAPHIC QUERIES (Secondary) ==========
 
@@ -340,12 +352,29 @@ node ~/.claude/scripts/mcp-test-runner.cjs https://mcp-trafikverket.vercel.app/m
 | Road conditions             | MEDIUM   | Heavy equipment transport                     |
 | Parking                     | LOW      | Staging areas near stations                   |
 
+## Geometry Detail (Token Reduction)
+
+The `geometryDetail` parameter reduces response size by 95-99% for infrastructure queries:
+
+| Value        | Returns                     | Use Case                                                         |
+| ------------ | --------------------------- | ---------------------------------------------------------------- |
+| `"metadata"` | Properties only (no coords) | "I just need track info (speed, electrification)"                |
+| `"corridor"` | ~50-100 simplified points   | "I need to query weather/geology along this track" **(Default)** |
+| `"precise"`  | All coordinates             | "I need to draw this track accurately on a map"                  |
+
+**Example reduction (Track 001):**
+
+- Precise: 47,747 coordinates → ~1.8 MB, ~537K tokens
+- Corridor: ~75 coordinates → ~3 KB, ~900 tokens (99.8% reduction)
+- Metadata: 0 coordinates → ~300 bytes, ~100 tokens
+
 ## Notes
 
 - **Infrastructure data from Lastkajen**: The `/data/*.json` files contain real NJDB infrastructure data (283 tracks, 214 tunnels, 4053 bridges) synced from Trafikverket's Lastkajen GeoPackage.
 - **Trafikinfo tools use live data**: The `trafikverket_get_crossings` and `trafikverket_get_operations` tools query the live Trafikinfo API.
 - All tools follow the flat schema pattern (no nested objects)
 - Trafikinfo API uses XML POST requests, handled by `xml-builder.ts`
+- **Geometry simplification**: Uses Douglas-Peucker algorithm (~500m tolerance) to reduce coordinates while preserving track shape
 
 ## Data Sync
 

@@ -49,9 +49,7 @@ async function main() {
 
     // Find railway packages
     const railwayPackages = packages.filter(
-      (pkg) =>
-        pkg.name.toLowerCase().includes('järnväg') ||
-        pkg.targetFolder.path.toLowerCase().includes('järnväg')
+      (pkg) => pkg.name.toLowerCase().includes('järnväg') || pkg.targetFolder.path.toLowerCase().includes('järnväg'),
     );
 
     console.log('');

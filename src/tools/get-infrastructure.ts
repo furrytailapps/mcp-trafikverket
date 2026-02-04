@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { lastkajenClient } from '@/clients/lastkajen-client';
 import { withErrorHandling } from '@/lib/response';
 import { ValidationError } from '@/lib/errors';
+import { loadSyncStatus } from '@/lib/data-loader';
 import {
   latitudeSchema,
   longitudeSchema,
@@ -9,6 +10,7 @@ import {
   bboxSchema,
   infrastructureQueryTypeSchema,
   largeLimitSchema,
+  geometryDetailSchema,
 } from '@/types/common-schemas';
 import type { InfrastructureQueryResult } from '@/types/njdb-api';
 
@@ -44,6 +46,13 @@ export const getInfrastructureInputSchema = {
     .describe('Filter by infrastructure manager name. Examples: "Trafikverket", "Inlandsbanan".'),
 
   limit: largeLimitSchema.optional().describe('Maximum number of results. Default: 100, max: 500.'),
+
+  geometryDetail: geometryDetailSchema.default('corridor').describe(
+    `Level of coordinate detail in response (reduces tokens by 95-99%):
+- "metadata": Properties only (length, speed, electrification). Use when you don't need location.
+- "corridor": Simplified path (~50-100 points). Use for querying weather/geology along the track. (Default)
+- "precise": All coordinates. Use only for accurate map visualization.`,
+  ),
 };
 
 export const getInfrastructureTool = {
@@ -53,7 +62,8 @@ export const getInfrastructureTool = {
     'PRIMARY: Query by track segment ID for maintenance planning (e.g., trackId="182"). ' +
     'SECONDARY: Query by geographic location (latitude/longitude with radius, or bbox). ' +
     'Returns track geometries, tunnels, bridges, switches, electrification sections, and stations. ' +
-    'Data is cached for 24 hours as infrastructure rarely changes.',
+    'Responses include lastSync timestamp indicating data freshness. ' +
+    'Note: electrified filter only applies to tracks queryType.',
   inputSchema: getInfrastructureInputSchema,
 };
 
@@ -67,6 +77,7 @@ type GetInfrastructureInput = {
   electrified?: boolean;
   infrastructureManager?: string;
   limit?: number;
+  geometryDetail?: 'metadata' | 'corridor' | 'precise';
 };
 
 export const getInfrastructureHandler = withErrorHandling(async (args: GetInfrastructureInput) => {
@@ -80,16 +91,22 @@ export const getInfrastructureHandler = withErrorHandling(async (args: GetInfras
     electrified,
     infrastructureManager,
     limit = 100,
+    geometryDetail = 'corridor',
   } = args;
+
+  // Get sync status for data freshness info
+  const syncStatus = await loadSyncStatus();
+  const lastSync = syncStatus?.lastSync || null;
 
   // PRIMARY: Query by track segment ID
   if (trackId) {
-    const segmentData = await lastkajenClient.getSegmentInfrastructure(trackId);
+    const segmentData = await lastkajenClient.getSegmentInfrastructure(trackId, geometryDetail);
 
     if (queryType === 'all') {
       return {
         queryType: 'all',
         trackId,
+        lastSync,
         count:
           (segmentData.track ? 1 : 0) +
           segmentData.tunnels.length +
@@ -112,19 +129,26 @@ export const getInfrastructureHandler = withErrorHandling(async (args: GetInfras
         return {
           queryType,
           trackId,
+          lastSync,
           count: segmentData.track ? 1 : 0,
           tracks: segmentData.track ? [segmentData.track] : [],
         };
       case 'tunnels':
-        return { queryType, trackId, count: segmentData.tunnels.length, tunnels: segmentData.tunnels };
+        return { queryType, trackId, lastSync, count: segmentData.tunnels.length, tunnels: segmentData.tunnels };
       case 'bridges':
-        return { queryType, trackId, count: segmentData.bridges.length, bridges: segmentData.bridges };
+        return { queryType, trackId, lastSync, count: segmentData.bridges.length, bridges: segmentData.bridges };
       case 'switches':
-        return { queryType, trackId, count: segmentData.switches.length, switches: segmentData.switches };
+        return { queryType, trackId, lastSync, count: segmentData.switches.length, switches: segmentData.switches };
       case 'electrification':
-        return { queryType, trackId, count: segmentData.electrification.length, electrification: segmentData.electrification };
+        return {
+          queryType,
+          trackId,
+          lastSync,
+          count: segmentData.electrification.length,
+          electrification: segmentData.electrification,
+        };
       case 'stations':
-        return { queryType, trackId, count: segmentData.stations.length, stations: segmentData.stations };
+        return { queryType, trackId, lastSync, count: segmentData.stations.length, stations: segmentData.stations };
     }
   }
 
@@ -139,11 +163,11 @@ export const getInfrastructureHandler = withErrorHandling(async (args: GetInfras
   }
 
   // Query specific infrastructure types
-  const result: InfrastructureQueryResult = { queryType, count: 0 };
+  const result: InfrastructureQueryResult = { queryType, count: 0, lastSync };
 
   switch (queryType) {
     case 'tracks': {
-      let tracks = await lastkajenClient.getTracksByBBox(parsedBBox, limit);
+      let tracks = await lastkajenClient.getTracksByBBox(parsedBBox, limit, geometryDetail);
       if (electrified !== undefined) {
         tracks = tracks.filter((t) => t.electrified === electrified);
       }
@@ -156,43 +180,43 @@ export const getInfrastructureHandler = withErrorHandling(async (args: GetInfras
       break;
     }
     case 'tunnels': {
-      const tunnels = await lastkajenClient.getTunnelsByBBox(parsedBBox, limit);
+      const tunnels = await lastkajenClient.getTunnelsByBBox(parsedBBox, limit, geometryDetail);
       result.tunnels = tunnels;
       result.count = tunnels.length;
       break;
     }
     case 'bridges': {
-      const bridges = await lastkajenClient.getBridgesByBBox(parsedBBox, limit);
+      const bridges = await lastkajenClient.getBridgesByBBox(parsedBBox, limit, geometryDetail);
       result.bridges = bridges;
       result.count = bridges.length;
       break;
     }
     case 'switches': {
-      const switches = await lastkajenClient.getSwitchesByBBox(parsedBBox, limit);
+      const switches = await lastkajenClient.getSwitchesByBBox(parsedBBox, limit, geometryDetail);
       result.switches = switches;
       result.count = switches.length;
       break;
     }
     case 'electrification': {
-      const electrification = await lastkajenClient.getElectrificationByBBox(parsedBBox, limit);
+      const electrification = await lastkajenClient.getElectrificationByBBox(parsedBBox, limit, geometryDetail);
       result.electrification = electrification;
       result.count = electrification.length;
       break;
     }
     case 'stations': {
-      const stations = await lastkajenClient.getStationsByBBox(parsedBBox, limit);
+      const stations = await lastkajenClient.getStationsByBBox(parsedBBox, limit, geometryDetail);
       result.stations = stations;
       result.count = stations.length;
       break;
     }
     case 'all': {
       const [tracks, tunnels, bridges, switches, electrification, stations] = await Promise.all([
-        lastkajenClient.getTracksByBBox(parsedBBox, limit),
-        lastkajenClient.getTunnelsByBBox(parsedBBox, limit),
-        lastkajenClient.getBridgesByBBox(parsedBBox, limit),
-        lastkajenClient.getSwitchesByBBox(parsedBBox, limit),
-        lastkajenClient.getElectrificationByBBox(parsedBBox, limit),
-        lastkajenClient.getStationsByBBox(parsedBBox, limit),
+        lastkajenClient.getTracksByBBox(parsedBBox, limit, geometryDetail),
+        lastkajenClient.getTunnelsByBBox(parsedBBox, limit, geometryDetail),
+        lastkajenClient.getBridgesByBBox(parsedBBox, limit, geometryDetail),
+        lastkajenClient.getSwitchesByBBox(parsedBBox, limit, geometryDetail),
+        lastkajenClient.getElectrificationByBBox(parsedBBox, limit, geometryDetail),
+        lastkajenClient.getStationsByBBox(parsedBBox, limit, geometryDetail),
       ]);
 
       let filteredTracks = tracks;

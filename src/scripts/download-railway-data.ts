@@ -13,11 +13,7 @@ import path from 'path';
 import Database from 'better-sqlite3';
 import unzipper from 'unzipper';
 import { Readable } from 'stream';
-import {
-  getDataPackageFiles,
-  downloadPackageFile,
-  RAILWAY_PACKAGE_IDS,
-} from '../lib/lastkajen-api';
+import { getDataPackageFiles, downloadPackageFile, RAILWAY_PACKAGE_IDS } from '../lib/lastkajen-api';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const TEMP_DIR = path.join(process.cwd(), 'data', 'temp');
@@ -79,9 +75,12 @@ async function exploreGeoPackage(gpkgPath: string): Promise<void> {
 
   // Check GeoPackage contents table
   try {
-    const contents = db
-      .prepare('SELECT table_name, data_type, identifier, description FROM gpkg_contents')
-      .all() as { table_name: string; data_type: string; identifier: string; description: string }[];
+    const contents = db.prepare('SELECT table_name, data_type, identifier, description FROM gpkg_contents').all() as {
+      table_name: string;
+      data_type: string;
+      identifier: string;
+      description: string;
+    }[];
 
     console.log(`\nGeoPackage Contents (layers):`);
     contents.forEach((c) => {

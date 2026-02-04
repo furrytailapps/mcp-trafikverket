@@ -209,6 +209,7 @@ export interface SegmentInfrastructure {
 export interface InfrastructureQueryResult {
   queryType: string;
   count: number;
+  lastSync?: string | null;
   tracks?: Track[];
   tunnels?: Tunnel[];
   bridges?: Bridge[];
