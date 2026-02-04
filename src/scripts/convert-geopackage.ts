@@ -11,6 +11,20 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import Database from 'better-sqlite3';
+import proj4 from 'proj4';
+
+// Define SWEREF99TM (EPSG:3006) - the coordinate system used by NJDB/Lastkajen
+proj4.defs('EPSG:3006', '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
+
+/**
+ * Convert SWEREF99TM to WGS84
+ * @param x Easting in meters
+ * @param y Northing in meters
+ * @returns [longitude, latitude] in WGS84
+ */
+function swerefToWgs84(x: number, y: number): [number, number] {
+  return proj4('EPSG:3006', 'EPSG:4326', [x, y]) as [number, number];
+}
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const TEMP_DIR = path.join(DATA_DIR, 'temp');
@@ -23,84 +37,66 @@ async function findGpkgFile(): Promise<string> {
   return path.join(TEMP_DIR, gpkg);
 }
 
-// Parse WKB (Well-Known Binary) geometry to GeoJSON coordinates
-// GeoPackage uses standard WKB format for geometry storage
+// GeoPackage envelope sizes by type (bytes)
+// Type 0: no envelope, 1: [minX,maxX,minY,maxY], 2: +Z, 3: +M, 4: +Z+M
+const ENVELOPE_SIZES = [0, 32, 48, 48, 64] as const;
+
+// WKB geometry types
+const WKB_POINT = 1;
+const WKB_LINESTRING = 2;
+
+/**
+ * Read a coordinate pair from buffer, converting SWEREF99TM to WGS84
+ */
+function readCoordinate(buffer: Buffer, offset: number, littleEndian: boolean): [number, number] {
+  const x = littleEndian ? buffer.readDoubleLE(offset) : buffer.readDoubleBE(offset);
+  const y = littleEndian ? buffer.readDoubleLE(offset + 8) : buffer.readDoubleBE(offset + 8);
+  return swerefToWgs84(x, y);
+}
+
+/**
+ * Parse WKB (Well-Known Binary) geometry to GeoJSON coordinates
+ * GeoPackage uses standard WKB format for geometry storage
+ */
 function parseWkbToCoordinates(wkb: Buffer): number[][] | null {
   if (!wkb || wkb.length < 5) return null;
 
   try {
-    // GeoPackage WKB has a header: byte order, type, SRID, envelope
-    // Standard WKB: 1 byte order + 4 byte type + coordinates
-
     let offset = 0;
 
-    // Check for GeoPackage header (starts with 'GP')
-    const hasGpkgHeader = wkb[0] === 0x47 && wkb[1] === 0x50;
-
-    if (hasGpkgHeader) {
-      // GeoPackage Binary Geometry header
-      // Bytes 0-1: Magic (GP)
-      // Byte 2: Version
-      // Byte 3: Flags
-      const flags = wkb[3];
-      const envelopeType = (flags >> 1) & 0x07;
-
-      // Calculate envelope size
-      let envelopeSize = 0;
-      if (envelopeType === 1) envelopeSize = 32; // [minX, maxX, minY, maxY]
-      else if (envelopeType === 2) envelopeSize = 48; // + [minZ, maxZ]
-      else if (envelopeType === 3) envelopeSize = 48; // + [minM, maxM]
-      else if (envelopeType === 4) envelopeSize = 64; // + [minZ, maxZ, minM, maxM]
-
-      offset = 8 + envelopeSize; // 8 byte header + envelope
+    // Check for GeoPackage header (magic bytes 'GP')
+    if (wkb[0] === 0x47 && wkb[1] === 0x50) {
+      const envelopeType = (wkb[3] >> 1) & 0x07;
+      const envelopeSize = ENVELOPE_SIZES[envelopeType] ?? 0;
+      offset = 8 + envelopeSize;
     }
 
-    // Now read WKB
-    const byteOrder = wkb[offset]; // 0 = big endian, 1 = little endian
-    const isLittleEndian = byteOrder === 1;
-
-    // Read geometry type (4 bytes)
+    const isLittleEndian = wkb[offset] === 1;
     const typeBytes = wkb.slice(offset + 1, offset + 5);
     const geomType = isLittleEndian ? typeBytes.readUInt32LE(0) : typeBytes.readUInt32BE(0);
 
-    // Type 2 = LineString, Type 1 = Point
-    if (geomType !== 2 && geomType !== 1) {
-      // Could be MultiLineString (5) or other
-      return null;
+    if (geomType === WKB_POINT) {
+      return [readCoordinate(wkb, offset + 5, isLittleEndian)];
     }
 
-    if (geomType === 1) {
-      // Point
-      const x = isLittleEndian
-        ? wkb.readDoubleLE(offset + 5)
-        : wkb.readDoubleBE(offset + 5);
-      const y = isLittleEndian
-        ? wkb.readDoubleLE(offset + 13)
-        : wkb.readDoubleBE(offset + 13);
-      return [[x, y]];
+    if (geomType === WKB_LINESTRING) {
+      const numPointsOffset = offset + 5;
+      const numPoints = isLittleEndian
+        ? wkb.readUInt32LE(numPointsOffset)
+        : wkb.readUInt32BE(numPointsOffset);
+
+      const coords: number[][] = [];
+      let coordOffset = numPointsOffset + 4;
+
+      for (let i = 0; i < numPoints && coordOffset + 16 <= wkb.length; i++) {
+        coords.push(readCoordinate(wkb, coordOffset, isLittleEndian));
+        coordOffset += 16;
+      }
+
+      return coords.length > 0 ? coords : null;
     }
 
-    // LineString
-    const numPointsOffset = offset + 5;
-    const numPoints = isLittleEndian
-      ? wkb.readUInt32LE(numPointsOffset)
-      : wkb.readUInt32BE(numPointsOffset);
-
-    const coords: number[][] = [];
-    let coordOffset = numPointsOffset + 4;
-
-    for (let i = 0; i < numPoints && coordOffset + 16 <= wkb.length; i++) {
-      const x = isLittleEndian
-        ? wkb.readDoubleLE(coordOffset)
-        : wkb.readDoubleBE(coordOffset);
-      const y = isLittleEndian
-        ? wkb.readDoubleLE(coordOffset + 8)
-        : wkb.readDoubleBE(coordOffset + 8);
-      coords.push([x, y]);
-      coordOffset += 16;
-    }
-
-    return coords.length > 0 ? coords : null;
+    return null;
   } catch {
     return null;
   }
@@ -173,9 +169,7 @@ async function main() {
   const db = new Database(gpkgPath, { readonly: true });
 
   // Get all records
-  const rows = db
-    .prepare('SELECT * FROM Järnvägsnät_med_grundegenskaper3_0')
-    .all() as Record<string, unknown>[];
+  const rows = db.prepare('SELECT * FROM Järnvägsnät_med_grundegenskaper3_0').all() as Record<string, unknown>[];
 
   console.log(`Total records: ${rows.length}`);
 
@@ -200,14 +194,14 @@ async function main() {
       continue;
     }
 
-    const bandel = row.Bandel as string || '';
-    const bandelNamn = row.Bandelnamn as string || '';
-    const elementId = row.ELEMENT_ID as string || '';
-    const segmentLength = row.SEGMENT_LENGTH as number || 0;
-    const elektrifi = row.Elektrifi as string || '';
-    const infraCode = row.InfrafKod as string || '';
-    const infraName = row.Infrafnam as string || '';
-    const sthMed = row.STH_A_med as number || 0;
+    const bandel = (row.Bandel as string) || '';
+    const bandelNamn = (row.Bandelnamn as string) || '';
+    const elementId = (row.ELEMENT_ID as string) || '';
+    const segmentLength = (row.SEGMENT_LENGTH as number) || 0;
+    const elektrifi = (row.Elektrifi as string) || '';
+    const infraCode = (row.InfrafKod as string) || '';
+    const infraName = (row.Infrafnam as string) || '';
+    const sthMed = (row.STH_A_med as number) || 0;
 
     // Track: aggregate by Bandel
     if (bandel && bandel !== 'null') {
@@ -242,7 +236,7 @@ async function main() {
 
     // Tunnel - uses -1 for true in GeoPackage
     if ((row.Tunnel as number) === -1) {
-      const tunnelName = row.Tunnelnam as string || '';
+      const tunnelName = (row.Tunnelnam as string) || '';
       const tunnelKey = tunnelName || elementId;
       if (!tunnelsMap.has(tunnelKey)) {
         tunnelsMap.set(tunnelKey, {
@@ -260,8 +254,8 @@ async function main() {
 
     // Bridge - uses -1 for true in GeoPackage
     if ((row.Bro as number) === -1) {
-      const bridgeName = row.Bronamn as string || '';
-      const bridgeFunc = row.Brofunk as string || '';
+      const bridgeName = (row.Bronamn as string) || '';
+      const bridgeFunc = (row.Brofunk as string) || '';
       const bridgeKey = bridgeName || elementId;
       if (!bridgesMap.has(bridgeKey)) {
         bridgesMap.set(bridgeKey, {
@@ -279,8 +273,8 @@ async function main() {
     }
 
     // Station (from PlNamn)
-    const plNamn = row.PlNamn as string || '';
-    const plForb = row.Pl_Forb as string || '';
+    const plNamn = (row.PlNamn as string) || '';
+    const plForb = (row.Pl_Forb as string) || '';
     if (plNamn && plNamn !== 'null' && !stationsMap.has(plNamn)) {
       // Use first coordinate as station point
       stationsMap.set(plNamn, {
@@ -319,30 +313,18 @@ async function main() {
   const bridges = Array.from(bridgesMap.values());
   // Note: We keep existing stations from Trafikinfo, just log these for reference
 
-  await fs.writeFile(
-    path.join(DATA_DIR, 'tracks.json'),
-    JSON.stringify(tracks, null, 2)
-  );
+  await fs.writeFile(path.join(DATA_DIR, 'tracks.json'), JSON.stringify(tracks, null, 2));
   console.log(`  Wrote tracks.json (${tracks.length} tracks)`);
 
-  await fs.writeFile(
-    path.join(DATA_DIR, 'tunnels.json'),
-    JSON.stringify(tunnels, null, 2)
-  );
+  await fs.writeFile(path.join(DATA_DIR, 'tunnels.json'), JSON.stringify(tunnels, null, 2));
   console.log(`  Wrote tunnels.json (${tunnels.length} tunnels)`);
 
-  await fs.writeFile(
-    path.join(DATA_DIR, 'bridges.json'),
-    JSON.stringify(bridges, null, 2)
-  );
+  await fs.writeFile(path.join(DATA_DIR, 'bridges.json'), JSON.stringify(bridges, null, 2));
   console.log(`  Wrote bridges.json (${bridges.length} bridges)`);
 
   // Write stations from GeoPackage for reference (as njdb-stations.json)
   const njdbStations = Array.from(stationsMap.values());
-  await fs.writeFile(
-    path.join(DATA_DIR, 'njdb-stations.json'),
-    JSON.stringify(njdbStations, null, 2)
-  );
+  await fs.writeFile(path.join(DATA_DIR, 'njdb-stations.json'), JSON.stringify(njdbStations, null, 2));
   console.log(`  Wrote njdb-stations.json (${njdbStations.length} stations from NJDB)`);
 
   // Update metadata
@@ -354,10 +336,7 @@ async function main() {
     trackDesignations: tracks.map((t) => t.designation),
     stationCodes: njdbStations.map((s) => ({ code: s.signature, name: s.name })),
   };
-  await fs.writeFile(
-    path.join(DATA_DIR, 'metadata.json'),
-    JSON.stringify(metadata, null, 2)
-  );
+  await fs.writeFile(path.join(DATA_DIR, 'metadata.json'), JSON.stringify(metadata, null, 2));
   console.log(`  Wrote metadata.json`);
 
   // Update sync status
@@ -374,10 +353,7 @@ async function main() {
       stations: njdbStations.length,
     },
   };
-  await fs.writeFile(
-    path.join(DATA_DIR, 'sync-status.json'),
-    JSON.stringify(syncStatus, null, 2)
-  );
+  await fs.writeFile(path.join(DATA_DIR, 'sync-status.json'), JSON.stringify(syncStatus, null, 2));
   console.log(`  Wrote sync-status.json`);
 
   console.log('');
