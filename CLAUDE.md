@@ -75,7 +75,7 @@ This MCP uses two different Trafikverket data sources:
 - **GitHub Actions** downloads GeoPackage, converts to JSON, commits to repo → triggers Vercel deploy
 - **Token auto-refresh**: `lastkajen-api.ts` automatically refreshes expired tokens using credentials
 
-## Available Tools (4)
+## Available Tools (<!-- AUTO:tool_count -->4<!-- /AUTO -->)
 
 | Tool                              | Description                                                                                                                  |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
