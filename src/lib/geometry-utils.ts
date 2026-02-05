@@ -82,6 +82,16 @@ export function truncatePrecision(coords: [number, number][]): [number, number][
 }
 
 /**
+ * Truncate a single point coordinate to 6 decimals
+ *
+ * @param coord - [lon, lat] coordinate
+ * @returns Coordinate with truncated precision
+ */
+export function truncatePointPrecision(coord: [number, number]): [number, number] {
+  return [Math.round(coord[0] * 1e6) / 1e6, Math.round(coord[1] * 1e6) / 1e6];
+}
+
+/**
  * Geometry detail levels for MCP responses
  */
 export type GeometryDetail = 'metadata' | 'corridor' | 'precise';
@@ -110,7 +120,11 @@ export function formatLineGeometry(geometry: GeoJsonLineString, detail: Geometry
         coordinates: truncatePrecision(simplifyPath(geometry.coordinates, DEFAULT_TOLERANCE)),
       };
     case 'precise':
-      return geometry;
+      // Still truncate precision to 6 decimals (11cm accuracy, sufficient for any use)
+      return {
+        type: 'LineString',
+        coordinates: truncatePrecision(geometry.coordinates),
+      };
   }
 }
 
@@ -128,16 +142,20 @@ export function formatLineStructureGeometry(
 ): GeoJsonLineString | undefined {
   if (detail === 'metadata') return undefined;
 
-  // For short LineStrings, return as-is
   const coords = geometry.coordinates;
+
+  // For short LineStrings, just truncate precision
   if (coords.length <= 2) {
-    return geometry;
+    return {
+      type: 'LineString',
+      coordinates: truncatePrecision(coords),
+    };
   }
 
-  // Return just start and end points
+  // Return just start and end points with truncated precision
   return {
     type: 'LineString',
-    coordinates: [coords[0], coords[coords.length - 1]],
+    coordinates: truncatePrecision([coords[0], coords[coords.length - 1]]),
   };
 }
 
@@ -156,21 +174,28 @@ export function formatStructureGeometry(
 ): GeoJsonLineString | GeoJsonPoint | undefined {
   if (detail === 'metadata') return undefined;
 
-  // For Point geometries, return as-is
+  // For Point geometries, truncate precision
   if (geometry.type === 'Point') {
-    return geometry;
+    const truncated = truncatePointPrecision(geometry.coordinates as [number, number]);
+    return {
+      type: 'Point',
+      coordinates: truncated,
+    };
   }
 
-  // For LineString, simplify to start/end
+  // For LineString, simplify to start/end with truncated precision
   const coords = geometry.coordinates;
   if (coords.length <= 2) {
-    return geometry;
+    return {
+      type: 'LineString',
+      coordinates: truncatePrecision(coords),
+    };
   }
 
-  // Return just start and end points
+  // Return just start and end points with truncated precision
   return {
     type: 'LineString',
-    coordinates: [coords[0], coords[coords.length - 1]],
+    coordinates: truncatePrecision([coords[0], coords[coords.length - 1]]),
   };
 }
 
@@ -183,7 +208,13 @@ export function formatStructureGeometry(
  */
 export function formatPointGeometry(geometry: GeoJsonPoint, detail: GeometryDetail): GeoJsonPoint | undefined {
   if (detail === 'metadata') return undefined;
-  return geometry;
+
+  // Truncate precision to 6 decimals for all point geometries
+  const truncated = truncatePointPrecision(geometry.coordinates as [number, number]);
+  return {
+    type: 'Point',
+    coordinates: truncated,
+  };
 }
 
 // ============================================================================

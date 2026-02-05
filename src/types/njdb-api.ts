@@ -134,20 +134,14 @@ export interface Bridge {
 
 export interface SwitchProperties {
   switchId?: string;
-  trackId?: string;
-  type?: string; // e.g., "left", "right", "double"
-  controlType?: string; // "manual", "remote", "automatic"
-  maxSpeed?: number;
 }
 
 export type SwitchFeature = GeoJsonFeature<GeoJsonPoint, SwitchProperties>;
 
+// Switches are junction points where tracks split
+// All switches in NJDB are "junction" type (not stored to reduce bloat)
 export interface Switch {
   id: string;
-  trackId?: string;
-  type?: string;
-  controlType?: string;
-  maxSpeed?: number;
   geometry: GeoJsonPoint;
 }
 
@@ -218,8 +212,6 @@ export interface Station {
 export interface YardProperties {
   yardId?: string;
   name?: string;
-  inspireId?: string;
-  validFrom?: string;
 }
 
 export type YardFeature = GeoJsonFeature<GeoJsonPoint, YardProperties>;
@@ -227,8 +219,6 @@ export type YardFeature = GeoJsonFeature<GeoJsonPoint, YardProperties>;
 export interface Yard {
   id: string;
   name?: string;
-  inspireId?: string;
-  validFrom?: string;
   geometry: GeoJsonPoint;
 }
 
@@ -238,20 +228,14 @@ export interface Yard {
 
 export interface AccessRestrictionProperties {
   restrictionId?: string;
-  restriction?: 'public' | 'private' | 'physically_impossible';
-  direction?: string;
-  inspireId?: string;
-  validFrom?: string;
 }
 
 export type AccessRestrictionFeature = GeoJsonFeature<GeoJsonPoint, AccessRestrictionProperties>;
 
+// Access restrictions indicate private/restricted track sections
+// All restrictions in NJDB are "private" with "both directions" (not stored to reduce bloat)
 export interface AccessRestriction {
   id: string;
-  restriction: 'public' | 'private' | 'physically_impossible';
-  direction?: string;
-  inspireId?: string;
-  validFrom?: string;
   geometry: GeoJsonPoint;
 }
 
@@ -353,10 +337,6 @@ export function transformSwitch(feature: SwitchFeature): Switch {
   const { properties, geometry } = feature;
   return {
     id: properties.switchId || 'unknown',
-    trackId: properties.trackId,
-    type: properties.type,
-    controlType: properties.controlType,
-    maxSpeed: properties.maxSpeed,
     geometry,
   };
 }

@@ -191,23 +191,21 @@ async function downloadAndExtract(packageId: number, fileName: string, gpkgName:
   }
 }
 
+// Lean yard record: only id, name, and geometry
+// inspireId/validFrom removed to reduce bloat
 interface Yard {
   id: string;
   name: string;
-  inspireId?: string;
-  validFrom?: string;
   geometry: {
     type: 'Point';
     coordinates: [number, number];
   };
 }
 
+// Lean access restriction record: only id and geometry
+// restriction/direction/inspireId/validFrom removed (always "private" + "both directions")
 interface AccessRestriction {
   id: string;
-  restriction: 'public' | 'private' | 'physically_impossible';
-  direction: string;
-  inspireId?: string;
-  validFrom?: string;
   geometry: {
     type: 'Point';
     coordinates: [number, number];
@@ -248,14 +246,16 @@ async function main() {
       continue;
     }
 
+    // Truncate coordinates to 6 decimals (~11cm precision)
+    const lon = Math.round(point.longitude * 1e6) / 1e6;
+    const lat = Math.round(point.latitude * 1e6) / 1e6;
+
     yards.push({
       id: `YRD-${yards.length + 1}`,
       name: row.geographicalName || 'Unnamed Yard',
-      inspireId: row.inspireId,
-      validFrom: row.validFrom,
       geometry: {
         type: 'Point',
-        coordinates: [point.longitude, point.latitude],
+        coordinates: [lon, lat],
       },
     });
   }
@@ -297,22 +297,15 @@ async function main() {
       continue;
     }
 
-    const restrictionType =
-      row.restriction === 'private'
-        ? 'private'
-        : row.restriction === 'physically impossible'
-          ? 'physically_impossible'
-          : 'private';
+    // Truncate coordinates to 6 decimals (~11cm precision)
+    const lon = Math.round(point.longitude * 1e6) / 1e6;
+    const lat = Math.round(point.latitude * 1e6) / 1e6;
 
     restrictions.push({
       id: `RST-${restrictions.length + 1}`,
-      restriction: restrictionType,
-      direction: row.applicableDirection,
-      inspireId: row.inspireId,
-      validFrom: row.validFrom,
       geometry: {
         type: 'Point',
-        coordinates: [point.longitude, point.latitude],
+        coordinates: [lon, lat],
       },
     });
   }

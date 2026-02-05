@@ -67,11 +67,10 @@ function parsePointGeometry(geom: Buffer): { longitude: number; latitude: number
   }
 }
 
+// Lean switch record: only id and geometry
+// type/inspireId/validFrom removed to reduce bloat (type is always "junction")
 interface Switch {
   id: string;
-  type: string;
-  inspireId?: string;
-  validFrom?: string;
   geometry: {
     type: 'Point';
     coordinates: [number, number];
@@ -144,14 +143,15 @@ async function main() {
       continue;
     }
 
+    // Truncate coordinates to 6 decimals (~11cm precision)
+    const lon = Math.round(point.longitude * 1e6) / 1e6;
+    const lat = Math.round(point.latitude * 1e6) / 1e6;
+
     switches.push({
       id: `SWT-${switches.length + 1}`,
-      type: 'junction',
-      inspireId: node.inspireId,
-      validFrom: node.validFrom,
       geometry: {
         type: 'Point',
-        coordinates: [point.longitude, point.latitude],
+        coordinates: [lon, lat],
       },
     });
   }

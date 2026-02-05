@@ -277,14 +277,18 @@ async function getSegmentInfrastructure(
 
     const track = allTracks.find((t) => t.id === trackId || t.designation === trackId);
 
-    // Filter stations, yards, and access restrictions by proximity to track geometry
+    // Filter point data by proximity to track geometry
     // Simplify track once for performance, then check each point
+    let nearbySwitches: Switch[] = [];
     let nearbyStations: Station[] = [];
     let nearbyYards: Yard[] = [];
     let nearbyRestrictions: AccessRestriction[] = [];
 
     if (track && track.geometry) {
       const simplifiedTrack = simplifyTrackForStationFilter(track.geometry);
+      nearbySwitches = allSwitches.filter(
+        (sw) => sw.geometry && isPointNearSimplifiedTrack(sw.geometry, simplifiedTrack),
+      );
       nearbyStations = allStations.filter(
         (station) => station.geometry && isPointNearSimplifiedTrack(station.geometry, simplifiedTrack),
       );
@@ -299,7 +303,7 @@ async function getSegmentInfrastructure(
       track: track || undefined,
       tunnels: allTunnels.filter((t) => t.trackId === trackId),
       bridges: allBridges.filter((b) => b.trackId === trackId),
-      switches: allSwitches.filter((s) => s.trackId === trackId),
+      switches: nearbySwitches,
       electrification: allElectrification.filter((e) => e.trackId === trackId),
       stations: nearbyStations,
       yards: nearbyYards,
