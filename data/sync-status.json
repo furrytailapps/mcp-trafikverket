@@ -1,15 +1,13 @@
 {
-  "lastSync": "2026-02-05T07:44:01.733Z",
+  "lastSync": "2026-02-08T04:57:31.372Z",
   "source": "lastkajen",
   "success": true,
   "counts": {
     "tracks": 283,
     "tunnels": 214,
     "bridges": 4053,
-    "switches": 15492,
+    "switches": 0,
     "electrification": 0,
-    "stations": 1388,
-    "yards": 1138,
-    "accessRestrictions": 10778
+    "stations": 1388
   }
 }

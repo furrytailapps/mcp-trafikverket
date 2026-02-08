@@ -1396,14 +1396,6 @@
       "name": "Hultsfreds Hembygdspark"
     },
     {
-      "code": "xSjv",
-      "name": "Sjövägen"
-    },
-    {
-      "code": "xNv",
-      "name": "Näsviken"
-    },
-    {
       "code": "Nld",
       "name": "Nyland"
     },
@@ -1416,12 +1408,16 @@
       "name": "Kistinge"
     },
     {
-      "code": "Fgc",
-      "name": "Fagersta central"
+      "code": "xLba",
+      "name": "Långbacka"
     },
     {
-      "code": "xDo",
-      "name": "Delsbo"
+      "code": "xNv",
+      "name": "Näsviken"
+    },
+    {
+      "code": "xFsa",
+      "name": "Forsa"
     },
     {
       "code": "Ggm",
@@ -1432,32 +1428,36 @@
       "name": "Hybo"
     },
     {
-      "code": "xTib",
-      "name": "Triabo"
+      "code": "xFos",
+      "name": "Fredriksfors"
     },
     {
-      "code": "xKpr",
-      "name": "Kopperå"
-    },
-    {
-      "code": "xLba",
-      "name": "Långbacka"
+      "code": "xDo",
+      "name": "Delsbo"
     },
     {
       "code": "xSdu",
       "name": "Sandudden"
     },
     {
-      "code": "xFos",
-      "name": "Fredriksfors"
-    },
-    {
-      "code": "xFsa",
-      "name": "Forsa"
+      "code": "xTib",
+      "name": "Triabo"
     },
     {
       "code": "xHkl",
       "name": "Hudiksvall (xHkl)"
+    },
+    {
+      "code": "xSjv",
+      "name": "Sjövägen"
+    },
+    {
+      "code": "xKpr",
+      "name": "Kopperå"
+    },
+    {
+      "code": "Fgc",
+      "name": "Fagersta central"
     },
     {
       "code": "Hmr",
@@ -1528,12 +1528,16 @@
       "name": "Tillberga"
     },
     {
+      "code": "xBäu",
+      "name": "Bläse kalkbruk"
+    },
+    {
       "code": "xBäo",
       "name": "Bläse kalkbrott"
     },
     {
-      "code": "xBäu",
-      "name": "Bläse kalkbruk"
+      "code": "Bih",
+      "name": "Billesholm"
     },
     {
       "code": "Mgb",
@@ -1542,10 +1546,6 @@
     {
       "code": "Rts",
       "name": "Rottneros"
-    },
-    {
-      "code": "Bih",
-      "name": "Billesholm"
     },
     {
       "code": "xIpr",
@@ -1560,44 +1560,24 @@
       "name": "Smedjebacken"
     },
     {
-      "code": "Mot",
-      "name": "Motala central"
-    },
-    {
-      "code": "xTe",
-      "name": "Tule"
-    },
-    {
-      "code": "xKht",
-      "name": "Kambshagtorp"
-    },
-    {
-      "code": "Bro",
-      "name": "Bro"
-    },
-    {
       "code": "xNys",
       "name": "Nygårds Stall Dalhem"
     },
     {
-      "code": "wSa",
-      "name": "Skara"
-    },
-    {
-      "code": "xEkn",
-      "name": "Eken"
-    },
-    {
-      "code": "xRok",
-      "name": "Roma kungsgård"
+      "code": "Nosk",
+      "name": "Nordskogen"
     },
     {
       "code": "Bhs",
       "name": "Bohus"
     },
     {
-      "code": "Nosk",
-      "name": "Nordskogen"
+      "code": "Bro",
+      "name": "Bro"
+    },
+    {
+      "code": "Mot",
+      "name": "Motala central"
     },
     {
       "code": "xTeg",
@@ -1608,232 +1588,252 @@
       "name": "Munkebos"
     },
     {
+      "code": "xTe",
+      "name": "Tule"
+    },
+    {
+      "code": "xRok",
+      "name": "Roma kungsgård"
+    },
+    {
+      "code": "xEkn",
+      "name": "Eken"
+    },
+    {
+      "code": "wSa",
+      "name": "Skara"
+    },
+    {
+      "code": "xKht",
+      "name": "Kambshagtorp"
+    },
+    {
       "code": "Vv",
       "name": "Vallvik"
-    },
-    {
-      "code": "Brh",
-      "name": "Brattheden"
-    },
-    {
-      "code": "xÅa",
-      "name": "Åseda (xÅa)"
-    },
-    {
-      "code": "xTog",
-      "name": "Tomtskog"
-    },
-    {
-      "code": "xMsa",
-      "name": "Målilla Sanatorium"
-    },
-    {
-      "code": "xLäe",
-      "name": "Länninge"
     },
     {
       "code": "xFie",
       "name": "Fiskåsen"
     },
     {
+      "code": "Gö",
+      "name": "Gällö"
+    },
+    {
       "code": "Ljun",
       "name": "Ljungaverks lastplats"
-    },
-    {
-      "code": "xHäs",
-      "name": "Hultanäs"
-    },
-    {
-      "code": "Uvn",
-      "name": "Ursviken"
-    },
-    {
-      "code": "xÖvl",
-      "name": "Östra Vemmerlöv"
-    },
-    {
-      "code": "Hak",
-      "name": "Hallstavik"
-    },
-    {
-      "code": "xLnb",
-      "name": "Lundsbrunn"
-    },
-    {
-      "code": "xScs",
-      "name": "Scoutstugan"
-    },
-    {
-      "code": "xOhs",
-      "name": "Ohs Bruk"
-    },
-    {
-      "code": "xGyb",
-      "name": "Gyllebosjö"
-    },
-    {
-      "code": "xGim",
-      "name": "Gimarp"
-    },
-    {
-      "code": "xDkn",
-      "name": "Dala kvarn"
-    },
-    {
-      "code": "xHap",
-      "name": "Hultarp"
-    },
-    {
-      "code": "xFla",
-      "name": "Flaten"
-    },
-    {
-      "code": "Bål",
-      "name": "Bålsta"
-    },
-    {
-      "code": "xVsm",
-      "name": "Virserum"
-    },
-    {
-      "code": "Mkln",
-      "name": "Munkedals nedre"
-    },
-    {
-      "code": "Mklh",
-      "name": "Munkedals hamn"
-    },
-    {
-      "code": "Vru",
-      "name": "Vekerum"
-    },
-    {
-      "code": "Ms",
-      "name": "Mosås"
-    },
-    {
-      "code": "xGåv",
-      "name": "Gårdveda"
-    },
-    {
-      "code": "xBn",
-      "name": "Bor Norra"
-    },
-    {
-      "code": "xEyd",
-      "name": "Elgaryd"
-    },
-    {
-      "code": "Vån",
-      "name": "Västerås norra"
-    },
-    {
-      "code": "xVtk",
-      "name": "Vitaby kyrka"
-    },
-    {
-      "code": "xÅtp",
-      "name": "Åtorp"
-    },
-    {
-      "code": "xVir",
-      "name": "Virestad"
-    },
-    {
-      "code": "Fabg",
-      "name": "Falkenbergs godsstation"
-    },
-    {
-      "code": "wSsu",
-      "name": "Sissehult"
-    },
-    {
-      "code": "Lsl",
-      "name": "Långsele"
-    },
-    {
-      "code": "Sbl",
-      "name": "Skärblacka"
-    },
-    {
-      "code": "Lyt",
-      "name": "Lycksele timmer"
-    },
-    {
-      "code": "xHöo",
-      "name": "Hösjömo"
     },
     {
       "code": "xMyå",
       "name": "Myråsen"
     },
     {
-      "code": "xTsk",
-      "name": "Trollskogen"
+      "code": "xÖvl",
+      "name": "Östra Vemmerlöv"
     },
     {
-      "code": "xSn",
-      "name": "Stenkullen"
-    },
-    {
-      "code": "xTve",
-      "name": "Tveta"
-    },
-    {
-      "code": "xHy",
-      "name": "Hesselby"
-    },
-    {
-      "code": "xRaä",
-      "name": "Ravlunda bränneri"
-    },
-    {
-      "code": "Mkl",
-      "name": "Munkedal"
-    },
-    {
-      "code": "xSmk",
-      "name": "Skogsmark"
-    },
-    {
-      "code": "Tpu",
-      "name": "Tappudden"
-    },
-    {
-      "code": "xGby",
-      "name": "Gimarpsby"
-    },
-    {
-      "code": "xEkh",
-      "name": "Ekebohult"
-    },
-    {
-      "code": "xMop",
-      "name": "Mosstorp"
-    },
-    {
-      "code": "Viln",
-      "name": "Vilan"
+      "code": "xGim",
+      "name": "Gimarp"
     },
     {
       "code": "xBös",
       "name": "Brösarp södra"
     },
     {
+      "code": "Vån",
+      "name": "Västerås norra"
+    },
+    {
+      "code": "xLäe",
+      "name": "Länninge"
+    },
+    {
+      "code": "xTog",
+      "name": "Tomtskog"
+    },
+    {
+      "code": "xÅtp",
+      "name": "Åtorp"
+    },
+    {
+      "code": "wSsu",
+      "name": "Sissehult"
+    },
+    {
+      "code": "xBn",
+      "name": "Bor Norra"
+    },
+    {
+      "code": "xRaä",
+      "name": "Ravlunda bränneri"
+    },
+    {
+      "code": "xHap",
+      "name": "Hultarp"
+    },
+    {
+      "code": "xVtk",
+      "name": "Vitaby kyrka"
+    },
+    {
+      "code": "xHäs",
+      "name": "Hultanäs"
+    },
+    {
+      "code": "Ms",
+      "name": "Mosås"
+    },
+    {
+      "code": "Brh",
+      "name": "Brattheden"
+    },
+    {
+      "code": "xVir",
+      "name": "Virestad"
+    },
+    {
+      "code": "Lyt",
+      "name": "Lycksele timmer"
+    },
+    {
       "code": "xRa",
       "name": "Roma"
     },
     {
-      "code": "Gö",
-      "name": "Gällö"
+      "code": "Mkln",
+      "name": "Munkedals nedre"
+    },
+    {
+      "code": "xOhs",
+      "name": "Ohs Bruk"
+    },
+    {
+      "code": "xTsk",
+      "name": "Trollskogen"
+    },
+    {
+      "code": "Vru",
+      "name": "Vekerum"
+    },
+    {
+      "code": "xEyd",
+      "name": "Elgaryd"
+    },
+    {
+      "code": "xÅa",
+      "name": "Åseda (xÅa)"
+    },
+    {
+      "code": "xSmk",
+      "name": "Skogsmark"
+    },
+    {
+      "code": "Hak",
+      "name": "Hallstavik"
     },
     {
       "code": "wLnb",
       "name": "Lundsbrunn kurort"
     },
     {
+      "code": "xEkh",
+      "name": "Ekebohult"
+    },
+    {
+      "code": "Sbl",
+      "name": "Skärblacka"
+    },
+    {
+      "code": "xHöo",
+      "name": "Hösjömo"
+    },
+    {
+      "code": "xSn",
+      "name": "Stenkullen"
+    },
+    {
+      "code": "Fabg",
+      "name": "Falkenbergs godsstation"
+    },
+    {
+      "code": "Mklh",
+      "name": "Munkedals hamn"
+    },
+    {
       "code": "Let",
       "name": "Lilla Edet"
+    },
+    {
+      "code": "xScs",
+      "name": "Scoutstugan"
+    },
+    {
+      "code": "xVsm",
+      "name": "Virserum"
+    },
+    {
+      "code": "xDkn",
+      "name": "Dala kvarn"
+    },
+    {
+      "code": "xFla",
+      "name": "Flaten"
+    },
+    {
+      "code": "xGby",
+      "name": "Gimarpsby"
+    },
+    {
+      "code": "Viln",
+      "name": "Vilan"
+    },
+    {
+      "code": "xLnb",
+      "name": "Lundsbrunn"
+    },
+    {
+      "code": "xHy",
+      "name": "Hesselby"
+    },
+    {
+      "code": "xMsa",
+      "name": "Målilla Sanatorium"
+    },
+    {
+      "code": "Uvn",
+      "name": "Ursviken"
+    },
+    {
+      "code": "xMop",
+      "name": "Mosstorp"
+    },
+    {
+      "code": "Bål",
+      "name": "Bålsta"
+    },
+    {
+      "code": "xTve",
+      "name": "Tveta"
+    },
+    {
+      "code": "xGyb",
+      "name": "Gyllebosjö"
+    },
+    {
+      "code": "Mkl",
+      "name": "Munkedal"
+    },
+    {
+      "code": "xGåv",
+      "name": "Gårdveda"
+    },
+    {
+      "code": "Tpu",
+      "name": "Tappudden"
+    },
+    {
+      "code": "Lsl",
+      "name": "Långsele"
     },
     {
       "code": "Gss",
@@ -1860,12 +1860,12 @@
       "name": "Björneborg"
     },
     {
-      "code": "xAsk",
-      "name": "Aska"
-    },
-    {
       "code": "Fgl",
       "name": "Fågelsta"
+    },
+    {
+      "code": "xAsk",
+      "name": "Aska"
     },
     {
       "code": "Sk",
@@ -4168,12 +4168,12 @@
       "name": "Simonstorp"
     },
     {
-      "code": "xSsu",
-      "name": "Stocksund"
-    },
-    {
       "code": "xÖst",
       "name": "Stockholms östra"
+    },
+    {
+      "code": "xSsu",
+      "name": "Stocksund"
     },
     {
       "code": "xDjö",
@@ -4544,12 +4544,12 @@
       "name": "Gamla Tortuna"
     },
     {
-      "code": "xStä",
-      "name": "Storängen"
-    },
-    {
       "code": "xNeg",
       "name": "Neglinge"
+    },
+    {
+      "code": "xStä",
+      "name": "Storängen"
     },
     {
       "code": "xSik",
