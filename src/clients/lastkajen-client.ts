@@ -286,9 +286,7 @@ async function getSegmentInfrastructure(
 
     if (track && track.geometry) {
       const simplifiedTrack = simplifyTrackForStationFilter(track.geometry);
-      nearbySwitches = allSwitches.filter(
-        (sw) => sw.geometry && isPointNearSimplifiedTrack(sw.geometry, simplifiedTrack),
-      );
+      nearbySwitches = allSwitches.filter((sw) => sw.geometry && isPointNearSimplifiedTrack(sw.geometry, simplifiedTrack));
       nearbyStations = allStations.filter(
         (station) => station.geometry && isPointNearSimplifiedTrack(station.geometry, simplifiedTrack),
       );
